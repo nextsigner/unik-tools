@@ -5,6 +5,8 @@ Item {
     id: raiz
     //anchors.fill: parent
     property alias flm: folderListModelApps
+    Connections {target: unik;onUkStdChanged: taLog.log(unik.ukStd);}
+    Connections {target: unik;onStdErrChanged: taLog.log(unik.getStdErr());}
     Rectangle{
         id: tb
         width: raiz.width
@@ -88,38 +90,50 @@ Item {
                     }
                     onClicked: {
                         taLog.log("Index presionado: "+index)
+                        var cl
                         if(!folderListModelApps.isFolder(index)){
                             taLog.log("Lanzando upk: "+fileName)
                             var c1 = ''+fileName
                             var c2 = c1.replace('.upk', '')
                             taLog.log("Lanzando appName: "+c2)
-                            taLog.log("Location 1: "+uk.getPath(1))
-                            var exe = ''+uk.getPath(0)
+                            taLog.log("Location 1: "+unik.getPath(1))
+                            var exe = ''+unik.getPath(0)
                             if(Qt.platform.os==='linux'){
                                 exe+='.AppImage'
                             }
 
-                            var cl
-                            cl = '"'+uk.getPath(1)+'/'+exe+'" -appName '+c2
+
+                            cl = '"'+unik.getPath(1)+'/'+exe+'" -appName '+c2
                             /*if(Qt.platform.os==='windows'){
-                                cl= '"'+uk.getPath(1)+'/unik.exe" -appName '+c2
+                                cl= '"'+unik.getPath(1)+'/unik.exe" -appName '+c2
                             }else if(Qt.platform.os==='linux'){
-                                cl= '"'+uk.getPath(1)+'/unik.AppImage" -appName '+c2
+                                cl= '"'+unik.getPath(1)+'/unik.AppImage" -appName '+c2
                             }else{
-                                cl= '"'+uk.getPath(1)+'/unik" -appName '+c2
+                                cl= '"'+unik.getPath(1)+'/unik" -appName '+c2
                             }*/
 
                             taLog.log("CommandLine: "+cl)
-                            uk.run(cl)
+                            unik.run(cl)
                         }else{
                             taLog.log("Lanzando carpeta "+fileName)
                             var urlUpk0 = ''+appsDir
                             var urlUpk1 = (urlUpk0.replace('file:///', ''))+'/'+fileName
-                            taLog.log("Carpeta para upkar "+urlUpk1)
+                            taLog.log("Carpeta a ejecutar "+urlUpk1)
+                            cl = ' -folder '+urlUpk1
 
-                            var cl2 = ''+uk.getPath(1)+'/unik.exe -foldertoupk '+urlUpk1
-                            taLog.log("CL: "+cl2)
-                            uk.run(cl2)
+                            //var cl2 = ''+unik.getPath(1)+'/unik.exe -foldertoupk '+urlUpk1
+                            var appPath
+                            if(Qt.platform.os==='osx'){
+                                appPath = '"'+unik.getPath(1)+'/'+unik.getPath(0)+'"'
+                            }
+                            if(Qt.platform.os==='windows'){
+                                appPath = '"'+unik.getPath(1)+'/'+unik.getPath(0)+'"'
+                            }
+                            if(Qt.platform.os==='linux'){
+                                appPath = '"'+appExec+'"'
+                            }
+                            taLog.log('Running: '+appPath+' '+cl)
+                            unik.run(appPath+' '+cl)
                         }
                         /*taLog.log("Lanzando "+urlUpk1)
                         dc.dato1 = urlUpk1
@@ -132,7 +146,7 @@ Item {
                     Component.onCompleted: {
                         if(!folderListModelApps.isFolder(index)){
                             var upk = unikDocs+'/'+fileName
-                            var isFree=uk.isFree(upk)
+                            var isFree=unik.isFree(upk)
                             btnRun.enabled = isFree
                             console.log(""+upk+" free: "+isFree)
                         }
@@ -160,6 +174,36 @@ Item {
                     font.pixelSize: xItem.height*0.8
                     background: Rectangle{color:appRoot.appVigente+'.upk'===fileName ? appRoot.c2 : appRoot.c1; radius: appRoot.fs*0.3;}
                 }
+                Button{//Actualizar
+                    id:botActualizarGit
+                    width: parent.height
+                    height: width
+                    text: '\uf09b'
+                    font.family: "FontAwesome"
+                    font.pixelSize: xItem.height*0.8
+                    background: Rectangle{color:appRoot.c1; radius: appRoot.fs*0.3;}
+                    opacity:  (''+fileName).indexOf('unik-qml')===0 ? 1.0 : 0.0
+                    enabled: opacity===1.0
+                    onClicked: {
+                        var url = 'https://github.com/nextsigner/'+fileName
+                        taLog.log('Actualizando '+url)
+                        var carpetaLocal=unik.getPath(3)+'/unik'
+                        taLog.log('Actualizando en carpeta '+carpetaLocal)
+                        listApps.enabled=false
+                        botActualizarGit.enabled=false
+                        var actualizado = unik.downloadGit(url, carpetaLocal)
+                        taLog.log('Actualizado: '+actualizado)
+                        listApps.enabled=true
+                        botActualizarGit.enabled=true
+
+                    }
+                    Text {
+                        text: '\uf019'
+                        font.family: "FontAwesome"
+                        font.pixelSize: xItem.height*0.3
+                        anchors.centerIn: parent
+                    }
+                }
                 Button{//Eliminar
                     width: parent.height
                     height: width
@@ -167,7 +211,7 @@ Item {
                     font.family: "FontAwesome"
                     font.pixelSize: xItem.height*0.8
                     background: Rectangle{color:appRoot.appVigente+'.upk'===fileName ? appRoot.c2 : appRoot.c1; radius: appRoot.fs*0.3;}
-                    opacity: appRoot.appVigente+'.upk'!==fileName ? 1.0 : 0.0
+                    opacity: (''+fileName).indexOf('.upk')===0 ? 1.0 : 0.0
                     onClicked: {
                         dc.dato1 = fileName
                         dc.estadoEntrada = 1
@@ -199,7 +243,7 @@ Item {
                     var urlUpk = appsDir+'/'+dc.dato1
                     var urlUpk1 = urlUpk.replace('file:///', '')
                     taLog.log("Eliminando "+urlUpk1)
-                    uk.deleteFile(urlUpk1)
+                    unik.deleteFile(urlUpk1)
                 }
                 if(dc.estadoEntrada===2&&dc.estadoSalida===1){
                     ukit.loadUpk(dc.dato1, true)
