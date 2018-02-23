@@ -1,11 +1,11 @@
 ﻿import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
-//import QtQuick.Controls.Styles 1.4
+import Qt.labs.settings 1.0
 import uk 1.0
 
 ApplicationWindow{
-    id: appRoot
+    id: app
     visible: true
     width: 640
     height: 480
@@ -16,14 +16,14 @@ ApplicationWindow{
     property string keyLog: ''
     onVisibleChanged: {
         if(!visible&&closedModeLaunch){
-            appRoot.close()
+            app.close()
         }
     }
     onClosing: {
         console.log("Cerrando en closedModeLaunch: "+closedModeLaunch)
     }
 
-    property int fs: appRoot.width*0.02
+    property int fs: app.width*0.02
     property color c1: "#1fbc05"
     property color c2: "#4fec35"
     property color c3: "white"
@@ -49,24 +49,30 @@ ApplicationWindow{
             taLog.log(uk.ukStd)
         }
     }
+    Settings{
+        id: appSettings
+        category: 'Configuration'
+        property int pyLineRH1: 0
+        property bool logVisible: false
+    }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
     Rectangle{
         id: fondoApp
         width: parent.width
-        height: parent.height-appRoot.fs*1.4
+        height: parent.height-app.fs*1.4
         //color: "transparent"
         gradient: Gradient {
             GradientStop {
                 position: 0.00;
-                color: appRoot.c5;
+                color: app.c5;
             }
             GradientStop {
                 position: 0.99;
-                color: appRoot.c5;
+                color: app.c5;
             }
             GradientStop {
                 position: 1.00;
-                color: appRoot.c1;
+                color: app.c1;
             }
         }
     }
@@ -74,38 +80,38 @@ ApplicationWindow{
         id: x
         anchors.fill: parent
         Column{
-            height: appRoot.height
+            height: app.height
             Rectangle{
-                width: appRoot.width
-                height: appRoot.fs*1.4
-                color: appRoot.c5
-                border.color: appRoot.c4
+                width: app.width
+                height: app.fs*1.4
+                color: app.c5
+                border.color: app.c4
                 border.width: 1
                 Rectangle{
-                    width: appRoot.fs
-                    height: appRoot.fs
+                    width: app.fs
+                    height: app.fs
                     radius: width*0.2
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: appRoot.fs
-                    color: appRoot.c5
+                    anchors.leftMargin: app.fs
+                    color: app.c5
 
                     Text {
                         id: userLoginIcon
                         text: "\uf2bd"
-                        font.pixelSize: appRoot.fs
+                        font.pixelSize: app.fs
                         anchors.centerIn: parent
-                        color: appRoot.logueado ? appRoot.c1 : "red"
+                        color: app.logueado ? app.c1 : "red"
 
                     }
                     Text {
                         id: userLoginId
-                        text: appRoot.userLogin
-                        font.pixelSize: appRoot.fs*0.5
+                        text: app.userLogin
+                        font.pixelSize: app.fs*0.5
                         anchors.left: userLoginIcon.right
                         anchors.verticalCenter: parent.verticalCenter
-                        color: appRoot.c1
-                        //visible: appRoot.logueado
+                        color: app.c1
+                        //visible: app.logueado
 
                     }
                     MouseArea{
@@ -121,7 +127,7 @@ ApplicationWindow{
                         }
                         onClicked: {
                             p = false
-                            if(!appRoot.logueado){
+                            if(!app.logueado){
                                 ful.visible = true
                             }
                         }
@@ -132,7 +138,7 @@ ApplicationWindow{
                             interval: 1500
                             onTriggered: {
                                 if(maLogIcon.p){
-                                    appRoot.logueado = false
+                                    app.logueado = false
                                 }
                             }
                         }
@@ -141,24 +147,25 @@ ApplicationWindow{
                 Text {
                     id: tit
                     text: "<b>unik-tools</b>"
-                    font.pixelSize: appRoot.fs
+                    font.pixelSize: app.fs
                     anchors.centerIn: parent
-                    color: appRoot.c1
+                    color: app.c1
                 }
                 Text {
                     id: txtAppVigente
-                    text: "<b>Próximo inicio: </b>"+appRoot.appVigente
-                    font.pixelSize: appRoot.fs
+                    text: "<b>Próximo inicio: </b>"+app.appVigente
+                    font.pixelSize: app.fs
                     anchors.right: parent.right
-                    anchors.rightMargin: appRoot.fs*0.1
-                    color: appRoot.c1
+                    anchors.rightMargin: app.fs*0.1
+                    color: app.c1
                 }
             }
             Row{
                 id: rowAreas
-                width: appRoot.width*children.length
-                height: appRoot.height-appRoot.fs*2.8-appRoot.fs*4
-                x:0-(tabBar.currentIndex*appRoot.width)
+                width: app.width*children.length
+                //height: tabBar.currentIndex===0? app.height-app.fs*2.8-app.fs*4 : app.height-app.fs*2.8
+                height: app.height-app.fs*2.8
+                x:0-(tabBar.currentIndex*app.width)
                 Behavior on x{
                     NumberAnimation{
                         duration: 500
@@ -167,73 +174,22 @@ ApplicationWindow{
                 }
                 PageAppList{
                     id: pal
-                    width: appRoot.width
-                    height: parent.height
-                }
-                Page1 {
-                    width: appRoot.width
+                    width: app.width
                     height: parent.height
                 }
                 Ayuda{
                     id: ayuda
-                    width: appRoot.width
+                    width: app.width
                     height: parent.height
                 }
             }
 
 
 
-            Rectangle{
-                id:xTaLog
-                width: appRoot.width
-                height: appRoot.fs*4
-                clip: true
-                color: appRoot.c5
-                border.width: 1
-                border.color: appRoot.c2
-                Flickable{
-                    id:fk
-                    width: parent.width
-                    height: parent.height
-                    contentWidth: parent.width
-                    contentHeight: taLog.contentHeight
-                    boundsBehavior: Flickable.StopAtBounds
-                    onContentHeightChanged: {
-                        //fk.contentY = fk.contentHeight
-                    }
-                    Text{
-                        id: taLog
-                        width: parent.width-appRoot.fs
-                        //height: contentHeight
-                        anchors.centerIn: parent
-                        font.pixelSize: appRoot.fs*0.5
-                        textFormat: Text.RichText
-                        color: appRoot.c2
-                        wrapMode: Text.WrapAnywhere
-                        onTextChanged: {
-                            //height = contentHeight
-                        }
-
-                        function log(l){
-                            var d = new Date(Date.now())
-                            var t = '['+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()+'] '
-                            taLog.text+=t+l+'<br />'
-                            if(taLog.height>xTaLog.height){
-                                //fk.contentY += appRoot.fs*0.525
-                                fk.contentY = taLog.height-xTaLog.height
-                            }else{
-                                //fk.contentY = 1111
-                            }
-                        }
-                    }
-                }
-
-            }
-
-                        TabBar {
+            TabBar {
                 id: tabBar
-                width: appRoot.width
-                height: appRoot.fs*1.4
+                width: app.width
+                height: app.fs*1.4
                 //anchors.top: rowAreas.bottom
 
                 //currentIndex: swipeView.currentIndex
@@ -246,74 +202,56 @@ ApplicationWindow{
                 TabButton {
                     id: tb1
                     text: qsTr("Lista de Apps")
-                    font.pixelSize: appRoot.fs
+                    font.pixelSize: app.fs
                     focus: tabBar.currentIndex===0
                     onFocusChanged: {
                         if(focus){
-                            background.color = appRoot.c2
+                            background.color = app.c2
                         }else{
                             background.color = "#444444"
                         }
                     }
                     onPressed: {
-                        background.color = appRoot.c2
+                        background.color = app.c2
                     }
                     onReleased: {
-                        background.color = appRoot.c2
-                    }
-                }
-                TabButton {
-                    text: qsTr("Instalar Apps")
-                    font.pixelSize: appRoot.fs
-                    focus: tabBar.currentIndex===1
-                    onFocusChanged: {
-                        if(focus){
-                            background.color = appRoot.c2
-                        }else{
-                            background.color = "#444444"
-                        }
-                    }
-                    onPressed: {
-                        background.color = appRoot.c2
-                    }
-                    onReleased: {
-                        background.color = appRoot.c2
+                        background.color = app.c2
                     }
                 }
                 TabButton {
                     text: qsTr("Ayuda")
-                    font.pixelSize: appRoot.fs
+                    font.pixelSize: app.fs
                     focus: tabBar.currentIndex===2
                     onFocusChanged: {
                         if(focus){
-                            background.color = appRoot.c2
+                            background.color = app.c2
                         }else{
                             background.color = "#444444"
                         }
                     }
                     onPressed: {
-                        background.color = appRoot.c2
+                        background.color = app.c2
                     }
                     onReleased: {
-                        background.color = appRoot.c2
+                        background.color = app.c2
                     }
                 }
                 TabButton {
                     text: qsTr("Salir")
-                    font.pixelSize: appRoot.fs
+                    font.pixelSize: app.fs
                     focus: tabBar.currentIndex===3
                     onFocusChanged: {
                         if(focus){
-                            background.color = appRoot.c2
+                            background.color = app.c2
                         }else{
                             background.color = "#444444"
                         }
                     }
                     onPressed: {
-                        background.color = appRoot.c2
+                        background.color = app.c2
                     }
                     onReleased: {
-                        background.color = appRoot.c2
+                        background.color = app.c2
                     }
                 }
             }
@@ -323,14 +261,10 @@ ApplicationWindow{
             id: ful
             visible: false
             width:  parent.width
-            height: parent.height-xTaLog.height-tabBar.height
-            color: appRoot.c5
+            height: parent.height-tabBar.height
+            color: app.c5
         }
     }
-
-
-
-
     Timer{
         id:timerInit
         running: false
@@ -346,7 +280,7 @@ ApplicationWindow{
 
     Component.onCompleted: {
         if(Qt.platform.os==='windows'||Qt.platform.os==='linux'){
-            appRoot.visibility = "Maximized"
+            app.visibility = "Maximized"
         }
         ful.init()
         timerInit.start()

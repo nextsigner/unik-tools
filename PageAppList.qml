@@ -5,18 +5,18 @@ Item {
     id: raiz
     //anchors.fill: parent
     property alias flm: folderListModelApps
-    Connections {target: unik;onUkStdChanged: taLog.log(unik.ukStd);}
-    Connections {target: unik;onStdErrChanged: taLog.log(unik.getStdErr());}
+    Connections {target: unik;onUkStdChanged: logView.log(unik.ukStd);}
+    Connections {target: unik;onStdErrChanged: logView.log(unik.getStdErr());}
     Rectangle{
         id: tb
         width: raiz.width
-        height: appRoot.fs*1.4
-        color: appRoot.c1
+        height: app.fs*1.4
+        color: app.c1
         Text {
             id: txtTit
             text: qsTr("Lista de Aplicaciones Instaladas")
-            font.pixelSize: appRoot.fs
-            color: appRoot.c4
+            font.pixelSize: app.fs
+            color: app.c4
             anchors.centerIn: parent
         }
     }
@@ -24,14 +24,15 @@ Item {
 
     ListView{
         id: listApps
-        width: raiz.width-appRoot.fs
-        height: raiz.height-tb.height
+        width: raiz.width-app.fs
+        //height: raiz.height-tb.height
         anchors.top: tb.bottom
+        anchors.bottom: lineRH.top
         anchors.horizontalCenter: raiz.horizontalCenter
         model: folderListModelApps
         delegate: delListApp
         clip: true
-        spacing: appRoot.fs*0.2
+        spacing: app.fs*0.2
     }
     FolderListModel{
         id: folderListModelApps
@@ -44,32 +45,32 @@ Item {
         Rectangle{
             id: xItem
             width: listApps.width
-            height: appRoot.fs*1.6
-            color: appRoot.appVigente+'.upk'===fileName ? appRoot.c1 : appRoot.c2
+            height: app.fs*1.6
+            color: app.appVigente+'.upk'===fileName ? app.c1 : app.c2
             border.width: 1
             radius: height*0.1
 
             Text {
                 id: txtFileName
                 text: fileName
-                font.pixelSize: appRoot.fs
+                font.pixelSize: app.fs
                 anchors.centerIn: parent
             }
             Text{
                 anchors.left: parent.left
-                anchors.leftMargin: appRoot.fs*0.2
+                anchors.leftMargin: app.fs*0.2
                 anchors.verticalCenter: parent.verticalCenter
                 text: '\uf192'
                 font.family: "FontAwesome"
                 font.pixelSize: xItem.height*0.8
-                visible: appRoot.appVigente+'.upk'===fileName
+                visible: app.appVigente+'.upk'===fileName
             }
             Row{
                 height: xItem.height*0.8
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.right: parent.right
                 anchors.rightMargin: xItem.height*0.2
-                spacing: appRoot.fs*0.5
+                spacing: app.fs*0.5
                 Button{//Ejecutar
                     id: btnRun
                     width: parent.height
@@ -77,8 +78,8 @@ Item {
                     text: '\uf135'
                     font.family: "FontAwesome"
                     font.pixelSize: xItem.height*0.8
-                    //opacity: appRoot.appVigente+'.upk'!==fileName ? 1.0 : 0.0
-                    background: Rectangle{color: appRoot.appVigente+'.upk'===fileName ? appRoot.c2 : appRoot.c1; radius: appRoot.fs*0.3;}
+                    //opacity: app.appVigente+'.upk'!==fileName ? 1.0 : 0.0
+                    background: Rectangle{color: app.appVigente+'.upk'===fileName ? app.c2 : app.c1; radius: app.fs*0.3;}
 
                     Text {
                         id: name
@@ -158,12 +159,23 @@ Item {
                     text: '\uf00c'
                     font.family: "FontAwesome"
                     font.pixelSize: xItem.height*0.8
-                    opacity: appRoot.appVigente+'.upk'!==fileName ? 1.0 : 0.0
-                    background: Rectangle{color: appRoot.appVigente+'.upk'===fileName ? appRoot.c2 : appRoot.c1; radius: appRoot.fs*0.3;}
+                    opacity: app.appVigente+'.upk'!==fileName ? 1.0 : 0.0
+                    background: Rectangle{color: app.appVigente+'.upk'===fileName ? app.c2 : app.c1; radius: app.fs*0.3;}
                     onClicked: {
-                        var c1 = ''+fileName
-                        var c2 = c1.split('.upk')
-                        appRoot.appVigente = c2[0]
+                        if((''+fileName).indexOf('.upk')<0){
+                            var c = ''+unik.getPath(3)+'/unik/'+fileName
+                            var json='{"mode":"-folder", "arg1":"'+c+'"}'
+                            app.appVigente = fileName
+                            var c2 = ''+unik.getPath(3)+'/unik/config.json'
+                            unik.setFile(c2, json)
+                            logView.log('Aplicaciòn por defecto: '+c)
+                            logView.log('Nuevo Json Config: '+c2)
+                        }else{
+                            var c1 = ''+fileName
+                            var c2 = c1.split('.upk')
+                            app.appVigente = c2[0]
+                        }
+
                     }
                 }
                 Button{//Descargar
@@ -172,7 +184,8 @@ Item {
                     text: '\uf019'
                     font.family: "FontAwesome"
                     font.pixelSize: xItem.height*0.8
-                    background: Rectangle{color:appRoot.appVigente+'.upk'===fileName ? appRoot.c2 : appRoot.c1; radius: appRoot.fs*0.3;}
+                    background: Rectangle{color:app.appVigente+'.upk'===fileName ? app.c2 : app.c1; radius: app.fs*0.3;}
+                    visible: false
                 }
                 Button{//Actualizar
                     id:botActualizarGit
@@ -181,7 +194,7 @@ Item {
                     text: '\uf09b'
                     font.family: "FontAwesome"
                     font.pixelSize: xItem.height*0.8
-                    background: Rectangle{color:appRoot.c1; radius: appRoot.fs*0.3;}
+                    background: Rectangle{color:app.c1; radius: app.fs*0.3;}
                     opacity:  (''+fileName).indexOf('unik-qml')===0 ? 1.0 : 0.0
                     enabled: opacity===1.0
                     onClicked: {
@@ -210,7 +223,7 @@ Item {
                     text: '\uf014'
                     font.family: "FontAwesome"
                     font.pixelSize: xItem.height*0.8
-                    background: Rectangle{color:appRoot.appVigente+'.upk'===fileName ? appRoot.c2 : appRoot.c1; radius: appRoot.fs*0.3;}
+                    background: Rectangle{color:app.appVigente+'.upk'===fileName ? app.c2 : app.c1; radius: app.fs*0.3;}
                     opacity: (''+fileName).indexOf('.upk')===0 ? 1.0 : 0.0
                     onClicked: {
                         dc.dato1 = fileName
@@ -225,6 +238,15 @@ Item {
         }
     }
 
+
+    LineResizeH{id:lineRH; y:visible?appSettings.pyLineRH1: parent.height;onLineReleased: appSettings.pyLineRH1 = y; visible: appSettings.logVisible;/*onYChanged: wv.height = !lineRH.visible ? wv.parent.height-(wv.parent.height-lineRH.y) : wv.parent.height*/}
+    LogView{
+        id:logView;
+        width: raiz.width
+        anchors.top: lineRH.bottom;
+        anchors.bottom: parent.bottom;
+        visible: appSettings.logVisible;
+    }
 
     DialogoConfirmar{
         id: dc

@@ -18,50 +18,50 @@ Item {
     }
     Rectangle{
         anchors.fill: raiz
-        color: appRoot.c5
+        color: app.c5
         border.width: 1
-        border.color: appRoot.c2
-        radius: appRoot.fs*0.2
+        border.color: app.c2
+        radius: app.fs*0.2
 
         Column{
             id:col
-            width: parent.width-appRoot.fs
-            height: parent.height-appRoot.fs
+            width: parent.width-app.fs
+            height: parent.height-app.fs
             anchors.centerIn: parent
-            spacing: appRoot.fs
+            spacing: app.fs
             Text {
                 id: tit
-                font.pixelSize: appRoot.fs
-                color: appRoot.c2
+                font.pixelSize: app.fs
+                color: app.c2
             }
             Text {
                 id: cons
-                font.pixelSize: appRoot.fs
-                color: appRoot.c2
+                font.pixelSize: app.fs
+                color: app.c2
                 width: raiz.width*0.8
-                height: col.height-appRoot.fs*1.4-appRoot.fs*3-appRoot.fs*0.5
+                height: col.height-app.fs*1.4-app.fs*3-app.fs*0.5
                 wrapMode: Text.WordWrap
             }
             Row{
                 anchors.right: parent.right
-                anchors.rightMargin: appRoot.fs*0.5
-                height: appRoot.fs*1.4
-                spacing: appRoot.fs*0.5
+                anchors.rightMargin: app.fs*0.5
+                height: app.fs*1.4
+                spacing: app.fs*0.5
                 Button{
-                    height: appRoot.fs*1.4
+                    height: app.fs*1.4
                     text: raiz.ctx === 'AceptarCancelar' ? "Cancelar" : "No"
-                    font.pixelSize: appRoot.fs
-                    background: Rectangle{color:appRoot.c2; radius: appRoot.fs*0.3;}
+                    font.pixelSize: app.fs
+                    background: Rectangle{color:app.c2; radius: app.fs*0.3;}
                     onClicked: {
                         raiz.estadoSalida = 0
                         raiz.visible = false
                     }
                 }
                 Button{
-                    height: appRoot.fs*1.4
+                    height: app.fs*1.4
                     text: raiz.ctx === 'AceptarCancelar' ? "Aceptar" : "Si"
-                    font.pixelSize: appRoot.fs
-                    background: Rectangle{color:appRoot.c2; radius: appRoot.fs*0.3;}
+                    font.pixelSize: app.fs
+                    background: Rectangle{color:app.c2; radius: app.fs*0.3;}
                     onClicked: {
                         raiz.estadoSalida = 1
                         raiz.visible = false

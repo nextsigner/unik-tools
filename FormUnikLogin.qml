@@ -10,42 +10,42 @@ Rectangle{
     ColumnLayout{
         id: col1
         anchors.centerIn: parent
-        Layout.preferredWidth: appRoot.width*0.8
+        Layout.preferredWidth: app.width*0.8
         Layout.preferredHeight: parent.height*0.5
         Layout.fillHeight: true
         Layout.fillWidth: true
-        spacing: appRoot.fs
+        spacing: app.fs
 
 
         RowLayout{
             id: row1
             Layout.fillWidth: true
-            Layout.preferredWidth:appRoot.width*0.8
-            Layout.preferredHeight: appRoot.fs
-            spacing: appRoot.fs
+            Layout.preferredWidth:app.width*0.8
+            Layout.preferredHeight: app.fs
+            spacing: app.fs
             Text {
                 id: txtSetUser
-                font.pixelSize: appRoot.fs
-                color: appRoot.c1
+                font.pixelSize: app.fs
+                color: app.c1
                 text: '<b>Usuario o Correo:</b>'
                 clip: true
             }
             Rectangle{
                 id:xtiSetUser
-                Layout.minimumWidth: appRoot.width*0.8-txtSetUser.width-appRoot.fs                    //Layout.maximumWidth: (parent.parent.parent.width-txtSetUser.width-appRoot.fs)*0.6
-                Layout.minimumHeight: appRoot.fs*1.6
-                Layout.maximumHeight: appRoot.fs*1.6
+                Layout.minimumWidth: app.width*0.8-txtSetUser.width-app.fs                    //Layout.maximumWidth: (parent.parent.parent.width-txtSetUser.width-app.fs)*0.6
+                Layout.minimumHeight: app.fs*1.6
+                Layout.maximumHeight: app.fs*1.6
                 anchors.verticalCenter: txtSetUser.verticalCenter
                 border.width: 1
-                border.color: appRoot.c1
+                border.color: app.c1
                 radius: height*0.3
                 clip: true
-                color: appRoot.c2
+                color: app.c2
                 TextInput{
                     id: tiSetUser
-                    font.pixelSize: appRoot.fs
+                    font.pixelSize: app.fs
                     width: parent.width*0.99
-                    height: appRoot.fs
+                    height: app.fs
                     anchors.centerIn: parent
                     maximumLength: 60
                     KeyNavigation.tab: tiSetKey
@@ -58,32 +58,32 @@ Rectangle{
         RowLayout{
             id: row3
             Layout.fillWidth: true
-            Layout.preferredWidth:appRoot.width*0.8
-            Layout.preferredHeight: appRoot.fs
-            spacing: appRoot.fs
+            Layout.preferredWidth:app.width*0.8
+            Layout.preferredHeight: app.fs
+            spacing: app.fs
             Text {
                 id: txtSetKey
-                font.pixelSize: appRoot.fs
-                color: appRoot.c1
+                font.pixelSize: app.fs
+                color: app.c1
                 text: '<b>Clave:</b>'
                 clip: true
             }
             Rectangle{
                 id:xtiSetKey
-                Layout.minimumWidth: appRoot.width*0.8-txtSetKey.width-appRoot.fs                    //Layout.maximumWidth: (parent.parent.parent.width-txtSetUser.width-appRoot.fs)*0.6
-                Layout.minimumHeight: appRoot.fs*1.6
-                Layout.maximumHeight: appRoot.fs*1.6
+                Layout.minimumWidth: app.width*0.8-txtSetKey.width-app.fs                    //Layout.maximumWidth: (parent.parent.parent.width-txtSetUser.width-app.fs)*0.6
+                Layout.minimumHeight: app.fs*1.6
+                Layout.maximumHeight: app.fs*1.6
                 anchors.verticalCenter: txtSetKey.verticalCenter
                 border.width: 1
-                border.color: appRoot.c1
-                color: appRoot.c2
+                border.color: app.c1
+                color: app.c2
                 radius: height*0.3
                 clip: true
                 TextInput{
                     id: tiSetKey
-                    font.pixelSize: appRoot.fs
+                    font.pixelSize: app.fs
                     width: parent.width*0.99
-                    height: appRoot.fs
+                    height: app.fs
                     anchors.centerIn: parent
                     maximumLength: 60
                     echoMode: TextInput.Password
@@ -93,25 +93,25 @@ Rectangle{
         }
         RowLayout{
             Layout.fillWidth: true
-            Layout.preferredWidth: appRoot.width*0.8
-            Layout.minimumHeight:  appRoot.fs
+            Layout.preferredWidth: app.width*0.8
+            Layout.minimumHeight:  app.fs
             spacing: 0
             CheckBox{
                 id: recordarme
-                width: appRoot.fs
-                height: appRoot.fs
+                width: app.fs
+                height: app.fs
             }
 
             Item{
                 Layout.fillWidth: true
-                Layout.preferredHeight: appRoot.fs
+                Layout.preferredHeight: app.fs
             }
             Button{
                 id: botCancelar
-                Layout.preferredWidth: appRoot.fs*6
+                Layout.preferredWidth: app.fs*6
                 Layout.preferredHeight: 50
-                font.pixelSize: appRoot.fs*0.8
-                background: Rectangle{color:parent.p ? appRoot.c1 : appRoot.c2;}
+                font.pixelSize: app.fs*0.8
+                background: Rectangle{color:parent.p ? app.c1 : app.c2;}
                 text: p ? '<b>Cancelar</b>' : 'Cancelar'
                 property bool p: false
                 onPressed: {
@@ -121,26 +121,26 @@ Rectangle{
                     p = false
                 }
                 onClicked: {
-                    appRoot.logueado = false
+                    app.logueado = false
                     raiz.visible = false
                 }
                 KeyNavigation.tab: botAceptar
                 Keys.onReturnPressed: {
-                    appRoot.logueado = false
+                    app.logueado = false
                     raiz.visible = false
                 }
             }
             Item{
                 Layout.fillWidth: true
-                Layout.maximumWidth: appRoot.fs
-                Layout.preferredHeight: appRoot.fs
+                Layout.maximumWidth: app.fs
+                Layout.preferredHeight: app.fs
             }
             Button{
                 id: botAceptar
-                Layout.preferredWidth: appRoot.fs*6
+                Layout.preferredWidth: app.fs*6
                 Layout.preferredHeight: 50
-                font.pixelSize: appRoot.fs*0.8
-                background: Rectangle{color:parent.p ? appRoot.c1 : appRoot.c2;}
+                font.pixelSize: app.fs*0.8
+                background: Rectangle{color:parent.p ? app.c1 : app.c2;}
                 text: p ? '<b>Login</b>' : 'Login'
                 property bool p: false
                 onPressed: {
@@ -169,7 +169,7 @@ Rectangle{
             //console.log("Url Login: "+url)
             //console.log("Ret: "+ret)
             if(ret===-1){
-                appRoot.userLogin = ""
+                app.userLogin = ""
                 //console.log('Usuario no existente')
                 taLog.log('Login não é bem sucedido! / Login no se ha producido con èxito! / Login is not successful!')
                 taLog.log('Login
@@ -177,9 +177,9 @@ devido a falha em nome de usuário e senha / Login falla por error en usuario y 
             }else if(ret>0){
                 //console.log('Logueado!')
                 taLog.log('Login é bem sucedido! / Login se ha producido con èxito! / Login is successful!')
-                appRoot.logueado = true
+                app.logueado = true
                 raiz.visible = false
-                appRoot.userLogin = u
+                app.userLogin = u
                 if(recordarme.checked){
                     //qkey.encriptar(tiSetUser.text+'@@@'+tiSetKey.text)
                     var passEnc = uk.encData(u+','+k, 'au', 'ak')
@@ -194,12 +194,12 @@ devido a falha em nome de usuário e senha / Login falla por error en usuario y 
                     }
                 }
             }else if(ret===-2){
-                appRoot.userLogin = ""
+                app.userLogin = ""
                 console.log('Error de clave de acceso')
                 taLog.log('Login não é bem sucedido! / Login no se ha producido con èxito! / Login is not successful!')
 
             }else{
-                appRoot.userLogin = ""
+                app.userLogin = ""
                 console.log('Error al loguear: Estado desconocido')
                 taLog.log('Login não é bem sucedido! / Login no se ha producido con èxito! / Login is not successful!')
                 taLog.log('Login
@@ -217,7 +217,7 @@ devido a falha em nome de usuário e senha / Login falla por error en usuario y 
             console.log('Key R: '+m0[1])
             loguin(m0[0], m0[1], false)
         }else{
-            taLog.log('unik-tools não é login / unik-tools no està logueado / unik-tools is not login')
+             //taLog.log('unik-tools não é login / unik-tools no està logueado / unik-tools is not login')
         }
     }
 }
