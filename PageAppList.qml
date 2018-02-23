@@ -199,13 +199,13 @@ Item {
                     enabled: opacity===1.0
                     onClicked: {
                         var url = 'https://github.com/nextsigner/'+fileName
-                        taLog.log('Actualizando '+url)
+                        logView.log('Actualizando '+url)
                         var carpetaLocal=unik.getPath(3)+'/unik'
-                        taLog.log('Actualizando en carpeta '+carpetaLocal)
+                        logView.log('Actualizando en carpeta '+carpetaLocal)
                         listApps.enabled=false
                         botActualizarGit.enabled=false
                         var actualizado = unik.downloadGit(url, carpetaLocal)
-                        taLog.log('Actualizado: '+actualizado)
+                        logView.log('Actualizado: '+actualizado)
                         listApps.enabled=true
                         botActualizarGit.enabled=true
 
