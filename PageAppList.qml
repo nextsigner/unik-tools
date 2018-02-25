@@ -90,14 +90,14 @@ Item {
                         visible: !parent.enabled
                     }
                     onClicked: {
-                        taLog.log("Index presionado: "+index)
+                        logView.log("Index presionado: "+index)
                         var cl
                         if(!folderListModelApps.isFolder(index)){
-                            taLog.log("Lanzando upk: "+fileName)
+                            logView.log("Lanzando upk: "+fileName)
                             var c1 = ''+fileName
                             var c2 = c1.replace('.upk', '')
-                            taLog.log("Lanzando appName: "+c2)
-                            taLog.log("Location 1: "+unik.getPath(1))
+                            logView.log("Lanzando appName: "+c2)
+                            logView.log("Location 1: "+unik.getPath(1))
                             var exe = ''+unik.getPath(0)
                             if(Qt.platform.os==='linux'){
                                 exe+='.AppImage'
@@ -113,13 +113,13 @@ Item {
                                 cl= '"'+unik.getPath(1)+'/unik" -appName '+c2
                             }*/
 
-                            taLog.log("CommandLine: "+cl)
+                            logView.log("CommandLine: "+cl)
                             unik.run(cl)
                         }else{
-                            taLog.log("Lanzando carpeta "+fileName)
+                            logView.log("Lanzando carpeta "+fileName)
                             var urlUpk0 = ''+appsDir
                             var urlUpk1 = (urlUpk0.replace('file:///', ''))+'/'+fileName
-                            taLog.log("Carpeta a ejecutar "+urlUpk1)
+                            logView.log("Carpeta a ejecutar "+urlUpk1)
                             cl = ' -folder '+urlUpk1
 
                             //var cl2 = ''+unik.getPath(1)+'/unik.exe -foldertoupk '+urlUpk1
@@ -133,10 +133,10 @@ Item {
                             if(Qt.platform.os==='linux'){
                                 appPath = '"'+appExec+'"'
                             }
-                            taLog.log('Running: '+appPath+' '+cl)
+                            logView.log('Running: '+appPath+' '+cl)
                             unik.run(appPath+' '+cl)
                         }
-                        /*taLog.log("Lanzando "+urlUpk1)
+                        /*logView.log("Lanzando "+urlUpk1)
                         dc.dato1 = urlUpk1
                         dc.estadoEntrada = 2
                         dc.titulo = '<b>Confirmar Modo</b>'
@@ -258,13 +258,13 @@ Item {
         onVisibleChanged: {
             if(!visible){
                 if(dc.estadoEntrada===1&&dc.estadoSalida===0){
-                    taLog.log("No Acepta eliminar")
+                    logView.log("No Acepta eliminar")
                 }
                 if(dc.estadoEntrada===1&&dc.estadoSalida===1){
-                    taLog.log("Acepta eliminar")
+                    logView.log("Acepta eliminar")
                     var urlUpk = appsDir+'/'+dc.dato1
                     var urlUpk1 = urlUpk.replace('file:///', '')
-                    taLog.log("Eliminando "+urlUpk1)
+                    logView.log("Eliminando "+urlUpk1)
                     unik.deleteFile(urlUpk1)
                 }
                 if(dc.estadoEntrada===2&&dc.estadoSalida===1){
