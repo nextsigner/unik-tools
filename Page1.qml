@@ -93,13 +93,13 @@ Item{
                         if(xItem.porcDL===100){
                             dlprogress.opacity = 0.0
                             botDesc.enabled = true
-                            taLog.log('Descarga finalizada de '+remotoAppName+' %'+xItem.porcDL)
+                            logView.log('Descarga finalizada de '+remotoAppName+' %'+xItem.porcDL)
                         }else{
-                            taLog.log('Descargando '+remotoAppName+' %'+xItem.porcDL)
+                            logView.log('Descargando '+remotoAppName+' %'+xItem.porcDL)
                         }
                     }
                     onUkStdChanged: {
-                        taLog.log(ukItem.getUkStd())
+                        logView.log(ukItem.getUkStd())
                     }
                 }
                 Text {
@@ -176,7 +176,7 @@ Item{
                             var code = '<b>Code JavaScript:</b><br />var upkDestination = '+nAppsDir+'/'+remotoAppName+'<br />'
                             code+='var url =  host+\'/users/unik-free/upks/'+remotoAppName+'<br />'
                             code += 'ukItem.setFile(upkDestination, ukItem.getHttpFile(url))'
-                            taLog.log(code)
+                            logView.log(code)
                             //ukItem.setPorc(0)
                             ukItem.setFile(upkDestination, ukItem.getHttpFile(url))                            
                         }

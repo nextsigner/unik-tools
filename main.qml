@@ -46,7 +46,7 @@ ApplicationWindow{
     Connections {
         target: uk
         onUkStdChanged: {
-            taLog.log(uk.ukStd)
+            logView.log(uk.ukStd)
         }
     }
     Settings{
@@ -271,9 +271,9 @@ ApplicationWindow{
         repeat: false
         interval: 2000
         onTriggered: {
-            taLog.log('<b>unik-tools log</b>')
-            taLog.log('<b>unik-tools version:</b> '+version+'')
-            taLog.log('<b>unik-tools host:</b> '+host+'')
+            logView.log('<b>unik-tools log</b>')
+            logView.log('<b>unik-tools version:</b> '+version+'')
+            logView.log('<b>unik-tools host:</b> '+host+'')
 
         }
     }
