@@ -46,7 +46,7 @@ ApplicationWindow{
     Connections {
         target: uk
         onUkStdChanged: {
-            logView.log(uk.ukStd)
+            unik.log(uk.ukStd)
         }
     }
     Settings{
@@ -271,9 +271,9 @@ ApplicationWindow{
         repeat: false
         interval: 2000
         onTriggered: {
-            logView.log('<b>unik-tools log</b>')
-            logView.log('<b>unik-tools version:</b> '+version+'')
-            logView.log('<b>unik-tools host:</b> '+host+'')
+            unik.log('<b>unik-tools log</b>')
+            unik.log('<b>unik-tools version:</b> '+version+'')
+            unik.log('<b>unik-tools host:</b> '+host+'')
 
         }
     }
