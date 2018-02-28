@@ -171,12 +171,12 @@ Rectangle{
             if(ret===-1){
                 app.userLogin = ""
                 //console.log('Usuario no existente')
-                logView.log('Login não é bem sucedido! / Login no se ha producido con èxito! / Login is not successful!')
-                logView.log('Login
+                unik.log('Login não é bem sucedido! / Login no se ha producido con èxito! / Login is not successful!')
+                unik.log('Login
 devido a falha em nome de usuário e senha / Login falla por error en usuario y clave incorrectas / Login fail in user and password data.')
             }else if(ret>0){
                 //console.log('Logueado!')
-                logView.log('Login é bem sucedido! / Login se ha producido con èxito! / Login is successful!')
+                unik.log('Login é bem sucedido! / Login se ha producido con èxito! / Login is successful!')
                 app.logueado = true
                 raiz.visible = false
                 app.userLogin = u
@@ -196,13 +196,13 @@ devido a falha em nome de usuário e senha / Login falla por error en usuario y 
             }else if(ret===-2){
                 app.userLogin = ""
                 console.log('Error de clave de acceso')
-                logView.log('Login não é bem sucedido! / Login no se ha producido con èxito! / Login is not successful!')
+                unik.log('Login não é bem sucedido! / Login no se ha producido con èxito! / Login is not successful!')
 
             }else{
                 app.userLogin = ""
                 console.log('Error al loguear: Estado desconocido')
-                logView.log('Login não é bem sucedido! / Login no se ha producido con èxito! / Login is not successful!')
-                logView.log('Login
+                unik.log('Login não é bem sucedido! / Login no se ha producido con èxito! / Login is not successful!')
+                unik.log('Login
 devido a falha em nome de usuário e senha / Login falla por error en usuario y clave incorrectas / Login fail in user and password data.')
             }
         }
@@ -217,7 +217,7 @@ devido a falha em nome de usuário e senha / Login falla por error en usuario y 
             console.log('Key R: '+m0[1])
             loguin(m0[0], m0[1], false)
         }else{
-             //logView.log('unik-tools não é login / unik-tools no està logueado / unik-tools is not login')
+             //unik.log('unik-tools não é login / unik-tools no està logueado / unik-tools is not login')
         }
     }
 }
