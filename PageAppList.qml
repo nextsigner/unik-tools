@@ -5,6 +5,7 @@ Item {
     id: raiz
     //anchors.fill: parent
     property alias flm: folderListModelApps
+    property alias dgvisible: xAddGit.visible
     Connections {target: unik;onUkStdChanged: logView.log(unik.ukStd);}
     Connections {target: unik;onStdErrChanged: logView.log(unik.getStdErr());}
     Rectangle{
@@ -102,16 +103,7 @@ Item {
                             if(Qt.platform.os==='linux'){
                                 exe+='.AppImage'
                             }
-
-
                             cl = '"'+unik.getPath(1)+'/'+exe+'" -appName '+c2
-                            /*if(Qt.platform.os==='windows'){
-                                cl= '"'+unik.getPath(1)+'/unik.exe" -appName '+c2
-                            }else if(Qt.platform.os==='linux'){
-                                cl= '"'+unik.getPath(1)+'/unik.AppImage" -appName '+c2
-                            }else{
-                                cl= '"'+unik.getPath(1)+'/unik" -appName '+c2
-                            }*/
 
                             logView.log("CommandLine: "+cl)
                             unik.run(cl)
@@ -136,13 +128,6 @@ Item {
                             logView.log('Running: '+appPath+' '+cl)
                             unik.run(appPath+' '+cl)
                         }
-                        /*logView.log("Lanzando "+urlUpk1)
-                        dc.dato1 = urlUpk1
-                        dc.estadoEntrada = 2
-                        dc.titulo = '<b>Confirmar Modo</b>'
-                        dc.consulta = 'Lanzar cerrando esta aplicación\n'+appName+'?'
-                        dc.ctx = 'SiNo'
-                        dc.visible = true*/
                     }
                     Component.onCompleted: {
                         if(!folderListModelApps.isFolder(index)){
@@ -187,7 +172,7 @@ Item {
                     background: Rectangle{color:app.appVigente+'.upk'===fileName ? app.c2 : app.c1; radius: app.fs*0.3;}
                     visible: false
                 }
-                Button{//Actualizar
+                Button{//Actualizar desde GitHub
                     id:botActualizarGit
                     width: parent.height
                     height: width
@@ -195,12 +180,14 @@ Item {
                     font.family: "FontAwesome"
                     font.pixelSize: xItem.height*0.8
                     background: Rectangle{color:app.c1; radius: app.fs*0.3;}
-                    opacity:  (''+fileName).indexOf('unik-qml')===0 ? 1.0 : 0.0
+                    //opacity:  (''+fileName).indexOf('unik-qml')===0 ? 1.0 : 0.0
                     enabled: opacity===1.0
                     onClicked: {
-                        var url = 'https://github.com/nextsigner/'+fileName
-                        logView.log('Actualizando '+url)
                         var carpetaLocal=unik.getPath(3)+'/unik'
+                        var ugdata = ''+unik.getFile(carpetaLocal+'/'+fileName+'/unik_github.dat')
+                        var url = ugdata.replace('.git', '')
+                        logView.log('Actualizando '+url)
+
                         logView.log('Actualizando en carpeta '+carpetaLocal)
                         listApps.enabled=false
                         botActualizarGit.enabled=false
@@ -215,6 +202,12 @@ Item {
                         font.family: "FontAwesome"
                         font.pixelSize: xItem.height*0.3
                         anchors.centerIn: parent
+                    }
+                    Component.onCompleted: {
+                        var e = unik.fileExist(unik.getPath(3)+'/unik/'+fileName+'/unik_github.dat')
+                        botActualizarGit.opacity = e
+
+
                     }
                 }
                 Button{//Eliminar
@@ -245,7 +238,11 @@ Item {
         onLineReleased: appSettings.pyLineRH1 = y;
         visible: appSettings.logVisible;
         /*onYChanged: wv.height = !lineRH.visible ? wv.parent.height-(wv.parent.height-lineRH.y) : wv.parent.height*/
-        onYChanged: console.log("Line Resize LovView change to y: "+y)
+        onYChanged: {
+            if(y<raiz.height/3){
+                y=raiz.height/3+2
+            }
+        }
         Component.onCompleted: {
             console.log("Line Resize LovView y: "+y)
         }
@@ -257,6 +254,87 @@ Item {
         anchors.bottom: parent.bottom;
         visible: appSettings.logVisible;
     }
+
+
+    Rectangle{
+        id: xAddGit
+        width: raiz.width
+        height: app.fs*4
+        color: "#333"
+        border.color: "white"
+        radius: app.fs*0.1
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+        visible: false
+        onVisibleChanged: {
+            if(visible){
+                tiUrlGit.text = appSettings.uGitUrl
+            }
+        }
+        Row{
+            anchors.centerIn: parent
+            height: app.fs
+            spacing: app.fs
+            Text {
+                text: "Url GitHub: "
+                font.pixelSize: app.fs
+                color: app.c1
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            TextInput{
+                id: tiUrlGit
+                width: xAddGit.width*0.65
+                height: app.fs
+                font.pixelSize: app.fs
+                color: text==='https://github.com/nextsigner/unik-qml-blogger.git' ? '#ccc' : 'white'
+                text: 'https://github.com/nextsigner/unik-qml-blogger.git'
+                anchors.verticalCenter: parent.verticalCenter
+                Keys.onReturnPressed: {
+                    dg()
+                }
+                onFocusChanged: {
+                    if(text==='search'){
+                        tiSearch.selectAll()
+                    }
+                }
+                onTextChanged: {
+                        appSettings.uGitUrl = text
+                }
+                Rectangle{
+                    width: parent.width+app.fs*0.5
+                    height: parent.height+app.fs*0.5
+                    color: "#333"
+                    border.color: app.c2
+                    radius: app.fs*0.1
+                    anchors.centerIn: parent
+                    z:parent.z-1
+                }
+            }
+            Boton{//Download Git
+                id:btnDG
+                w:app.fs
+                h: w
+                t: '\uf019'
+                b:app.area===0?app.c2:app.c1
+                anchors.verticalCenter: parent.verticalCenter
+                onClicking: {
+                    dg()
+                }
+            }
+        }
+        Boton{//Close
+            id:btnClose
+            w:app.fs
+            h: w
+            t: 'X'
+            b:app.c1
+            anchors.right: parent.right
+            onClicking: {
+                parent.visible = false
+            }
+        }
+    }
+
 
     DialogoConfirmar{
         id: dc
@@ -288,6 +366,39 @@ Item {
             }
         }
 
+    }
+    function dg(){
+        btnDG.enabled = false
+        if(tiUrlGit.text.indexOf('https://')!==-1&&tiUrlGit.text.indexOf('/')!==-1&&tiUrlGit.text.indexOf('github.com/')!==-1){
+            var check = ''+unik.getHttpFile(tiUrlGit.text.replace('.git', ''));
+            unik.log(check)
+            if(check!=='Error:404'){
+                var g1=tiUrlGit.text.split('/')
+                var g2=(''+g1[g1.length-1]).replace('.git', '')
+                var folder=unik.getPath(3)+'/unik/'
+                var folder2=folder+'/'+g2
+                unik.log('Prepare urlGit: '+tiUrlGit.text)
+                unik.log('Making folder: '+folder)
+                unik.mkdir(folder2)
+                var urlGit=tiUrlGit.text.replace('.git', '')
+                var gitDownloaded=unik.downloadGit(urlGit, folder)
+                if(gitDownloaded){
+                    xAddGit.visible = false
+                    btnDG.enabled = true
+                    unik.log('GitHub downloaded in folder '+folder2)
+                    var ugdata = tiUrlGit.text
+                    unik.setFile(folder2+'/unik_github.dat', ugdata)
+                    listApps.model = undefined
+                    listApps.model = folderListModelApps
+                    return;
+                }
+            }else{
+                unik.log('GitHub Project Not Found.')
+            }
+        }else{
+            unik.log('This url is no valid for this action.')
+            btnDG.enabled = true
+        }
     }
 
 }

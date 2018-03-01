@@ -42,6 +42,8 @@
                 anchors.right: parent.right
                 h: w
                 t: '\uf12d'
+                b:"#444444"
+                c: app.c2
                 onClicking: {
                     taLog.text = ''
                 }

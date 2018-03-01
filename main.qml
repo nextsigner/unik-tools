@@ -2,7 +2,6 @@
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
-import uk 1.0
 
 ApplicationWindow{
     id: app
@@ -10,10 +9,13 @@ ApplicationWindow{
     width: 640
     height: 480
     title: qsTr("uniK-Tools")
+    color: app.c5
+    property int area: 0
     property bool closedModeLaunch: false
     property bool logueado: false
     property string userLogin: ''
     property string keyLog: ''
+
     onVisibleChanged: {
         if(!visible&&closedModeLaunch){
             app.close()
@@ -21,6 +23,11 @@ ApplicationWindow{
     }
     onClosing: {
         console.log("Cerrando en closedModeLaunch: "+closedModeLaunch)
+    }
+    onWidthChanged: {
+        if(Qt.platform.os==='android'){
+            xApp.rotation = app.width<app.height?0:90
+        }
     }
 
     property int fs: app.width*0.02
@@ -30,58 +37,25 @@ ApplicationWindow{
     property color c4: "black"
     property color c5: "#333333"
 
-
     property string appVigente: appName
     property string appSeleccionada: appName
 
-
-    //color: c5
-
-    UK{
-        id:uk
-        onPorcChanged: {
-            console.log("Descargando: "+porc)
-        }
-    }
-    Connections {
-        target: uk
-        onUkStdChanged: {
-            unik.log(uk.ukStd)
-        }
-    }
     Settings{
         id: appSettings
         category: 'Configuration'+appName
         property int pyLineRH1: 0
         property bool logVisible: true
+        property string uGitUrl: 'https://github.com/nextsigner/unik-qml-blogger.git'
     }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
-    Rectangle{
-        id: fondoApp
-        width: parent.width
-        height: parent.height-app.fs*1.4
-        //color: "transparent"
-        gradient: Gradient {
-            GradientStop {
-                position: 0.00;
-                color: app.c5;
-            }
-            GradientStop {
-                position: 0.99;
-                color: app.c5;
-            }
-            GradientStop {
-                position: 1.00;
-                color: app.c1;
-            }
-        }
-    }
+
     Item{
-        id: x
-        anchors.fill: parent
+        id: xApp
+        anchors.fill: parent        
         Column{
             height: app.height
-            Rectangle{
+            Rectangle{//Top Tool Bar
+                id: xTopBar
                 width: app.width
                 height: app.fs*1.4
                 color: app.c5
@@ -160,120 +134,127 @@ ApplicationWindow{
                     color: app.c1
                 }
             }
+
             Row{
-                id: rowAreas
-                width: app.width*children.length
-                //height: tabBar.currentIndex===0? app.height-app.fs*2.8-app.fs*4 : app.height-app.fs*2.8
-                height: app.height-app.fs*2.8
-                x:0-(tabBar.currentIndex*app.width)
-                Behavior on x{
-                    NumberAnimation{
-                        duration: 500
-                        easing.type: Easing.OutQuad
+                id:rowAreas
+                width: app.width
+                height: app.height-xTopBar.height
+                Rectangle{
+                    id: xTools
+                    width: app.fs*2
+                    height: parent.height
+                    color: "transparent"
+                    border.color: app.c2
+                    border.width: 1
+
+                    Column{
+                        id: colTools
+                        width: parent.width*0.8
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        spacing:  width*0.5
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        Boton{//AppList
+                            id:btnArea0
+                            w:parent.width
+                            h: w
+                            t: '\uf022'
+                            b:app.area===0?app.c2:app.c1
+                            onClicking: {
+                                app.area=0
+                            }
+                        }
+                        Boton{//Help
+                            id:btnArea1
+                            w:parent.width
+                            h: w
+                            t: '\uf05a'
+                            b:app.area===1?app.c2:app.c1
+                            onClicking: {
+                                app.area=1
+                            }
+                        }
+                        Boton{//Add git project
+                            id:btnAddGit
+                            w:parent.width
+                            h: w
+                            t: '\uf09b'
+                            b:app.area===1?app.c2:app.c1
+                            opacity: app.area===0?1.0:0.0
+                            enabled: opacity===1.0
+                            onClicking: {
+                                pal.dgvisible = !pal.dgvisible
+                            }
+                            Text {
+                                text: '+'
+                                font.family: "FontAwesome"
+                                font.pixelSize: btnAddGit.height*0.3
+                                anchors.centerIn: parent
+                            }
+                        }
+                        Boton{//Show Debug Panel
+                            id:btnShowDP
+                            w:parent.width
+                            h: w
+                            t: '\uf188'
+                            b:appSettings.logVisible?app.c2:'#444'
+                            c: appSettings.logVisible?'black':'#ccc'
+                            opacity: app.area===0?1.0:0.0
+                            enabled: opacity===1.0
+                            onClicking: {
+                                appSettings.logVisible = !appSettings.logVisible
+                            }
+                        }
+                        Boton{//Quit
+                            w:parent.width
+                            h: w
+                            t: "\uf011"
+                            b:"#444444"
+                            c: app.c2
+                            onClicking: {
+                                Qt.quit()
+                            }
+                        }
                     }
+
                 }
                 PageAppList{
                     id: pal
-                    width: app.width
+                    width: app.width-xTools.width
                     height: parent.height
+                    visible: app.area===0
                 }
                 Ayuda{
                     id: ayuda
-                    width: app.width
+                    width: app.width-xTools.width
                     height: parent.height
+                    visible: app.area===1
                 }
             }
 
 
 
-            TabBar {
-                id: tabBar
-                width: app.width
-                height: app.fs*1.4
-                //anchors.top: rowAreas.bottom
 
-                //currentIndex: swipeView.currentIndex
-                background: Rectangle{color:"transparent";}
-                onCurrentIndexChanged: {
-                    if(currentIndex===count-1){
-                        Qt.quit()
-                    }
-                }
-                TabButton {
-                    id: tb1
-                    text: qsTr("Lista de Apps")
-                    font.pixelSize: app.fs
-                    focus: tabBar.currentIndex===0
-                    onFocusChanged: {
-                        if(focus){
-                            background.color = app.c2
-                        }else{
-                            background.color = "#444444"
-                        }
-                    }
-                    onPressed: {
-                        background.color = app.c2
-                    }
-                    onReleased: {
-                        background.color = app.c2
-                    }
-                }
-                TabButton {
-                    text: qsTr("Ayuda")
-                    font.pixelSize: app.fs
-                    focus: tabBar.currentIndex===2
-                    onFocusChanged: {
-                        if(focus){
-                            background.color = app.c2
-                        }else{
-                            background.color = "#444444"
-                        }
-                    }
-                    onPressed: {
-                        background.color = app.c2
-                    }
-                    onReleased: {
-                        background.color = app.c2
-                    }
-                }
-                TabButton {
-                    text: qsTr("Salir")
-                    font.pixelSize: app.fs
-                    focus: tabBar.currentIndex===3
-                    onFocusChanged: {
-                        if(focus){
-                            background.color = app.c2
-                        }else{
-                            background.color = "#444444"
-                        }
-                    }
-                    onPressed: {
-                        background.color = app.c2
-                    }
-                    onReleased: {
-                        background.color = app.c2
-                    }
-                }
-            }
         }
 
         FormUnikLogin{
             id: ful
             visible: false
             width:  parent.width
-            height: parent.height-tabBar.height
+            height: parent.height
             color: app.c5
         }
     }
+
     Timer{
         id:timerInit
         running: false
         repeat: false
         interval: 2000
         onTriggered: {
-            unik.log('<b>unik-tools log</b>')
-            unik.log('<b>unik-tools version:</b> '+version+'')
-            unik.log('<b>unik-tools host:</b> '+host+'')
+            unik.log('unik-tools log')
+            unik.log('unik-tools version: '+version+'')
+            unik.log('unik-tools host:  '+host+'')
 
         }
     }
