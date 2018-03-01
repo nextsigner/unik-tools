@@ -239,7 +239,17 @@ Item {
     }
 
 
-    LineResizeH{id:lineRH; y:visible?appSettings.pyLineRH1: parent.height;onLineReleased: appSettings.pyLineRH1 = y; visible: appSettings.logVisible;/*onYChanged: wv.height = !lineRH.visible ? wv.parent.height-(wv.parent.height-lineRH.y) : wv.parent.height*/}
+    LineResizeH{
+        id:lineRH;
+        y:visible?appSettings.pyLineRH1: parent.height;
+        onLineReleased: appSettings.pyLineRH1 = y;
+        visible: appSettings.logVisible;
+        /*onYChanged: wv.height = !lineRH.visible ? wv.parent.height-(wv.parent.height-lineRH.y) : wv.parent.height*/
+        onYChanged: console.log("Line Resize LovView change to y: "+y)
+        Component.onCompleted: {
+            console.log("Line Resize LovView y: "+y)
+        }
+    }
     LogView{
         id:logView;
         width: raiz.width

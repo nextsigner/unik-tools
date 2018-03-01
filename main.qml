@@ -51,9 +51,9 @@ ApplicationWindow{
     }
     Settings{
         id: appSettings
-        category: 'Configuration'
+        category: 'Configuration'+appName
         property int pyLineRH1: 0
-        property bool logVisible: false
+        property bool logVisible: true
     }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
     Rectangle{

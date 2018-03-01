@@ -25,7 +25,7 @@
                     //height: contentHeight
                     anchors.centerIn: parent
                     font.pixelSize: app.fs*0.5
-                    //textFormat: Text.RichText
+                    textFormat: Text.Normal
                     color: app.c2
                     wrapMode: Text.WrapAnywhere
                     onTextChanged: {

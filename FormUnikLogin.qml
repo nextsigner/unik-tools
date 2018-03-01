@@ -163,9 +163,9 @@ Rectangle{
 
     function loguin(u, k, reset){
         if(u!==''){
-            var passFile = uk.getPath(4)+'/pass'
+            var passFile = unik.getPath(4)+'/pass'
             var url =  host+'/modulos/login.php?email='+u+'&clave='+k
-            var ret = parseInt(uk.getHttpFile(url))
+            var ret = parseInt(unik.getHttpFile(url))
             //console.log("Url Login: "+url)
             //console.log("Ret: "+ret)
             if(ret===-1){
@@ -181,16 +181,11 @@ devido a falha em nome de usuário e senha / Login falla por error en usuario y 
                 raiz.visible = false
                 app.userLogin = u
                 if(recordarme.checked){
-                    //qkey.encriptar(tiSetUser.text+'@@@'+tiSetKey.text)
-                    var passEnc = uk.encData(u+','+k, 'au', 'ak')
-                    //console.log("Enc Pass: "+passEnc)
-
-                    //console.log("passFile: "+passFile)
-                    uk.setFile(passFile, passEnc)
-                    //console.log('DecPass: '+uk.decData(uk.getFile(passFile), tiSetUser.text, tiSetKey.text))
+                    var passEnc = unik.encData(u+','+k, 'au', 'ak')
+                    unik.setFile(passFile, passEnc)
                 }else{
                     if(reset){
-                        uk.setFile(passFile, '')
+                        unik.setFile(passFile, '')
                     }
                 }
             }else if(ret===-2){
@@ -208,13 +203,11 @@ devido a falha em nome de usuário e senha / Login falla por error en usuario y 
         }
     }
     function init() {
-        var passFile = uk.getPath(4)+'/pass'
-        var dataPass = uk.decData(uk.getFile(passFile), 'au', 'ak')
+        var passFile = unik.getPath(4)+'/pass'
+        var dataPass = unik.decData(unik.getFile(passFile), 'au', 'ak')
         //console.log('DecPass: '+
         if(dataPass!==''){
             var m0 = (''+dataPass).split(',')
-            console.log('User R: '+m0[0])
-            console.log('Key R: '+m0[1])
             loguin(m0[0], m0[1], false)
         }else{
              //unik.log('unik-tools não é login / unik-tools no està logueado / unik-tools is not login')

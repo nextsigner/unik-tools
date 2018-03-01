@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 import Qt.labs.folderlistmodel 2.2
-import QtWebEngine 1.4
+import QtWebView 1.1
 Item {
     id: raiz
     property int nindex: 0
@@ -56,7 +56,7 @@ Item {
         height: raiz.height-tb.height
         anchors.top: tb.bottom
         color: app.c5
-        WebEngineView{
+        WebView{
             id: weAyuda
             width: parent.width
             height: parent.height
