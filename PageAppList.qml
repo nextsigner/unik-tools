@@ -93,6 +93,92 @@ Item {
                     onClicked: {
                         logView.log("Index presionado: "+index)
                         var cl
+                        var s0=''+fileName
+                        var s1= s0.substring(s0.length-4, s0.length);
+                        if(!folderListModelApps.isFolder(index)&&s1==='.upk'){
+                            logView.log("Lanzando upk: "+fileName)
+                            var path = unik.getPath(3)+'/unik/'+fileName
+                            var t = unik.getPath(2)+'/abc'
+                            unik.mkdir(t)
+                            var upkToFolder = unik.upkToFolder(path, "unik-free", "free", t)
+                            if(upkToFolder){
+                                engine.load(t+'/main.qml')
+                            }
+                            logView.log("Upk to folder: "+upkToFolder)
+
+                            /*var c1 = ''+fileName
+                            var c2 = c1.replace('.upk', '')
+                            logView.log("Lanzando appName: "+c2)
+                            logView.log("Location 1: "+unik.getPath(1))
+                            var exe = ''+unik.getPath(0)
+                            if(Qt.platform.os==='linux'){
+                                exe+='.AppImage'
+                            }
+                            cl = '"'+unik.getPath(1)+'/'+exe+'" -appName '+c2
+
+                            logView.log("CommandLine: "+cl)*/
+                            //unik.run(cl)
+                        }else{
+                            logView.log("Lanzando carpeta "+fileName)
+                            var urlUpk0 = ''+appsDir
+                            var urlUpk1 = (urlUpk0.replace('file:///', ''))+'/'+fileName
+                            logView.log("Carpeta a ejecutar "+urlUpk1)
+                            cl = ' -folder '+urlUpk1
+
+                            //var cl2 = ''+unik.getPath(1)+'/unik.exe -foldertoupk '+urlUpk1
+                            var appPath
+                            if(Qt.platform.os==='osx'){
+                                appPath = '"'+unik.getPath(1)+'/'+unik.getPath(0)+'"'
+                            }
+                            if(Qt.platform.os==='windows'){
+                                appPath = '"'+unik.getPath(1)+'/'+unik.getPath(0)+'"'
+                            }
+                            if(Qt.platform.os==='linux'){
+                                appPath = '"'+appExec+'"'
+                            }
+                            logView.log('Running: '+appPath+' '+cl)
+                            unik.run(appPath+' '+cl)
+                        }
+                    }
+                    Component.onCompleted: {
+                        if(!folderListModelApps.isFolder(index)){
+                            var upk = unikDocs+'/'+fileName
+                            var isFree=unik.isFree(upk)
+                            btnRun.enabled = isFree
+                            console.log(""+upk+" free: "+isFree)
+                        }
+                    }
+                }
+
+                Button{//Ejecutar Aparte
+                    id: btnRun2
+                    width: parent.height
+                    height: width
+                    text: '\uf135'
+                    font.family: "FontAwesome"
+                    font.pixelSize: xItem.height*0.8
+                    //opacity: app.appVigente+'.upk'!==fileName ? 1.0 : 0.0
+                    background: Rectangle{color: app.appVigente+'.upk'===fileName ? app.c2 : app.c1; radius: app.fs*0.3;}
+
+                    Text {
+                        text: '\uf135'
+                        font.family: "FontAwesome"
+                        font.pixelSize: xItem.height*0.3
+                        anchors.top: parent.top
+                        anchors.right: parent.right
+                        color: "red"
+                    }
+                    Text {
+                        id: name2
+                        text: '<b>No Free</b>'
+                        anchors.centerIn: parent
+                        font.pixelSize: parent.height*0.2
+                        color: "red"
+                        visible: !parent.enabled
+                    }
+                    onClicked: {
+                        logView.log("Index presionado: "+index)
+                        var cl
                         if(!folderListModelApps.isFolder(index)){
                             logView.log("Lanzando upk: "+fileName)
                             var c1 = ''+fileName
@@ -138,6 +224,7 @@ Item {
                         }
                     }
                 }
+
                 Button{//Seleccionar
                     width: parent.height
                     height: width
@@ -217,7 +304,7 @@ Item {
                     font.family: "FontAwesome"
                     font.pixelSize: xItem.height*0.8
                     background: Rectangle{color:app.appVigente+'.upk'===fileName ? app.c2 : app.c1; radius: app.fs*0.3;}
-                    opacity: (''+fileName).indexOf('.upk')===0 ? 1.0 : 0.0
+                    opacity: (''+fileName).indexOf('.upk')>=0 ? 1.0 : 0.0
                     onClicked: {
                         dc.dato1 = fileName
                         dc.estadoEntrada = 1
@@ -244,7 +331,10 @@ Item {
             }
         }
         Component.onCompleted: {
-            console.log("Line Resize LovView y: "+y)
+            if(lineRH.y<raiz.height/3){
+                lineRH.y=raiz.height/3+2
+            }
+            //console.log("Line Resize LovView y: "+y)
         }
     }
     LogView{
@@ -366,6 +456,12 @@ Item {
             }
         }
 
+    }
+    Component.onCompleted: {
+        if(lineRH.y<raiz.height/3){
+            lineRH.y=raiz.height/3+2
+        }
+        //console.log("Line Resize LovView y: "+y)
     }
     function dg(){
         btnDG.enabled = false
