@@ -72,6 +72,36 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: xItem.height*0.2
                 spacing: app.fs*0.5
+
+
+                Button{//Convertir a UPK
+                    id: btnToUpk
+                    width: parent.height
+                    height: width
+                    text: ''
+                    font.family: "FontAwesome"
+                    font.pixelSize: xItem.height*0.8
+                    //opacity: app.appVigente+'.upk'!==fileName ? 1.0 : 0.0
+                    background: Rectangle{color: app.appVigente+'.upk'===fileName ? app.c2 : app.c1; radius: app.fs*0.3;}
+                    Text {
+                        text: '<b>To</b><br /><b>UPK</b>'
+                        anchors.centerIn: parent
+                        horizontalAlignment: Text.AlignHCenter
+                        font.pixelSize: parent.height*0.4
+                    }
+                    onClicked: {
+                        var path = unik.getPath(3)+'/unik/'+fileName
+                        toUpkDialog.currentFolder = path
+                        toUpkDialog.visible = true
+                    }
+                    Component.onCompleted: {
+                        var path = unik.getPath(3)+'/unik/'+fileName+'/main.qml'
+                        btnToUpk.visible = folderListModelApps.isFolder(index)&&unik.fileExist(path)
+                    }
+                }
+
+
+
                 Button{//Ejecutar
                     id: btnRun
                     width: parent.height
@@ -91,53 +121,22 @@ Item {
                         visible: !parent.enabled
                     }
                     onClicked: {
-                        logView.log("Index presionado: "+index)
+                        var path = unik.getPath(3)+'/unik/'+fileName
                         var cl
                         var s0=''+fileName
                         var s1= s0.substring(s0.length-4, s0.length);
                         if(!folderListModelApps.isFolder(index)&&s1==='.upk'){
                             logView.log("Lanzando upk: "+fileName)
-                            var path = unik.getPath(3)+'/unik/'+fileName
                             var t = unik.getPath(2)+'/abc'
                             unik.mkdir(t)
                             var upkToFolder = unik.upkToFolder(path, "unik-free", "free", t)
                             if(upkToFolder){
                                 engine.load(t+'/main.qml')
                             }
-                            logView.log("Upk to folder: "+upkToFolder)
-
-                            /*var c1 = ''+fileName
-                            var c2 = c1.replace('.upk', '')
-                            logView.log("Lanzando appName: "+c2)
-                            logView.log("Location 1: "+unik.getPath(1))
-                            var exe = ''+unik.getPath(0)
-                            if(Qt.platform.os==='linux'){
-                                exe+='.AppImage'
-                            }
-                            cl = '"'+unik.getPath(1)+'/'+exe+'" -appName '+c2
-
-                            logView.log("CommandLine: "+cl)*/
-                            //unik.run(cl)
+                            logView.log("Upk to folder: "+upkToFolder)                          
                         }else{
-                            logView.log("Lanzando carpeta "+fileName)
-                            var urlUpk0 = ''+appsDir
-                            var urlUpk1 = (urlUpk0.replace('file:///', ''))+'/'+fileName
-                            logView.log("Carpeta a ejecutar "+urlUpk1)
-                            cl = ' -folder '+urlUpk1
-
-                            //var cl2 = ''+unik.getPath(1)+'/unik.exe -foldertoupk '+urlUpk1
-                            var appPath
-                            if(Qt.platform.os==='osx'){
-                                appPath = '"'+unik.getPath(1)+'/'+unik.getPath(0)+'"'
-                            }
-                            if(Qt.platform.os==='windows'){
-                                appPath = '"'+unik.getPath(1)+'/'+unik.getPath(0)+'"'
-                            }
-                            if(Qt.platform.os==='linux'){
-                                appPath = '"'+appExec+'"'
-                            }
-                            logView.log('Running: '+appPath+' '+cl)
-                            unik.run(appPath+' '+cl)
+                            logView.log("Lanzando carpeta "+path)
+                            engine.load(path+'/main.qml')
                         }
                     }
                     Component.onCompleted: {
@@ -154,7 +153,7 @@ Item {
                     id: btnRun2
                     width: parent.height
                     height: width
-                    text: '\uf135'
+                    text: ''
                     font.family: "FontAwesome"
                     font.pixelSize: xItem.height*0.8
                     //opacity: app.appVigente+'.upk'!==fileName ? 1.0 : 0.0
@@ -163,10 +162,16 @@ Item {
                     Text {
                         text: '\uf135'
                         font.family: "FontAwesome"
-                        font.pixelSize: xItem.height*0.3
+                        font.pixelSize: xItem.height*0.5
+                        anchors.bottom: parent.bottom
+                        //anchors.r: parent.right
+                    }
+                    Text {
+                        text: '\uf135'
+                        font.family: "FontAwesome"
+                        font.pixelSize: xItem.height*0.5
                         anchors.top: parent.top
                         anchors.right: parent.right
-                        color: "red"
                     }
                     Text {
                         id: name2
@@ -177,7 +182,6 @@ Item {
                         visible: !parent.enabled
                     }
                     onClicked: {
-                        logView.log("Index presionado: "+index)
                         var cl
                         if(!folderListModelApps.isFolder(index)){
                             logView.log("Lanzando upk: "+fileName)
@@ -187,7 +191,7 @@ Item {
                             logView.log("Location 1: "+unik.getPath(1))
                             var exe = ''+unik.getPath(0)
                             if(Qt.platform.os==='linux'){
-                                exe+='.AppImage'
+                                exe+=''+version+'.AppImage'
                             }
                             cl = '"'+unik.getPath(1)+'/'+exe+'" -appName '+c2
 
@@ -211,7 +215,7 @@ Item {
                             if(Qt.platform.os==='linux'){
                                 appPath = '"'+appExec+'"'
                             }
-                            logView.log('Running: '+appPath+' '+cl)
+                            unik.log('Running: '+appPath+' '+cl)
                             unik.run(appPath+' '+cl)
                         }
                     }
@@ -456,6 +460,13 @@ Item {
             }
         }
 
+    }
+    ToUpkDialog{
+        id: toUpkDialog
+        width: parent.width*0.6
+        height: app.fs*11
+        anchors.centerIn: parent
+        visible: false
     }
     Component.onCompleted: {
         if(lineRH.y<raiz.height/3){

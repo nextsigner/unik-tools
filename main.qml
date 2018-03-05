@@ -8,7 +8,7 @@ ApplicationWindow{
     visible: true
     width: 640
     height: 480
-    title: qsTr("uniK-Tools")
+    title: qsTr("unik-tools")
     color: app.c5
     property int area: 0
     property bool closedModeLaunch: false
@@ -22,7 +22,7 @@ ApplicationWindow{
         }
     }
     onClosing: {
-        console.log("Cerrando en closedModeLaunch: "+closedModeLaunch)
+        Qt.quit()
     }
     onWidthChanged: {
         if(Qt.platform.os==='android'){
@@ -43,6 +43,7 @@ ApplicationWindow{
     Settings{
         id: appSettings
         category: 'Configuration'+appName
+        property string languaje: 'English'
         property int pyLineRH1: 0
         property bool logVisible: true
         property string uGitUrl: 'https://github.com/nextsigner/unik-qml-blogger.git'
@@ -260,11 +261,14 @@ ApplicationWindow{
     }
 
     Component.onCompleted: {
-        if(Qt.platform.os==='windows'||Qt.platform.os==='linux'){
+        if(Qt.platform.os==='windows'||Qt.platform.os==='linux'||Qt.platform.os==='osx'){
             app.visibility = "Maximized"
+        }else{
+            app.visibility = "FullScreen"
         }
         ful.init()
         timerInit.start()
+        unik.log('Unik Tools AppName: '+appName)
     }
 
 }
