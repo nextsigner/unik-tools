@@ -52,7 +52,7 @@ ApplicationWindow{
         appSettings.appWS = app.visibility
     }
 
-    property int fs: app.width*0.02
+    property int fs: Qt.platform.os !=='android'?app.width*0.02:app.width*0.06
     property color c1: "#1fbc05"
     property color c2: "#4fec35"
     property color c3: "white"
