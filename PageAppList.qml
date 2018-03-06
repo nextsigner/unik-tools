@@ -473,8 +473,8 @@ Item {
             if(check!=='Error:404'){
                 var g1=tiUrlGit.text.split('/')
                 var g2=(''+g1[g1.length-1]).replace('.git', '')
-                var folder=unik.getPath(3)+'/unik/'
-                var folder2=folder+''+g2
+                var folder=unik.getPath(3)+'/unik'
+                var folder2=folder+'/'+g2
                 unik.log('Prepare urlGit: '+tiUrlGit.text)
                 unik.log('Making folder: '+folder)
                 unik.mkdir(folder2)
