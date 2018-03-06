@@ -6,10 +6,12 @@ import Qt.labs.settings 1.0
 ApplicationWindow{
     id: app
     visible: true
-    width: 640
-    height: 480
+    width: 500
+    height: 500
     title: qsTr("unik-tools")
     color: app.c5
+    minimumWidth: 500
+    minimumHeight: 500
     property int area: 0
     property bool closedModeLaunch: false
     property bool logueado: false
@@ -27,7 +29,27 @@ ApplicationWindow{
     onWidthChanged: {
         if(Qt.platform.os==='android'){
             xApp.rotation = app.width<app.height?0:90
+        }else{
+            appSettings.appWidth = width
+            appSettings.appX = app.x
         }
+    }
+    onHeightChanged:  {
+        if(Qt.platform.os==='android'){
+            xApp.rotation = app.width<app.height?0:90
+        }else{
+            appSettings.appHeight = height
+            appSettings.appY = app.y
+        }
+    }
+    onXChanged: {
+        appSettings.appX = app.x
+    }
+    onYChanged: {
+        appSettings.appY = app.y
+    }
+    onVisibilityChanged: {
+        appSettings.appWS = app.visibility
     }
 
     property int fs: app.width*0.02
@@ -44,6 +66,11 @@ ApplicationWindow{
         id: appSettings
         category: 'Configuration'+appName
         property string languaje: 'English'
+        property int appWidth: 500
+        property int appHeight: 500
+        property int appX: 0
+        property int appY: 0
+        property int appWS
         property int pyLineRH1: 0
         property bool logVisible: true
         property string uGitUrl: 'https://github.com/nextsigner/unik-qml-blogger.git'
@@ -263,7 +290,13 @@ ApplicationWindow{
 
     Component.onCompleted: {
         if(Qt.platform.os==='windows'||Qt.platform.os==='linux'||Qt.platform.os==='osx'){
-            app.visibility = "Maximized"
+            app.visibility = appSettings.appWS
+            if(appSettings.appWS===2){
+                app.x = appSettings.appX
+                app.y = appSettings.appY
+                app.width = appSettings.appWidth
+                app.height = appSettings.appHeight
+            }
         }else{
             app.visibility = "FullScreen"
         }

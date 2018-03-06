@@ -50,7 +50,6 @@ Item {
             color: app.appVigente+'.upk'===fileName ? app.c1 : app.c2
             border.width: 1
             radius: height*0.1
-
             Text {
                 id: txtFileName
                 text: fileName
@@ -100,8 +99,6 @@ Item {
                     }
                 }
 
-
-
                 Button{//Ejecutar
                     id: btnRun
                     width: parent.height
@@ -127,7 +124,8 @@ Item {
                         var s1= s0.substring(s0.length-4, s0.length);
                         if(!folderListModelApps.isFolder(index)&&s1==='.upk'){
                             logView.log("Lanzando upk: "+fileName)
-                            var t = unik.getPath(2)+'/abc'
+                            var d = new Date(Date.now())
+                            var t = unik.getPath(2)+'/t'+d.getTime()
                             unik.mkdir(t)
                             var upkToFolder = unik.upkToFolder(path, "unik-free", "free", t)
                             if(upkToFolder){
@@ -242,9 +240,9 @@ Item {
                             var c2 = c1.split('.upk')
                             app.appVigente = c2[0]
                         }
-
                     }
                 }
+
                 Button{//Descargar
                     width: parent.height
                     height: width
@@ -254,6 +252,7 @@ Item {
                     background: Rectangle{color:app.appVigente+'.upk'===fileName ? app.c2 : app.c1; radius: app.fs*0.3;}
                     visible: false
                 }
+
                 Button{//Actualizar desde GitHub
                     id:botActualizarGit
                     width: parent.height
@@ -277,7 +276,6 @@ Item {
                         logView.log('Actualizado: '+actualizado)
                         listApps.enabled=true
                         botActualizarGit.enabled=true
-
                     }
                     Text {
                         text: '\uf019'
@@ -288,10 +286,9 @@ Item {
                     Component.onCompleted: {
                         var e = unik.fileExist(unik.getPath(3)+'/unik/'+fileName+'/unik_github.dat')
                         botActualizarGit.opacity = e
-
-
                     }
                 }
+
                 Button{//Eliminar
                     width: parent.height
                     height: width
@@ -309,6 +306,7 @@ Item {
 
                     }
                 }
+
             }
         }
     }

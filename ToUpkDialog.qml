@@ -70,7 +70,7 @@ Item {
                     text: arrayLangTexts[3]+': '
                     font.pixelSize: app.fs
                     color: app.c1
-                    anchors.verticalCenter: xTiUser.verticalCenter
+                    anchors.verticalCenter: xTiKey.verticalCenter
                 }
                 Rectangle{
                     id: xTiKey
