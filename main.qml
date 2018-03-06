@@ -36,7 +36,7 @@ ApplicationWindow{
     }
     onHeightChanged:  {
         if(Qt.platform.os==='android'){
-            xApp.rotation = app.width>app.height?0:90
+            //xApp.rotation = app.width>app.height?0:90
         }else{
             appSettings.appHeight = height
             appSettings.appY = app.y
@@ -52,7 +52,7 @@ ApplicationWindow{
         appSettings.appWS = app.visibility
     }
 
-    property int fs: Qt.platform.os !=='android'?app.width*0.02:app.width*0.06
+    property int fs: Qt.platform.os !=='android'?app.width*0.02:app.width*0.04
     property color c1: "#1fbc05"
     property color c2: "#4fec35"
     property color c3: "white"
@@ -79,7 +79,7 @@ ApplicationWindow{
 
     Item{
         id: xApp
-        anchors.fill: parent        
+        anchors.fill: parent
         Column{
             height: app.height
             Rectangle{//Top Tool Bar
@@ -219,6 +219,27 @@ ApplicationWindow{
                                 font.family: "FontAwesome"
                                 font.pixelSize: btnAddGit.height*0.3
                                 anchors.centerIn: parent
+                            }
+                        }
+                        Boton{//Actualizar Unik-Tools
+                            id:btnUpdateUnikTools
+                            w:parent.width
+                            h: w
+                            t: '\uf021'
+                            b:app.c1
+                            onClicking: {
+                                var g1='https://github.com/nextsigner/unik-tools.git'
+                                var g2=(''+g1[g1.length-1]).replace('.git', '')
+                                var folder=unik.getPath(3)+'/unik'
+                                var folder2=folder+'/'+g2
+                                unik.log('Prepare urlGit: https://github.com/nextsigner/unik-tools.git')
+                                unik.log('Making folder: '+folder)
+                                unik.mkdir(folder2)
+                                var urlGit='https://github.com/nextsigner/unik-tools'
+                                var gitDownloaded=unik.downloadGit(urlGit, folder)
+                                if(gitDownloaded){
+                                    engine.load(folder+'/unik-tools/main.qml')
+                                }
                             }
                         }
                         Boton{//Show Debug Panel
