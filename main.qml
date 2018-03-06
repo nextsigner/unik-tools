@@ -75,6 +75,7 @@ ApplicationWindow{
                         id: userLoginIcon
                         text: "\uf2bd"
                         font.pixelSize: app.fs
+                        font.family: "FontAwesome"
                         anchors.centerIn: parent
                         color: app.logueado ? app.c1 : "red"
 
