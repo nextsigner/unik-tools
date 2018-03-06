@@ -469,18 +469,18 @@ Item {
         btnDG.enabled = false
         if(tiUrlGit.text.indexOf('https://')!==-1&&tiUrlGit.text.indexOf('/')!==-1&&tiUrlGit.text.indexOf('github.com/')!==-1){
             var check = ''+unik.getHttpFile(tiUrlGit.text.replace('.git', ''));
-            unik.log(check)
+            unik.log('Check url github '+tiUrlGit+': '+check)
             if(check!=='Error:404'){
                 var g1=tiUrlGit.text.split('/')
                 var g2=(''+g1[g1.length-1]).replace('.git', '')
                 var folder=unik.getPath(3)+'/unik/'
-                var folder2=folder+'/'+g2
+                var folder2=folder+''+g2
                 unik.log('Prepare urlGit: '+tiUrlGit.text)
                 unik.log('Making folder: '+folder)
                 unik.mkdir(folder2)
                 var urlGit=tiUrlGit.text.replace('.git', '')
                 var gitDownloaded=unik.downloadGit(urlGit, folder)
-                if(gitDownloaded){
+                  if(gitDownloaded){
                     xAddGit.visible = false
                     btnDG.enabled = true
                     unik.log('GitHub downloaded in folder '+folder2)
