@@ -28,7 +28,7 @@ ApplicationWindow{
     }
     onWidthChanged: {
         if(Qt.platform.os==='android'){
-            xApp.rotation = app.width<app.height?0:90
+            xApp.rotation = app.width>app.height?0:90
         }else{
             appSettings.appWidth = width
             appSettings.appX = app.x
