@@ -217,7 +217,7 @@ Item {
                             unik.log('Running: '+appPath+' '+cl)
                             unik.run(appPath+' '+cl)
                         }
-
+                    }
                 }
 
                 Button{//Seleccionar
