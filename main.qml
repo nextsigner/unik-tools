@@ -28,7 +28,7 @@ ApplicationWindow{
     }
     onWidthChanged: {
         if(Qt.platform.os==='android'){
-            xApp.rotation = app.width>app.height?0:90
+            //xApp.rotation = app.width>app.height?0:90
         }else{
             appSettings.appWidth = width
             appSettings.appX = app.x
@@ -52,7 +52,7 @@ ApplicationWindow{
         appSettings.appWS = app.visibility
     }
 
-    property int fs: Qt.platform.os !=='android'?app.width*0.02:app.width*0.04
+    property int fs: Qt.platform.os !=='android'?app.width*0.02:app.width*0.03
     property color c1: "#1fbc05"
     property color c2: "#4fec35"
     property color c3: "white"
