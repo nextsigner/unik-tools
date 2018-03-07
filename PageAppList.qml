@@ -108,7 +108,7 @@ Item {
                     font.pixelSize: xItem.height*0.8
                     //opacity: app.appVigente+'.upk'!==fileName ? 1.0 : 0.0
                     background: Rectangle{color: app.appVigente+'.upk'===fileName ? app.c2 : app.c1; radius: app.fs*0.3;}
-
+                    visible:Qt.platform.os!=='android'
                     Text {
                         id: name
                         text: '<b>No Free</b>'
@@ -157,7 +157,7 @@ Item {
                     enabled: btnRun.enabled
                     //opacity: app.appVigente+'.upk'!==fileName ? 1.0 : 0.0
                     background: Rectangle{color: app.appVigente+'.upk'===fileName ? app.c2 : app.c1; radius: app.fs*0.3;}
-
+                    visible:Qt.platform.os!=='android'
                     Text {
                         text: '\uf135'
                         font.family: "FontAwesome"
