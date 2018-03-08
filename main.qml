@@ -193,14 +193,24 @@ ApplicationWindow{
                                 app.area=0
                             }
                         }
-                        Boton{//Help
+                        Boton{//PageAppList
                             id:btnArea1
                             w:parent.width
                             h: w
-                            t: '\uf05a'
+                            t: '\uf022'
                             b:app.area===1?app.c2:app.c1
                             onClicking: {
                                 app.area=1
+                            }
+                        }
+                        Boton{//Help
+                            id:btnArea2
+                            w:parent.width
+                            h: w
+                            t: '\uf05a'
+                            b:app.area===2?app.c2:app.c1
+                            onClicking: {
+                                app.area=2
                             }
                         }
                         Boton{//Add git project
@@ -249,7 +259,7 @@ ApplicationWindow{
                             t: '\uf188'
                             b:appSettings.logVisible?app.c2:'#444'
                             c: appSettings.logVisible?'black':'#ccc'
-                            opacity: app.area===0?1.0:0.0
+                            opacity: app.area===1?1.0:0.0
                             enabled: opacity===1.0
                             onClicking: {
                                 appSettings.logVisible = !appSettings.logVisible
@@ -268,17 +278,23 @@ ApplicationWindow{
                     }
 
                 }
+                AppList{
+                    id: appList
+                    width: app.width-xTools.width
+                    height: parent.height
+                    visible: app.area===0
+                }
                 PageAppList{
                     id: pal
                     width: app.width-xTools.width
                     height: parent.height
-                    visible: app.area===0
+                    visible: app.area===1
                 }
                 Ayuda{
                     id: ayuda
                     width: app.width-xTools.width
                     height: parent.height
-                    visible: app.area===1
+                    visible: app.area===2
                 }
             }
 
