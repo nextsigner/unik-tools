@@ -242,9 +242,8 @@ ApplicationWindow{
                             property bool up: false
                             onClicking: {
                                 var g1='https://github.com/nextsigner/unik-tools.git'
-                                var g2=(''+g1[g1.length-1]).replace('.git', '')
                                 var folder=unik.getPath(3)+'/unik'
-                                var folder2=folder+'/'+g2
+                                var folder2=folder+'/unik-tools'
                                 unik.log('Prepare urlGit: https://github.com/nextsigner/unik-tools.git')
                                 unik.log('Making folder: '+folder)
                                 unik.mkdir(folder2)
