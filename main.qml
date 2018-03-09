@@ -64,7 +64,7 @@ ApplicationWindow{
 
     Settings{
         id: appSettings
-        category: 'Configuration'+appName
+        category: 'conf-unik-tools'
         property string languaje: 'English'
         property int appWidth: 500
         property int appHeight: 500
@@ -74,6 +74,7 @@ ApplicationWindow{
         property int pyLineRH1: 0
         property bool logVisible: true
         property string uGitUrl: 'https://github.com/nextsigner/unik-qml-blogger.git'
+        property string uRS: ''
     }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
 
@@ -232,11 +233,13 @@ ApplicationWindow{
                             }
                         }
                         Boton{//Actualizar Unik-Tools
-                            id:btnUpdateUnikTools
+                            id:btnUpdate
                             w:parent.width
                             h: w
                             t: '\uf021'
-                            b:app.c1
+                            b: up ? 'red':app.c1
+                            c: up ? 'white':'#000'
+                            property bool up: false
                             onClicking: {
                                 var g1='https://github.com/nextsigner/unik-tools.git'
                                 var g2=(''+g1[g1.length-1]).replace('.git', '')
@@ -322,6 +325,37 @@ ApplicationWindow{
             unik.log('unik-tools version: '+version+'')
             unik.log('unik-tools host:  '+host+'')
 
+        }
+    }
+
+    Timer{
+        id:tu
+        running: true
+        repeat: true
+        //interval: 1000*60*60
+        interval: 1000*3
+        onTriggered: {
+            var d = new Date(Date.now())
+            var ur0 = ''+unik.getHttpFile('https://github.com/nextsigner/unik-tools/commits/master?r='+d.getTime())
+            var m0=ur0.split("commit-title")
+            var m1=(''+m0[1]).split('</p>')
+            var m2=(''+m1[0]).split('\">')
+            var m3=(''+m2[1]).split('\"')
+            var ur = ''+m3[1]
+            unik.log("Update key control: "+ur)
+            if(appSettings.uRS!==''&&appSettings.uRS!==ur){
+                appSettings.uRS = ur
+                var fd=unik.getPath(3)+'/unik'
+                var downloaded = unik.downloadGit('https://github.com/nextsigner/unik-tools', fd)
+                tu.stop()
+                if(downloaded){
+                    btnUpdate.up=true
+                }else{
+                    tu.start()
+                }
+            }else{
+                appSettings.uRS=ur
+            }
         }
     }
 
