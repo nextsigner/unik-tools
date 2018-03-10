@@ -1,6 +1,7 @@
 import QtQuick 2.0
 
 Item {
+    property alias lm: lm2
     ListModel{
         id:lm2
         ListElement{
