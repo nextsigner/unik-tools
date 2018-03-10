@@ -77,7 +77,8 @@ ApplicationWindow{
         property string uRS: ''
     }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
-
+    FontLoader {name: "FontAwesome2";source: "qrc:/Font Awesome 5 Free-Solid-900.otf";}
+    //://Font Awesome 5 Brands-Regular-400.otf
     Item{
         id: xApp
         anchors.fill: parent
@@ -188,8 +189,9 @@ ApplicationWindow{
                             id:btnArea0
                             w:parent.width
                             h: w
-                            t: '\uf022'
+                            t: '\uf466'
                             b:app.area===0?app.c2:app.c1
+                            f: 'FontAwesome2'
                             onClicking: {
                                 app.area=0
                             }
@@ -241,16 +243,21 @@ ApplicationWindow{
                             c: up ? 'white':'#000'
                             property bool up: false
                             onClicking: {
-                                var g1='https://github.com/nextsigner/unik-tools.git'
-                                var folder=unik.getPath(3)+'/unik'
-                                var folder2=folder+'/unik-tools'
-                                unik.log('Prepare urlGit: https://github.com/nextsigner/unik-tools.git')
-                                unik.log('Making folder: '+folder)
-                                unik.mkdir(folder2)
-                                var urlGit='https://github.com/nextsigner/unik-tools'
-                                var gitDownloaded=unik.downloadGit(urlGit, folder)
-                                if(gitDownloaded){
-                                    engine.load(folder+'/unik-tools/main.qml')
+                                if(!up){
+                                    /*var g1='https://github.com/nextsigner/unik-tools.git'
+                                    var folder=unik.getPath(3)+'/unik'
+                                    var folder2=folder+'/unik-tools'
+                                    unik.log('Prepare urlGit: https://github.com/nextsigner/unik-tools.git')
+                                    unik.log('Making folder: '+folder)
+                                    unik.mkdir(folder2)
+                                    var urlGit='https://github.com/nextsigner/unik-tools'
+                                    var gitDownloaded=unik.downloadGit(urlGit, folder)
+                                    if(gitDownloaded){
+                                        engine.load(folder+'/unik-tools/main.qml')
+                                    }*/
+                                    unik.restartApp("-git=https://github.com/nextsigner/unik-tools.git")
+                                }else{
+                                    unik.restartApp()
                                 }
                             }
                         }
@@ -373,6 +380,7 @@ ApplicationWindow{
         ful.init()
         timerInit.start()
         unik.log('Unik Tools AppName: '+appName)
+        appList.act()
     }
 
 }

@@ -9,7 +9,7 @@ Item {
             des: "Navergador Web para Los Rickytos de Matias Ponce. Este navegador está diseñado solo para navegar por las Redes Sociales más importantes de la manera más facil, ágil y dinámica aprovechando al máximo tu pantalla."
             dev: "@nextsigner"
             urlgit: "https://github.com/nextsigner/rickypapi"
-            img2: "https://github.com/nextsigner/rickypapi/blob/master/unik_rickypapi_1.PNG?raw=true"
+            img2: "https://github.com/nextsigner/rickypapi/blob/master/screenshot.png?raw=true"
         }
 
     }

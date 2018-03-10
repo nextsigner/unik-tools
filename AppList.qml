@@ -4,6 +4,11 @@ import QtQuick.Controls 2.0
 Rectangle {
     id: raiz
     color: app.c5
+    onVisibleChanged: {
+
+        //act()
+
+    }
 
     ListView{
         id: lv
@@ -12,17 +17,7 @@ Rectangle {
         anchors.horizontalCenter: raiz.horizontalCenter
         model: lm
         delegate: del
-        ListModel{
-            id:lm
-            ListElement{
-                nom: "RickyPapi Web Browser"
-                des: "Navegador Web para Los Rickytos de Matias Ponce. Este navegador está diseñado solo para navegar por las Redes Sociales más importantes de la manera más facil, ágil y dinámica aprovechando al máximo tu pantalla."
-                dev: "@nextsigner"
-                urlgit: "https://github.com/nextsigner/rickypapi"
-                img2: "https://github.com/nextsigner/rickypapi/blob/master/unik_rickypapi_1.PNG?raw=true"
-            }
-
-        }
+        ListModel{id:lm}
         Component{
             id:del
             Rectangle{
@@ -38,7 +33,7 @@ Rectangle {
                     id: imagen
                     source: img2
                     width: xC.height-app.fs*0.2
-                    height: width*0.6
+                    height: width
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: app.fs*0.1
@@ -151,6 +146,11 @@ Rectangle {
         }
     }
 
-
+    function act(){
+        var d = new Date(Date.now())
+        var c = unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik-tools/master/GitAppsList.qml?raw=true&r='+d.getTime())
+        var nLm=Qt.createQmlObject(c, raiz, 'qmlNLM')
+        lv.model = nLm.lm
+    }
 
 }

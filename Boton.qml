@@ -7,6 +7,7 @@ Item {
     property alias t: txt.text
     property alias c: txt.color
     property alias b: rect.color
+    property alias f: txt.font.family
     width: w
     height: h
     signal clicking
