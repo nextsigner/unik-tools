@@ -14,7 +14,8 @@ Rectangle {
         id: lv
         width: raiz.width*0.96
         height: raiz.height
-        anchors.horizontalCenter: raiz.horizontalCenter
+        spacing: app.fs*0.5
+	anchors.horizontalCenter: raiz.horizontalCenter
         model: lm
         delegate: del
         ListModel{id:lm}
@@ -37,6 +38,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: app.fs*0.5
+		    cache:false
                 }
                 Column{
                     anchors.left: imagen.right
@@ -48,7 +50,6 @@ Rectangle {
                         height: xC.height*0.15
                         clip: true
                         color: "transparent"
-                        border.width: 1
                         Text {
                             id: lnom
                             text: '<b>'+nom+'</b>'
@@ -62,7 +63,6 @@ Rectangle {
                         width:xNom.width
                         height: xC.height*0.6
                         anchors.horizontalCenter: xNom.horizontalCenter
-                        border.width: 1
                         clip: true
                         color: "transparent"
                         Text {
