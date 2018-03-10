@@ -221,10 +221,10 @@ ApplicationWindow{
                             w:parent.width
                             h: w
                             t: '\uf09b'
-                            b:app.area===1?app.c2:app.c1
-                            opacity: app.area===0?1.0:0.0
-                            enabled: opacity===1.0
+                            b:pal.dgvisible?app.c2:app.c5
+                            c:pal.dgvisible?app.c5:app.c2
                             onClicking: {
+                                app.area = 1
                                 pal.dgvisible = !pal.dgvisible
                             }
                             Text {
@@ -232,6 +232,7 @@ ApplicationWindow{
                                 font.family: "FontAwesome"
                                 font.pixelSize: btnAddGit.height*0.3
                                 anchors.centerIn: parent
+                                color: btnAddGit.c
                             }
                         }
                         Boton{//Actualizar Unik-Tools
@@ -270,7 +271,7 @@ ApplicationWindow{
                             h: w
                             t: "\uf011"
                             b:"#444444"
-                            c: app.c2
+                            c: app.c1
                             onClicking: {
                                 Qt.quit()
                             }

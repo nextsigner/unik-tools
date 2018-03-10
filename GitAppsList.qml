@@ -11,6 +11,16 @@ Item {
             urlgit: "https://github.com/nextsigner/rickypapi"
             img2: "https://github.com/nextsigner/rickypapi/blob/master/screenshot.png?raw=true"
         }
+	ListElement{
+		nom: "unik-qml-blogger"
+		des: "Esta aplicación nos permite utilizar Blogger.com 
+como un editor o entorno para publicar y probar código QML de ejemplo 
+del blog sobre programación QML de @nextsigner, el suyo, otro blogger o 
+sitio web en donde exista código QML disponible."
+		urlgit: "https://github.com/nextsigner/unik-qml-blogger"
+		img2: 
+"https://github.com/nextsigner/unik-qml-blogger/blob/master/screenshot.png"
+	}
 
     }
 
