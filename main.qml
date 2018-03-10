@@ -257,7 +257,14 @@ ApplicationWindow{
                                     }*/
                                     unik.restartApp("-git=https://github.com/nextsigner/unik-tools.git")
                                 }else{
-                                    unik.restartApp()
+                                    var args = '-folder '+unik.getPath(3)+'/unik/unik-tools'
+                                    if(dim){
+                                        args += ' -dim='+dim
+                                    }
+                                    if(pos){
+                                        args += ' -pos='+pos
+                                    }
+                                    unik.restartApp(args)
                                 }
                             }
                         }
