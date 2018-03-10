@@ -17,6 +17,7 @@ Item {
 como un editor o entorno para publicar y probar código QML de ejemplo 
 del blog sobre programación QML de @nextsigner, el suyo, otro blogger o 
 sitio web en donde exista código QML disponible."
+		dev: "@nextsigner"
 		urlgit: "https://github.com/nextsigner/unik-qml-blogger"
 		img2: 
 "https://github.com/nextsigner/unik-qml-blogger/blob/master/screenshot.png"
