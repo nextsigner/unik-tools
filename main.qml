@@ -243,27 +243,11 @@ ApplicationWindow{
                             c: up ? 'white':'#000'
                             property bool up: false
                             onClicking: {
-                                if(!up){
-                                    /*var g1='https://github.com/nextsigner/unik-tools.git'
-                                    var folder=unik.getPath(3)+'/unik'
-                                    var folder2=folder+'/unik-tools'
-                                    unik.log('Prepare urlGit: https://github.com/nextsigner/unik-tools.git')
-                                    unik.log('Making folder: '+folder)
-                                    unik.mkdir(folder2)
-                                    var urlGit='https://github.com/nextsigner/unik-tools'
-                                    var gitDownloaded=unik.downloadGit(urlGit, folder)
-                                    if(gitDownloaded){
-                                        engine.load(folder+'/unik-tools/main.qml')
-                                    }*/
+                                if(!up){                                    
                                     unik.restartApp("-git=https://github.com/nextsigner/unik-tools.git")
                                 }else{
                                     var args = '-folder '+unik.getPath(3)+'/unik/unik-tools'
-                                    if(dim){
-                                        args += ' -dim='+dim
-                                    }
-                                    if(pos){
-                                        args += ' -pos='+pos
-                                    }
+                                    args += ' -dim='+app.width+'x'+app.height+' -pos='+app.x+'x'+app.y
                                     unik.restartApp(args)
                                 }
                             }
@@ -355,7 +339,7 @@ ApplicationWindow{
             var m2=(''+m1[0]).split('\">')
             var m3=(''+m2[1]).split('\"')
             var ur = ''+m3[1]
-            unik.log("Update key control: "+ur)
+            //unik.log("Update key control: "+ur)
             if(appSettings.uRS!==''&&appSettings.uRS!==ur){
                 appSettings.uRS = ur
                 var fd=unik.getPath(3)+'/unik'

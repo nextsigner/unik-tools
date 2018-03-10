@@ -32,21 +32,23 @@ Rectangle {
                 Image {
                     id: imagen
                     source: img2
-                    width: xC.height-app.fs*0.2
+                    width: xC.height-app.fs*0.4
                     height: width
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: app.fs*0.1
+                    anchors.leftMargin: app.fs*0.5
                 }
                 Column{
                     anchors.left: imagen.right
+                    anchors.leftMargin: app.fs*0.5
                     anchors.verticalCenter: parent.verticalCenter
                     Rectangle{
                         id: xNom
-                        width:xC.width-imagen.width-xC.width*0.02
+                        width:xC.width-imagen.width-app.fs*1.5
                         height: xC.height*0.15
                         clip: true
                         color: "transparent"
+                        border.width: 1
                         Text {
                             id: lnom
                             text: '<b>'+nom+'</b>'
@@ -57,8 +59,10 @@ Rectangle {
                     }
                     Rectangle{
                         id:xDes
-                        width:xC.width-imagen.width-xC.width*0.02
+                        width:xNom.width
                         height: xC.height*0.6
+                        anchors.horizontalCenter: xNom.horizontalCenter
+                        border.width: 1
                         clip: true
                         color: "transparent"
                         Text {
@@ -72,10 +76,11 @@ Rectangle {
                     }
                     Rectangle{
                         id:xDevYBotInst
-                        width:xC.width-imagen.width-xC.width*0.02
+                        width:xNom.width
                         height: xC.height*0.15
                         clip: true
                         color: "transparent"
+                        anchors.horizontalCenter: xNom.horizontalCenter
                         Text {
                             id: ldev
                             text: '<b>Desarrollador: </b>'+dev+''
