@@ -180,7 +180,7 @@ ApplicationWindow{
                         id: colTools
                         width: parent.width*0.8
                         anchors.horizontalCenter: parent.horizontalCenter
-                        spacing:  width*0.5
+                        spacing:  Qt.platform.os !=='android'?width*0.5:width*0.25
                         anchors.verticalCenter: parent.verticalCenter
 
                         Boton{//AppList
