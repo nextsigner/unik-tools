@@ -264,6 +264,23 @@ ApplicationWindow{
                                 appSettings.logVisible = !appSettings.logVisible
                             }
                         }
+                        Boton{//Restart
+                            w:parent.width
+                            h: w
+                            t: '\uf021'
+                            b:"#444444"
+                            c: app.c1
+                            onClicking: {
+                                unik.restartApp()
+                            }
+                            Text {
+                                text: "\uf011"
+                                font.family: "FontAwesome"
+                                font.pixelSize: btnAddGit.height*0.3
+                                anchors.centerIn: parent
+                                color: app.c2
+                            }
+                        }
                         Boton{//Quit
                             w:parent.width
                             h: w
