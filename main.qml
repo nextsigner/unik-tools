@@ -77,8 +77,6 @@ ApplicationWindow{
         property string uRS: ''
     }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
-    FontLoader {name: "FontAwesome2";source: "qrc:/Font Awesome 5 Free-Solid-900.otf";}
-    //://Font Awesome 5 Brands-Regular-400.otf
     Item{
         id: xApp
         anchors.fill: parent
@@ -189,9 +187,9 @@ ApplicationWindow{
                             id:btnArea0
                             w:parent.width
                             h: w
-                            t: '\uf466'
+                            t: '\uf0ca'
                             b:app.area===0?app.c2:app.c1
-                            f: 'FontAwesome2'
+                            //f: 'FontAwesome'
                             onClicking: {
                                 app.area=0
                             }
@@ -334,6 +332,7 @@ ApplicationWindow{
         interval: 1000*3
         onTriggered: {
             var d = new Date(Date.now())
+            unik.setDebugLog(false)
             var ur0 = ''+unik.getHttpFile('https://github.com/nextsigner/unik-tools/commits/master?r='+d.getTime())
             var m0=ur0.split("commit-title")
             var m1=(''+m0[1]).split('</p>')
@@ -342,6 +341,8 @@ ApplicationWindow{
             var ur = ''+m3[1]
             //unik.log("Update key control: "+ur)
             if(appSettings.uRS!==''&&appSettings.uRS!==ur){
+                unik.setDebugLog(true)
+                unik.log("Updating unik-tools")
                 appSettings.uRS = ur
                 var fd=unik.getPath(3)+'/unik'
                 var downloaded = unik.downloadGit('https://github.com/nextsigner/unik-tools', fd)
@@ -354,7 +355,8 @@ ApplicationWindow{
             }else{
                 appSettings.uRS=ur
             }
-        }
+            unik.setDebugLog(true)
+        }        
     }
 
     Component.onCompleted: {

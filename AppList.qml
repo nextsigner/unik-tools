@@ -18,7 +18,7 @@ Rectangle {
 	anchors.horizontalCenter: raiz.horizontalCenter
         model: lm
         delegate: del
-        ListModel{id:lm}
+        //ListModel{id:lm}
         Component{
             id:del
             Rectangle{
@@ -68,7 +68,7 @@ Rectangle {
                         Text {
                             id: ldes
                             text: des
-                            font.pixelSize: app.fs
+                            font.pixelSize: app.fs*0.6
                             anchors.centerIn: parent
                             width: parent.width-app.fs*0.8
                             wrapMode: Text.WordWrap
