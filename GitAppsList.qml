@@ -35,8 +35,8 @@ sitio web en donde exista código QML disponible."
             nom: "semitimes"
             des: "Primer Reloj QML creado para la lista de Aplicaciones QML disponibles para unik qml engine."
             dev: "@nextsigner"
-            urlgit: "https://github.com/nextsigner/semitimes/blob/master/semitimes_m1"
-            img2: "https://github.com/nextsigner/semitimes/blob/master/semitimes_m1/screenshot.png"
+            urlgit: "https://github.com/nextsigner/semitimes/tree/master/semitimes_m1"
+            img2: "https://github.com/nextsigner/semitimes/blob/master/semitimes_m1/screenshot.png?raw=true"
             tipo: "todos"
         }
 
