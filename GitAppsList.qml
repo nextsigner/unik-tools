@@ -10,17 +10,35 @@ Item {
             dev: "@nextsigner"
             urlgit: "https://github.com/nextsigner/rickypapi"
             img2: "https://github.com/nextsigner/rickypapi/blob/master/screenshot.png?raw=true"
+            tipo: "desktop"
         }
-	ListElement{
-		nom: "unik-qml-blogger"
-		des: "Esta aplicación nos permite utilizar Blogger.com 
+        ListElement{
+            nom: "unik-qml-blogger"
+            des: "Esta aplicación nos permite utilizar Blogger.com
 como un editor o entorno para publicar y probar código QML de ejemplo 
 del blog sobre programación QML de @nextsigner, el suyo, otro blogger o 
 sitio web en donde exista código QML disponible."
-		dev: "@nextsigner"
-		urlgit: "https://github.com/nextsigner/unik-qml-blogger"
-		img2: "http://unikdev.net/img/screenshot.png"
-	}
+            dev: "@nextsigner"
+            urlgit: "https://github.com/nextsigner/unik-qml-blogger"
+            img2: "http://unikdev.net/img/screenshot.png"
+            tipo: "desktop"
+        }
+        ListElement{
+            nom: "naty"
+            des: "Esta aplicaciòn aùn està en fase de desarrollo. Se està desarrollando en los dìas de Marzo de 2018 para ser utilizada en Android y Ordenadores de Escritorio. La aplicaciòn no cuenta aùn con todos los menus terminados y su uso se recomienda solo a los fines de probar unik qml engine en Android. Se intentarà terminar el desarrollo a la brevedad."
+            dev: "@nextsigner"
+            urlgit: "https://github.com/nextsigner/naty"
+            img2: "http://unikdev.net/img/screenshot.png"
+            tipo: "movil"
+        }
+        ListElement{
+            nom: "semitimes"
+            des: "Primer Reloj QML creado para la lista de Aplicaciones QML disponibles para unik qml engine."
+            dev: "@nextsigner"
+            urlgit: "https://github.com/nextsigner/semitimes/blob/master/semitimes_m1"
+            img2: "https://github.com/nextsigner/semitimes/blob/master/semitimes_m1/screenshot.png"
+            tipo: "todos"
+        }
 
     }
 
