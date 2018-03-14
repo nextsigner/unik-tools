@@ -74,7 +74,7 @@ ApplicationWindow{
         property int pyLineRH1: 0
         property bool logVisible: true
         property string uGitUrl: 'https://github.com/nextsigner/unik-qml-blogger.git'
-        property string uRS: ''
+        property string uRS
     }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
     Item{

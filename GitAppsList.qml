@@ -10,7 +10,7 @@ Item {
             dev: "@nextsigner"
             urlgit: "https://github.com/nextsigner/rickypapi"
             img2: "https://github.com/nextsigner/rickypapi/blob/master/screenshot.png?raw=true"
-            tipo: "desktop"
+            tipo: "linux-osx-windows"
         }
         ListElement{
             nom: "unik-qml-blogger"
@@ -21,15 +21,15 @@ sitio web en donde exista código QML disponible."
             dev: "@nextsigner"
             urlgit: "https://github.com/nextsigner/unik-qml-blogger"
             img2: "http://unikdev.net/img/screenshot.png"
-            tipo: "desktop"
+            tipo: "linux-osx-windows"
         }
         ListElement{
             nom: "naty"
             des: "Esta aplicaciòn aùn està en fase de desarrollo. Se està desarrollando en los dìas de Marzo de 2018 para ser utilizada en Android y Ordenadores de Escritorio. La aplicaciòn no cuenta aùn con todos los menus terminados y su uso se recomienda solo a los fines de probar unik qml engine en Android. Se intentarà terminar el desarrollo a la brevedad."
             dev: "@nextsigner"
             urlgit: "https://github.com/nextsigner/naty"
-            img2: "http://unikdev.net/img/screenshot.png"
-            tipo: "movil"
+            img2: "https://github.com/nextsigner/naty/blob/master/screenshot.png?raw=true"
+            tipo: "linux-osx-windows-android"
         }
         ListElement{
             nom: "semitimes"
@@ -37,7 +37,7 @@ sitio web en donde exista código QML disponible."
             dev: "@nextsigner"
             urlgit: "https://github.com/nextsigner/semitimes/tree/master/semitimes_m1"
             img2: "https://github.com/nextsigner/semitimes/blob/master/semitimes_m1/screenshot.png?raw=true"
-            tipo: "todos"
+            tipo: "linux-osx-windows-android"
         }
 
     }

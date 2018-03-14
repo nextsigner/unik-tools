@@ -30,6 +30,7 @@ Rectangle {
                 border.width: 2
                 border.color: app.c2
                 radius: app.fs*0.5
+                visible: (''+tipo).indexOf(''+Qt.platform.os)!==-1
                 Image {
                     id: imagen
                     source: img2
