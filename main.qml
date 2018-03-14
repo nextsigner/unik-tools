@@ -247,7 +247,14 @@ ApplicationWindow{
                                 }else{
                                     var args = '-folder '+unik.getPath(3)+'/unik/unik-tools'
                                     args += ' -dim='+app.width+'x'+app.height+' -pos='+app.x+'x'+app.y
-                                    unik.restartApp(args)
+                                    if(Qt.platform.os!=='android'){
+                                        unik.restartApp(args)
+                                     }else{
+                                        var j=unik.getPath(3)+'/unik/config.json'
+                                        unik.deleteFile(j)
+                                        unik.restartApp()
+                                    }
+
                                 }
                             }
                         }
