@@ -1,153 +1,152 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick.Controls 1.4
 
 Rectangle {
     id: raiz
     color: app.c5
-    onVisibleChanged: {
 
-        //act()
-
-    }
-
-    ListView{
-        id: lv
-        width: raiz.width*0.96
+    ScrollView{
+        width: raiz.width
         height: raiz.height
-        spacing: app.fs*0.5
-	anchors.horizontalCenter: raiz.horizontalCenter
-        model: lm
-        delegate: del
-        //ListModel{id:lm}
-        Component{
-            id:del
-            Rectangle{
-                id: xC
-                width: lv.width
-                height: lv.width*0.2
-                clip: true
-                color: app.c1
-                border.width: 2
-                border.color: app.c2
-                radius: app.fs*0.5
-                visible: (''+tipo).indexOf(''+Qt.platform.os)!==-1
-                Image {
-                    id: imagen
-                    source: img2
-                    width: xC.height-app.fs*0.4
-                    height: width
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.left: parent.left
-                    anchors.leftMargin: app.fs*0.5
-		    cache:false
-                }
-                Column{
-                    anchors.left: imagen.right
-                    anchors.leftMargin: app.fs*0.5
-                    anchors.verticalCenter: parent.verticalCenter
-                    Rectangle{
-                        id: xNom
-                        width:xC.width-imagen.width-app.fs*1.5
-                        height: xC.height*0.15
-                        clip: true
-                        color: "transparent"
-                        Text {
-                            id: lnom
-                            text: '<b>'+nom+'</b>'
-                            font.pixelSize: app.fs
-                            width: parent.width-app.fs
-                            anchors.centerIn: parent
-                        }
+        ListView{
+            id: lv
+            width: raiz.width*0.5
+            height: raiz.height
+            spacing: app.fs*0.5
+            anchors.horizontalCenter: raiz.horizontalCenter
+            model: lm
+            delegate: del
+
+            //ListModel{id:lm}
+            Component{
+                id:del
+                Rectangle{
+                    id: xC
+                    width: lv.width-app.fs
+                    height: visible?lv.width*0.2:0
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    clip: true
+                    color: app.c1
+                    border.width: 2
+                    border.color: app.c2
+                    radius: app.fs*0.5
+                    visible: (''+tipo).indexOf(''+Qt.platform.os)!==-1
+                    Image {
+                        id: imagen
+                        source: img2
+                        width: xC.height-app.fs*0.4
+                        height: width
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: app.fs*0.5
+                        cache:false
                     }
-                    Rectangle{
-                        id:xDes
-                        width:xNom.width
-                        height: xC.height*0.6
-                        anchors.horizontalCenter: xNom.horizontalCenter
-                        clip: true
-                        color: "transparent"
-                        Text {
-                            id: ldes
-                            text: des
-                            font.pixelSize: app.fs*0.6
-                            anchors.centerIn: parent
-                            width: parent.width-app.fs*0.8
-                            wrapMode: Text.WordWrap
-                        }
-                    }
-                    Rectangle{
-                        id:xDevYBotInst
-                        width:xNom.width
-                        height: xC.height*0.15
-                        clip: true
-                        color: "transparent"
-                        anchors.horizontalCenter: xNom.horizontalCenter
-                        Text {
-                            id: ldev
-                            text: '<b>Desarrollador: </b>'+dev+''
-                            font.pixelSize: app.fs*0.8
-                            width: contentWidth+app.fs
-                            anchors.left: parent.left
-                            anchors.leftMargin: app.fs*0.5
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
+                    Column{
+                        anchors.left: imagen.right
+                        anchors.leftMargin: app.fs*0.5
+                        anchors.verticalCenter: parent.verticalCenter
                         Rectangle{
-                            id:botInstalarApp
-                            width:lBotInst.contentWidth+app.fs
+                            id: xNom
+                            width:xC.width-imagen.width-app.fs*1.5
                             height: xC.height*0.15
                             clip: true
-                            color: 'black'
-                            anchors.right: parent.right
-                            radius: app.fs*0.5
+                            color: "transparent"
                             Text {
-                                id: lBotInst
-                                color: app.c2
-                                text: "Instalar"
-                                font.pixelSize: app.fs*0.8
+                                id: lnom
+                                text: '<b>'+nom+'</b>'
+                                font.pixelSize: app.fs
+                                width: parent.width-app.fs
                                 anchors.centerIn: parent
                             }
-                            MouseArea{
-                                anchors.fill: parent
-                                hoverEnabled: true
-                                onEntered: {
-                                    botInstalarApp.color = app.c2
-                                    lBotInst.color = 'black'
-                                }
-                                onExited:  {
-                                    botInstalarApp.color = 'black'
-                                    lBotInst.color = app.c2
-                                }
-                                onPressed: {
-                                    lBotInst.text='<b>'+"Instalar"+'</b>'
-                                }
-                                onReleased: {
-                                    lBotInst.text="Instalar"
-                                }
-                                onClicked: {
-                                    app.area=1
-                                    var fd = unik.getPath(3)+'/unik'
-                                    var downloaded = unik.downloadGit(urlgit, fd)
-                                    if(downloaded){
-                                        unik.log('Aplicación '+nom+' descargada.')
-                                        var m0= (''+urlgit).split('/')
-                                        var s0=''+m0[m0.length-1]
-                                        var s1=s0.replace('.git', '')
-                                        var nc = '{"mode":"-folder", "arg1": "'+fd+'/'+s1+'"}'
-                                        unik.setFile(unik.getPath(3)+'/unik/config.json', nc)
-                                        unik.restartApp()
-                                    }else{
-                                        unik.log('Aplicación '+nom+' no se ha instalado.')
-                                    }
-
-
-                                }
+                        }
+                        Rectangle{
+                            id:xDes
+                            width:xNom.width
+                            height: xC.height*0.6
+                            anchors.horizontalCenter: xNom.horizontalCenter
+                            clip: true
+                            color: "transparent"
+                            Text {
+                                id: ldes
+                                text: des
+                                font.pixelSize: app.fs*0.6
+                                anchors.centerIn: parent
+                                width: parent.width-app.fs*0.8
+                                wrapMode: Text.WordWrap
                             }
+                        }
+                        Rectangle{
+                            id:xDevYBotInst
+                            width:xNom.width
+                            height: xC.height*0.15
+                            clip: true
+                            color: "transparent"
+                            anchors.horizontalCenter: xNom.horizontalCenter
+                            Text {
+                                id: ldev
+                                text: '<b>Desarrollador: </b>'+dev+''
+                                font.pixelSize: app.fs*0.8
+                                width: contentWidth+app.fs
+                                anchors.left: parent.left
+                                anchors.leftMargin: app.fs*0.5
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                            Rectangle{
+                                id:botInstalarApp
+                                width:lBotInst.contentWidth+app.fs
+                                height: xC.height*0.15
+                                clip: true
+                                color: 'black'
+                                anchors.right: parent.right
+                                radius: app.fs*0.5
+                                Text {
+                                    id: lBotInst
+                                    color: app.c2
+                                    text: "Instalar"
+                                    font.pixelSize: app.fs*0.8
+                                    anchors.centerIn: parent
+                                }
+                                MouseArea{
+                                    anchors.fill: parent
+                                    hoverEnabled: true
+                                    onEntered: {
+                                        botInstalarApp.color = app.c2
+                                        lBotInst.color = 'black'
+                                    }
+                                    onExited:  {
+                                        botInstalarApp.color = 'black'
+                                        lBotInst.color = app.c2
+                                    }
+                                    onPressed: {
+                                        lBotInst.text='<b>'+"Instalar"+'</b>'
+                                    }
+                                    onReleased: {
+                                        lBotInst.text="Instalar"
+                                    }
+                                    onClicked: {
+                                        app.area=1
+                                        var fd = unik.getPath(3)+'/unik'
+                                        var downloaded = unik.downloadGit(urlgit, fd)
+                                        if(downloaded){
+                                            unik.log('Aplicación '+nom+' descargada.')
+                                            var m0= (''+urlgit).split('/')
+                                            var s0=''+m0[m0.length-1]
+                                            var s1=s0.replace('.git', '')
+                                            var nc = '{"mode":"-folder", "arg1": "'+fd+'/'+s1+'"}'
+                                            unik.setFile(unik.getPath(3)+'/unik/config.json', nc)
+                                            unik.restartApp()
+                                        }else{
+                                            unik.log('Aplicación '+nom+' no se ha instalado.')
+                                        }
 
+
+                                    }
+                                }
+
+                            }
                         }
                     }
                 }
-
-
             }
         }
     }
