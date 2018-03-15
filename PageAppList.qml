@@ -169,7 +169,7 @@ Item {
                     onClicked: {
                         var j=unik.getPath(3)+'/unik/temp_config.json'
                         var path = unik.getPath(3)+'/unik/'+fileName
-                        var cl
+                        var c
                         var s0=''+fileName
                         var s1= s0.substring(s0.length-4, s0.length);
                         if(!folderListModelApps.isFolder(index)&&s1==='.upk'){
@@ -178,13 +178,13 @@ Item {
                             var t = unik.getPath(2)+'/t'+d.getTime()
                             unik.mkdir(t)
                             var upkToFolder = unik.upkToFolder(path, "unik-free", "free", t)
-                            var c='{"mode":"-folder", "arg1": "'+t+'"}'
-                            unik.setFile(j, c)
-                            unik.restartApp()
+                            c='{"mode":"-folder", "arg1": "'+t+'"}'
                         }else{
                             logView.log("Lanzando carpeta "+path)
-                            engine.load(path+'/main.qml')
+                            c='{"mode":"-folder", "arg1": "'+path+'"}'
                         }
+                        unik.setFile(j, c)
+                        unik.restartApp()
                     }
                     Component.onCompleted: {
                         if(!folderListModelApps.isFolder(index)){

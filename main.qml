@@ -318,7 +318,7 @@ ApplicationWindow{
                                 app.area=2
                             }
                         }
-                        Boton{//Load QML
+                        /*Boton{//Load QML
                             id:btnLoadQml
                             visible: userLogin==='nextsigner@gmail.com'
                             w:parent.width
@@ -328,7 +328,7 @@ ApplicationWindow{
                             onClicking: {
                                 unik.loadQml('dfsdf')
                             }
-                        }
+                        }*/
                         Boton{//Add git project
                             id:btnAddGit
                             w:parent.width
@@ -357,18 +357,23 @@ ApplicationWindow{
                             c: up ? 'white':'#000'
                             property bool up: false
                             onClicking: {
-                                if(!up){                                    
+                                if(!up){
                                     unik.restartApp("-git=https://github.com/nextsigner/unik-tools.git")
                                 }else{
                                     var args = '-folder '+unik.getPath(3)+'/unik/unik-tools'
                                     args += ' -dim='+app.width+'x'+app.height+' -pos='+app.x+'x'+app.y
                                     if(Qt.platform.os!=='android'){
                                         unik.restartApp(args)
-                                     }else{
-                                        var j=unik.getPath(3)+'/unik/config.json'
-                                        unik.deleteFile(j)
-                                        unik.restartApp()
-                                    }                                }
+                                    }else{
+                                        var gitDownloaded=unik.downloadGit('https://github.com/nextsigner/unik-tools', unik.getPath(3)+'/unik/unik-tools')
+                                        if(gitDownloaded){
+                                            var j=unik.getPath(3)+'/unik/temp_config.json'
+                                            var c='{"mode":"-folder", "arg1": "'+unik.getPath(3)+'/unik/unik-tools'+'"}'
+                                            unik.setFile(j, c)
+                                            unik.restartApp()
+                                        }
+                                    }
+                                }
                             }
                         }
                         Boton{//Show Debug Panel
@@ -496,7 +501,7 @@ ApplicationWindow{
                 appSettings.uRS=ur
             }
             unik.setDebugLog(true)
-        }        
+        }
     }
 
     Component.onCompleted: {
