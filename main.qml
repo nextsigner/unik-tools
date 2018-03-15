@@ -8,7 +8,7 @@ ApplicationWindow{
     visible: true
     width: 500
     height: 500
-    title: qsTr("unik-tools")
+    title: "unik-tools"
     color: Qt.platform.os !=='android' && app.waiting?"transparent":app.c5
     minimumWidth: 500
     minimumHeight: 500

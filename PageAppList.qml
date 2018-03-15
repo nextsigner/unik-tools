@@ -147,6 +147,57 @@ Item {
                     }
                 }
 
+
+                Button{//Ejecutar Android
+                    id: btnRunAndroid
+                    width: parent.height
+                    height: width
+                    text: '\uf135'
+                    font.family: "FontAwesome"
+                    font.pixelSize: xItem.height*0.8
+                    //opacity: app.appVigente+'.upk'!==fileName ? 1.0 : 0.0
+                    background: Rectangle{color: app.appVigente+'.upk'===fileName ? app.c2 : app.c1; radius: app.fs*0.3;}
+                    visible:Qt.platform.os==='android'
+                    Text {
+                        id: nameAn
+                        text: '<b>No Free</b>'
+                        anchors.centerIn: parent
+                        font.pixelSize: parent.height*0.2
+                        color: "red"
+                        visible: !parent.enabled
+                    }
+                    onClicked: {
+                        var j=unik.getPath(3)+'/unik/temp_config.json'
+                        var path = unik.getPath(3)+'/unik/'+fileName
+                        var cl
+                        var s0=''+fileName
+                        var s1= s0.substring(s0.length-4, s0.length);
+                        if(!folderListModelApps.isFolder(index)&&s1==='.upk'){
+                            logView.log("Lanzando upk: "+fileName)
+                            var d = new Date(Date.now())
+                            var t = unik.getPath(2)+'/t'+d.getTime()
+                            unik.mkdir(t)
+                            var upkToFolder = unik.upkToFolder(path, "unik-free", "free", t)
+                            var c='{"mode":"-folder", "arg1": "'+t+'"}'
+                            unik.setFile(j, c)
+                            unik.restartApp()
+                        }else{
+                            logView.log("Lanzando carpeta "+path)
+                            engine.load(path+'/main.qml')
+                        }
+                    }
+                    Component.onCompleted: {
+                        if(!folderListModelApps.isFolder(index)){
+                            var upk = unikDocs+'/'+fileName
+                            var isFree=unik.isFree(upk)
+                            btnRun.enabled = isFree
+                            console.log(""+upk+" free: "+isFree)
+                        }
+                    }
+                }
+
+
+
                 Button{//Ejecutar Aparte
                     id: btnRun2
                     width: parent.height
