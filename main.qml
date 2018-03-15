@@ -9,14 +9,18 @@ ApplicationWindow{
     width: 500
     height: 500
     title: qsTr("unik-tools")
-    color: app.c5
+    color: Qt.platform.os !=='android' && app.waiting?"transparent":app.c5
     minimumWidth: 500
     minimumHeight: 500
+
     property int area: 0
     property bool closedModeLaunch: false
     property bool logueado: false
     property string userLogin: ''
     property string keyLog: ''
+    property bool waiting: wait
+
+    flags: Qt.platform.os !=='android' && app.waiting?Qt.Window | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint:1
 
     onVisibleChanged: {
         if(!visible&&closedModeLaunch){
@@ -78,8 +82,108 @@ ApplicationWindow{
     }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
     Item{
+        id: xWainting
+        anchors.fill: parent
+        visible: app.waiting
+        Rectangle{
+            width: parent.width*0.1
+            height: width
+            radius: width*0.5
+            color: app.c5
+            border.width: 2
+            border.color: app.c2
+            anchors.centerIn: parent
+            Text {
+                id: txtW0
+                text: "\uf1ce"
+                font.family: "FontAwesome"
+                color: app.c2
+                font.pixelSize: parent.width*0.9
+                anchors.centerIn: parent
+                onRotationChanged:{if(rotation>279){rotation=50}}
+                Behavior on rotation {
+                    NumberAnimation {
+                        target: txtW0
+                        property: "rotation"
+                        duration: 2000
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+            }
+            Text {
+                id: txtW1
+                text: "\uf1ce"
+                font.family: "FontAwesome"
+                color: "black"
+                rotation: 100
+                font.pixelSize: parent.width*0.8
+                anchors.centerIn: parent
+                onRotationChanged:{if(rotation>330){rotation=180}}
+                Behavior on rotation {
+                    NumberAnimation {
+                        target: txtW1
+                        property: "rotation"
+                        duration: 3000
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+            }
+            Text {
+                id: txtW2
+                text: "\uf1ce"
+                font.family: "FontAwesome"
+                color: app.c2
+                rotation: 350
+                font.pixelSize: parent.width*0.7
+                anchors.centerIn: parent
+                onRotationChanged:{if(rotation<180){rotation=300}}
+                Behavior on rotation {
+                    NumberAnimation {
+                        target: txtW2
+                        property: "rotation"
+                        duration: 5000
+                        easing.type: Easing.InOutQuad
+                    }
+                }
+            }
+            Text {
+                id: txtWaiting1
+                text: "?"
+                font.family: "FontAwesome"
+                color: app.c2
+                font.pixelSize: parent.width*0.55
+                anchors.centerIn: parent
+            }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: app.waiting=false
+            }
+        }
+        Timer{
+            id:tw
+            running: true
+            repeat: true
+            interval: 1000
+            property int s: 5
+            onTriggered: {
+                txtWaiting1.text=''+s
+                //console.log("--------------------->"+s)
+                if(s===0){
+                    tw.stop()
+                    if(app.waiting){
+                        Qt.quit()
+                    }
+                }
+                txtWaiting1.opacity=txtWaiting1.opacity-=0.15
+                tw.s--
+            }
+        }
+
+    }
+    Item{
         id: xApp
         anchors.fill: parent
+        visible: !app.waiting
         Column{
             height: app.height
             Rectangle{//Top Tool Bar
@@ -214,6 +318,17 @@ ApplicationWindow{
                                 app.area=2
                             }
                         }
+                        Boton{//Load QML
+                            id:btnLoadQml
+                            visible: userLogin==='nextsigner@gmail.com'
+                            w:parent.width
+                            h: w
+                            t: '\uf05a'
+                            b:app.c1
+                            onClicking: {
+                                unik.loadQml('dfsdf')
+                            }
+                        }
                         Boton{//Add git project
                             id:btnAddGit
                             w:parent.width
@@ -253,9 +368,7 @@ ApplicationWindow{
                                         var j=unik.getPath(3)+'/unik/config.json'
                                         unik.deleteFile(j)
                                         unik.restartApp()
-                                    }
-
-                                }
+                                    }                                }
                             }
                         }
                         Boton{//Show Debug Panel
@@ -335,6 +448,8 @@ ApplicationWindow{
         }
     }
 
+
+
     Timer{
         id:timerInit
         running: false
@@ -370,6 +485,7 @@ ApplicationWindow{
                 appSettings.uRS = ur
                 var fd=unik.getPath(3)+'/unik'
                 var downloaded = unik.downloadGit('https://github.com/nextsigner/unik-tools', fd)
+                appSettings.uRS=''
                 tu.stop()
                 if(downloaded){
                     btnUpdate.up=true
@@ -384,6 +500,9 @@ ApplicationWindow{
     }
 
     Component.onCompleted: {
+        txtW0.rotation= txtW0.rotation+280
+        txtW1.rotation= txtW1.rotation-340
+        txtW2.rotation= 170
         if(Qt.platform.os==='windows'||Qt.platform.os==='linux'||Qt.platform.os==='osx'){
             app.visibility = appSettings.appWS
             if(appSettings.appWS===2){
