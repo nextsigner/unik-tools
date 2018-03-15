@@ -358,14 +358,24 @@ ApplicationWindow{
                             property bool up: false
                             onClicking: {
                                 if(!up){
-                                    unik.restartApp("-git=https://github.com/nextsigner/unik-tools.git")
+                                    if(Qt.platform.os!=='android'){
+                                        unik.restartApp("-git=https://github.com/nextsigner/unik-tools.git")
+                                    }else{
+                                        var gitDownloaded=unik.downloadGit('https://github.com/nextsigner/unik-tools', unik.getPath(3)+'/unik/unik-tools')
+                                        if(gitDownloaded){
+                                            var j=unik.getPath(3)+'/unik/temp_config.json'
+                                            var c='{"mode":"-folder", "arg1": "'+unik.getPath(3)+'/unik/unik-tools'+'"}'
+                                            unik.setFile(j, c)
+                                            unik.restartApp()
+                                        }
+                                    }
                                 }else{
                                     var args = '-folder '+unik.getPath(3)+'/unik/unik-tools'
                                     args += ' -dim='+app.width+'x'+app.height+' -pos='+app.x+'x'+app.y
                                     if(Qt.platform.os!=='android'){
                                         unik.restartApp(args)
                                     }else{
-                                        var gitDownloaded=unik.downloadGit('https://github.com/nextsigner/unik-tools', unik.getPath(3)+'/unik/unik-tools')
+                                         gitDownloaded=unik.downloadGit('https://github.com/nextsigner/unik-tools', unik.getPath(3)+'/unik/unik-tools')
                                         if(gitDownloaded){
                                             var j=unik.getPath(3)+'/unik/temp_config.json'
                                             var c='{"mode":"-folder", "arg1": "'+unik.getPath(3)+'/unik/unik-tools'+'"}'
