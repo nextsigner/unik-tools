@@ -13,11 +13,7 @@ Rectangle {
             width: raiz.width*0.5
             height: raiz.height
             spacing: app.fs*0.5
-            //anchors.horizontalCenter: parent.horizontalCenter
-            model: lm
-            delegate: del
-
-            //ListModel{id:lm}
+            delegate: del            
             Component{
                 id:del
                 Rectangle{
