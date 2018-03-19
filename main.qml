@@ -498,9 +498,8 @@ ApplicationWindow{
     Timer{
         id:tu
         running: true
-        repeat: true
-        //interval: 1000*60*60
-        interval: 1000*30
+        repeat: false
+        interval: 1000*5
         property int v: 0
         onTriggered: {
             tu.v++
@@ -515,7 +514,7 @@ ApplicationWindow{
             if(appSettings.uRS!==''){
                 appSettings.uRS=ur
             }
-            unik.log("Update key control nª"+tu.v+": "+ur+" urs: "+appSettings.uRS)
+            //unik.log("Update key control nª"+tu.v+": "+ur+" urs: "+appSettings.uRS)
             if(appSettings.uRS!==ur){
                 unik.setDebugLog(true)
                 unik.log("Updating unik-tools")
