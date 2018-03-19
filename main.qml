@@ -514,7 +514,7 @@ ApplicationWindow{
             if(appSettings.uRS===''){
                 appSettings.uRS=ur
             }
-            unik.log("Update key control nª"+tu.v+": "+ur+" urs: "+appSettings.uRS)
+            //unik.log("Update key control nª"+tu.v+": "+ur+" urs: "+appSettings.uRS)
             if(appSettings.uRS!==ur){
                 unik.setDebugLog(true)
                 unik.log("Updating unik-tools")
@@ -532,6 +532,9 @@ ApplicationWindow{
                 //appSettings.uRS=ur
             }
             unik.setDebugLog(true)
+            tu.interval=1000*60*5
+            tu.repeat=true
+            tu.start()
         }
     }
 
