@@ -37,7 +37,7 @@ Item {
     }
     FolderListModel{
         id: folderListModelApps
-        folder: appsDir
+        folder: Qt.platform.os!=='windows'?appsDir:'file:///'+appsDir
         nameFilters: ["*.upk"]
     }
 

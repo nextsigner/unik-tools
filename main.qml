@@ -511,10 +511,10 @@ ApplicationWindow{
             var m2=(''+m1[0]).split('\">')
             var m3=(''+m2[2]).split('<')
             var ur = ''+m3[0]
-            if(appSettings.uRS!==''){
+            if(appSettings.uRS===''){
                 appSettings.uRS=ur
             }
-            //unik.log("Update key control nª"+tu.v+": "+ur+" urs: "+appSettings.uRS)
+            unik.log("Update key control nª"+tu.v+": "+ur+" urs: "+appSettings.uRS)
             if(appSettings.uRS!==ur){
                 unik.setDebugLog(true)
                 unik.log("Updating unik-tools")
