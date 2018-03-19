@@ -148,7 +148,7 @@ ApplicationWindow{
             }
             Text {
                 id: txtWaiting1
-                text: "?"
+                text: "\uf017"
                 font.family: "FontAwesome"
                 color: app.c2
                 font.pixelSize: parent.width*0.55
@@ -274,7 +274,7 @@ ApplicationWindow{
                 height: app.height-xTopBar.height
                 Rectangle{
                     id: xTools
-                    width: app.fs*2
+                    width: app.fs*1.5
                     height: parent.height
                     color: "transparent"
                     border.color: app.c2
@@ -361,24 +361,24 @@ ApplicationWindow{
                                     if(Qt.platform.os!=='android'){
                                         unik.restartApp("-git=https://github.com/nextsigner/unik-tools.git")
                                     }else{
-                                        var gitDownloaded=unik.downloadGit('https://github.com/nextsigner/unik-tools', unik.getPath(3)+'/unik/unik-tools')
+                                        var gitDownloaded=unik.downloadGit('https://github.com/nextsigner/unik-tools', appsDir+'/unik-tools')
                                         if(gitDownloaded){
-                                            var j=unik.getPath(3)+'/unik/temp_config.json'
-                                            var c='{"mode":"-folder", "arg1": "'+unik.getPath(3)+'/unik/unik-tools'+'"}'
+                                            var j=appsDir+'/temp_config.json'
+                                            var c='{"mode":"-folder", "arg1": "'+appsDir+'/unik-tools'+'"}'
                                             unik.setFile(j, c)
                                             unik.restartApp()
                                         }
                                     }
                                 }else{
-                                    var args = '-folder '+unik.getPath(3)+'/unik/unik-tools'
+                                    var args = '-folder '+appsDir+'/unik-tools'
                                     args += ' -dim='+app.width+'x'+app.height+' -pos='+app.x+'x'+app.y
                                     if(Qt.platform.os!=='android'){
                                         unik.restartApp(args)
                                     }else{
                                          gitDownloaded=unik.downloadGit('https://github.com/nextsigner/unik-tools', unik.getPath(3)+'/unik/unik-tools')
                                         if(gitDownloaded){
-                                            var j=unik.getPath(3)+'/unik/temp_config.json'
-                                            var c='{"mode":"-folder", "arg1": "'+unik.getPath(3)+'/unik/unik-tools'+'"}'
+                                            var j=appsDir+'/temp_config.json'
+                                            var c='{"mode":"-folder", "arg1": "'+appsDir+'/unik-tools'+'"}'
                                             unik.setFile(j, c)
                                             unik.restartApp()
                                         }
@@ -397,6 +397,17 @@ ApplicationWindow{
                             enabled: opacity===1.0
                             onClicking: {
                                 appSettings.logVisible = !appSettings.logVisible
+                            }
+                        }
+                        Boton{//Config
+                            w:parent.width
+                            h: w
+                            t: '\uf013'
+                            b:"#444444"
+                            c: app.c1
+                            visible: parseFloat(version)>2.12
+                            onClicking: {
+                                app.area = 3
                             }
                         }
                         Boton{//Restart
@@ -447,6 +458,12 @@ ApplicationWindow{
                     height: parent.height
                     visible: app.area===2
                 }
+                Config{
+                    id: config
+                    width: app.width-xTools.width
+                    height: parent.height
+                    visible: app.area===3
+                }
             }
 
 
@@ -483,22 +500,24 @@ ApplicationWindow{
         running: true
         repeat: true
         //interval: 1000*60*60
-        interval: 1000*3
+        interval: 1000*30
+        property int v: 0
         onTriggered: {
+            tu.v++
             var d = new Date(Date.now())
             unik.setDebugLog(false)
             var ur0 = ''+unik.getHttpFile('https://github.com/nextsigner/unik-tools/commits/master?r='+d.getTime())
             var m0=ur0.split("commit-title")
             var m1=(''+m0[1]).split('</p>')
             var m2=(''+m1[0]).split('\">')
-            var m3=(''+m2[1]).split('\"')
-            var ur = ''+m3[1]
-            //unik.log("Update key control: "+ur)
+            var m3=(''+m2[2]).split('<')
+            var ur = ''+m3[0]
+            unik.log("Update key control nª"+tu.v+": "+ur)
             if(appSettings.uRS!==''&&appSettings.uRS!==ur){
                 unik.setDebugLog(true)
                 unik.log("Updating unik-tools")
                 appSettings.uRS = ur
-                var fd=unik.getPath(3)+'/unik'
+                var fd=appsDir
                 var downloaded = unik.downloadGit('https://github.com/nextsigner/unik-tools', fd)
                 appSettings.uRS=''
                 tu.stop()
@@ -532,7 +551,9 @@ ApplicationWindow{
         ful.init()
         timerInit.start()
         unik.log('Unik Tools AppName: '+appName)
+        unik.log(app.contentData)
         appList.act()
     }
+
 
 }

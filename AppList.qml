@@ -13,7 +13,7 @@ Rectangle {
             width: raiz.width*0.5
             height: raiz.height
             spacing: app.fs*0.5
-            anchors.horizontalCenter: raiz.horizontalCenter
+            //anchors.horizontalCenter: parent.horizontalCenter
             model: lm
             delegate: del
 
@@ -125,7 +125,7 @@ Rectangle {
                                     }
                                     onClicked: {
                                         app.area=1
-                                        var fd = unik.getPath(3)+'/unik'
+                                        var fd = appsDir
                                         var downloaded = unik.downloadGit(urlgit, fd)
                                         if(downloaded){
                                             unik.log('Aplicación '+nom+' descargada.')
@@ -133,7 +133,8 @@ Rectangle {
                                             var s0=''+m0[m0.length-1]
                                             var s1=s0.replace('.git', '')
                                             var nc = '{"mode":"-folder", "arg1": "'+fd+'/'+s1+'"}'
-                                            unik.setFile(unik.getPath(3)+'/unik/config.json', nc)
+                                            unik.setFile(appsDir+'/config.json', nc)
+                                            unik.setFile(fd+'/unik_github.dat', urlgit)
                                             unik.restartApp()
                                         }else{
                                             unik.log('Aplicación '+nom+' no se ha instalado.')

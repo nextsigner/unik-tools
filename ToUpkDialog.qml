@@ -59,8 +59,7 @@ Item {
                         font.pixelSize: app.fs
                         color: app.c1
                         anchors.centerIn: parent
-                        text: 'unik-free'
-                        echoMode: text==='unik-free'?TextInput.Normal : TextInput.Password
+                        text: 'unik-free'                        
                     }
                 }
             }
@@ -125,7 +124,7 @@ Item {
                     background: Rectangle{color:app.c2; radius: app.fs*0.3;}
                     onClicked: {
                         var m0=currentFolder.split('/')
-                        var c = unik.mkUpk(currentFolder, m0[m0.length-1], tiUser.text, tiKey.text, unik.getPath(3)+'/unik')
+                        var c = unik.mkUpk(currentFolder, m0[m0.length-1], tiUser.text, tiKey.text, appsDir+'')
                         logView.log('Upk converted: '+c)
                         raiz.visible = !c
                     }

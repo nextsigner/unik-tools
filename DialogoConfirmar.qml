@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 2.0
 Item {
     id: raiz
+    height: col.height+app.fs
     property alias consulta: cons.text
     property alias titulo: tit.text
     property string ctx: 'AceptarCancelar'
@@ -26,7 +27,7 @@ Item {
         Column{
             id:col
             width: parent.width-app.fs
-            height: parent.height-app.fs
+            //height: parent.height-app.fs
             anchors.centerIn: parent
             spacing: app.fs
             Text {
@@ -39,7 +40,8 @@ Item {
                 font.pixelSize: app.fs
                 color: app.c2
                 width: raiz.width*0.8
-                height: col.height-app.fs*1.4-app.fs*3-app.fs*0.5
+                //height: col.height-app.fs*1.4-app.fs*3-app.fs*0.5
+                //height: contentHeight+app.fs*2
                 wrapMode: Text.WordWrap
             }
             Row{
