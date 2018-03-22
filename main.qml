@@ -272,14 +272,11 @@ ApplicationWindow{
                 id:rowAreas
                 width: app.width
                 height: app.height-xTopBar.height
-                Rectangle{
+                Item{
                     id: xTools
                     width: app.fs*1.5
                     height: parent.height
-                    color: "transparent"
-                    border.color: app.c2
-                    border.width: 1
-
+                    z:99999
                     Column{
                         id: colTools
                         width: parent.width*0.8
@@ -292,8 +289,8 @@ ApplicationWindow{
                             w:parent.width
                             h: w
                             t: '\uf0ca'
+                            d:'Mostrar Lista de Aplicaciones dispobibles para instalar'
                             b:app.area===0?app.c2:app.c1
-                            //f: 'FontAwesome'
                             onClicking: {
                                 app.area=0
                             }
@@ -303,6 +300,7 @@ ApplicationWindow{
                             w:parent.width
                             h: w
                             t: '\uf022'
+                            d:'Mostrar Lista de Aplicaciones y Còdigo disponible en el Espacio de Trabajo'
                             b:app.area===1?app.c2:app.c1
                             onClicking: {
                                 app.area=1
@@ -313,6 +311,7 @@ ApplicationWindow{
                             w:parent.width
                             h: w
                             t: '\uf05a'
+                            d:'Informaciòn, Ayuda y Documentaciòn'
                             b:app.area===2?app.c2:app.c1
                             onClicking: {
                                 app.area=2
@@ -334,6 +333,7 @@ ApplicationWindow{
                             w:parent.width
                             h: w
                             t: '\uf09b'
+                            d:'Instalar una aplicaciòn desde una url GitHub.com'
                             b:pal.dgvisible?app.c2:app.c5
                             c:pal.dgvisible?app.c5:app.c2
                             onClicking: {
@@ -353,6 +353,7 @@ ApplicationWindow{
                             w:parent.width
                             h: w
                             t: '\uf021'
+                            d:'Actualizar el còdigo fuente de unik-tools desde GitHub.com'
                             b: up ? 'red':app.c1
                             c: up ? 'white':'#000'
                             property bool up: false
@@ -391,6 +392,7 @@ ApplicationWindow{
                             w:parent.width
                             h: w
                             t: '\uf188'
+                            d:'Ver panel de la salida estandar de esta y otras instancias de unik para depurar errores y conocer eventos'
                             b:appSettings.logVisible?app.c2:'#444'
                             c: appSettings.logVisible?'black':'#ccc'
                             opacity: app.area===1?1.0:0.0
@@ -403,6 +405,7 @@ ApplicationWindow{
                             w:parent.width
                             h: w
                             t: '\uf013'
+                            d:'Configurar unik y unik-tools'
                             b:"#444444"
                             c: app.c1
                             visible: parseFloat(version)>2.12
@@ -414,6 +417,7 @@ ApplicationWindow{
                             w:parent.width
                             h: w
                             t: '\uf021'
+                            d:'Reiniciar unik'
                             b:"#444444"
                             c: app.c1
                             onClicking: {
@@ -431,6 +435,7 @@ ApplicationWindow{
                             w:parent.width
                             h: w
                             t: "\uf011"
+                            d:'Apagar unik'
                             b:"#444444"
                             c: app.c1
                             onClicking: {
