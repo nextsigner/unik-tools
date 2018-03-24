@@ -32,17 +32,6 @@ sitio web en donde exista código QML disponible."
             tipo: "linux-osx-windows"
         }
         ListElement{
-            nom: "unik-qml-blogger"
-            des: "Esta aplicación nos permite utilizar Blogger.com
-como un editor o entorno para publicar y probar código QML de ejemplo 
-del blog sobre programación QML de @nextsigner, el suyo, otro blogger o 
-sitio web en donde exista código QML disponible."
-            dev: "@nextsigner"
-            urlgit: "https://github.com/nextsigner/unik-qml-blogger"
-            img2: "http://unikdev.net/img/screenshot.png"
-            tipo: "linux-osx-windows"
-        }
-        ListElement{
             nom: "naty"
             des: "Esta aplicaciòn aùn està en fase de desarrollo. Se està desarrollando en los dìas de Marzo de 2018 para ser utilizada en Android y Ordenadores de Escritorio. La aplicaciòn no cuenta aùn con todos los menus terminados y su uso se recomienda solo a los fines de probar unik qml engine en Android. Se intentarà terminar el desarrollo a la brevedad."
             dev: "@nextsigner"
