@@ -401,7 +401,7 @@ ApplicationWindow{
                                 appSettings.logVisible = !appSettings.logVisible
                             }
                         }
-                        Boton{//Config
+                        /*Boton{//Config
                             w:parent.width
                             h: w
                             t: '\uf013'
@@ -412,7 +412,7 @@ ApplicationWindow{
                             onClicking: {
                                 app.area = 3
                             }
-                        }
+                        }*/
                         Boton{//Restart
                             w:parent.width
                             h: w
@@ -463,12 +463,12 @@ ApplicationWindow{
                     height: parent.height
                     visible: app.area===2
                 }
-                Config{
+                /*Config{
                     id: config
                     width: app.width-xTools.width
                     height: parent.height
                     visible: app.area===3
-                }
+                }*/
             }
 
 
