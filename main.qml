@@ -5,9 +5,11 @@ import Qt.labs.settings 1.0
 
 ApplicationWindow{
     id: app
+    objectName: 'unik-tools'
     visible: true
     width: 500
     height: 500
+    visibility: 'Maximized'
     title: "unik-tools"
     color: Qt.platform.os !=='android' && app.waiting?"transparent":app.c5
     minimumWidth: 500
@@ -18,9 +20,9 @@ ApplicationWindow{
     property bool logueado: false
     property string userLogin: ''
     property string keyLog: ''
-    property bool waiting: wait
+    //property bool waiting: wait
 
-    flags: Qt.platform.os !=='android' && app.waiting?Qt.Window | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint:1
+    //flags: Qt.platform.os !=='android' && app.waiting?Qt.Window | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint:1
 
     onVisibleChanged: {
         if(!visible&&closedModeLaunch){
@@ -79,9 +81,10 @@ ApplicationWindow{
         property bool logVisible: true
         property string uGitUrl: 'https://github.com/nextsigner/unik-qml-blogger.git'
         property string uRS
+        property string ucs: ''
     }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
-    Item{
+    /*Item{
         id: xWainting
         anchors.fill: parent
         visible: app.waiting
@@ -179,11 +182,11 @@ ApplicationWindow{
             }
         }
 
-    }
+    }*/
     Item{
         id: xApp
         anchors.fill: parent
-        visible: !app.waiting
+        //visible: !app.waiting
         Column{
             height: app.height
             Rectangle{//Top Tool Bar
@@ -277,6 +280,7 @@ ApplicationWindow{
                     width: app.fs*1.5
                     height: parent.height
                     z:99999
+
                     Column{
                         id: colTools
                         width: parent.width*0.8
@@ -401,7 +405,7 @@ ApplicationWindow{
                                 appSettings.logVisible = !appSettings.logVisible
                             }
                         }
-                        /*Boton{//Config
+                        Boton{//Config
                             w:parent.width
                             h: w
                             t: '\uf013'
@@ -412,7 +416,7 @@ ApplicationWindow{
                             onClicking: {
                                 app.area = 3
                             }
-                        }*/
+                        }
                         Boton{//Restart
                             w:parent.width
                             h: w
@@ -463,12 +467,12 @@ ApplicationWindow{
                     height: parent.height
                     visible: app.area===2
                 }
-                /*Config{
+                Config{
                     id: config
                     width: app.width-xTools.width
                     height: parent.height
                     visible: app.area===3
-                }*/
+                }
             }
 
 
@@ -496,7 +500,6 @@ ApplicationWindow{
             unik.log('unik-tools log')
             unik.log('unik-tools version: '+version+'')
             unik.log('unik-tools host:  '+host+'')
-
         }
     }
 
@@ -543,10 +546,7 @@ ApplicationWindow{
         }
     }
 
-    Component.onCompleted: {
-        txtW0.rotation= txtW0.rotation+280
-        txtW1.rotation= txtW1.rotation-340
-        txtW2.rotation= 170
+    Component.onCompleted: {        
         if(Qt.platform.os==='windows'||Qt.platform.os==='linux'||Qt.platform.os==='osx'){
             app.visibility = appSettings.appWS
             if(appSettings.appWS===2){

@@ -1,12 +1,13 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
-import Qt.labs.platform 1.0
+import QtQuick.Dialogs 1.2
 Rectangle {
     id: raiz
     width: parent.width
     height: parent.height
     color: app.c5
+    property string prevPathWS:appsDir
 
         ColumnLayout{
             id:col
@@ -29,6 +30,7 @@ Rectangle {
             RowLayout{
                 spacing: app.fs*0.5
                 Layout.preferredWidth: parent.width
+                Layout.preferredHeight: app.fs*1.2
                 Text {
                     id: labelWS
                     text: 'Espacio de Trabajo:'
@@ -52,54 +54,121 @@ Rectangle {
                         text: appsDir
                         anchors.centerIn: parent
                         Keys.onReturnPressed: {
-                                        setWS(tiWS.text)
+                                        preSetWS(tiWS.text)
                         }
                         onTextChanged: {
-                            tiWS.color = unik.fileExist(tiWS.text)?app.c1:"red"
+                            preSetWS(tiWS.text)
+                        }                        
+                    }
+                    Rectangle{
+                        id: xMsgAplicado
+                        width: parent.width
+                        height:  parent.height
+                        color: app.c2
+                        border.color: app.c2
+                        radius: app.fs*0.1
+                        clip: true
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        opacity: 0.0
+                        property bool apar: true
+                        Behavior on opacity{
+                            NumberAnimation{
+                                id:dur
+                                duration: 1000
+                            }
+                        }
+                        Text{
+                            id: msg
+                            width: parent.width*0.98
+                            height: app.fs
+                            font.pixelSize: app.fs*0.8
+                            text: 'Se ha aplicado el nuevo Espacio de Trabajo'
+                            color: app.c5
+                            anchors.centerIn: parent
+                        }
+                        Timer{
+                            id:tmsg1
+                            running: false
+                            repeat: false
+                            interval: 3000
+                            onTriggered:  {dur.duration=1000; xMsgAplicado.opacity=0.0}
                         }
                     }
                 }
 
                 Boton{
-                    w:app.fs*1.2
-                    h:w
+                    Layout.preferredWidth:  app.fs*1.2
+                    Layout.preferredHeight: app.fs*1.2
                     b:app.c2
                     c: "#333"
                     t: "..."
                     d: 'Seleccionar Carpeta para Espacio de Trabajo'
                     tp:1
-                    onClicking: folderDialog.visible=true
+                    onClicking: fileDialog.visible=true
                 }
-
-                Button{
-                    id: botAplicarWS
-                    height: app.fs*1.2
-                    text: 'Aplicar'
-                    font.pixelSize: app.fs
-                    background: Rectangle{color:app.c2; radius: app.fs*0.3;}
-                    onClicked: {
-                        unik.setWorkSpace('')
-                    }
+                Boton{
+                    Layout.preferredWidth:  app.fs*1.2
+                    Layout.preferredHeight: app.fs*1.2
+                    b:app.c2
+                    c: "#333"
+                    t: "\uf0e2"
+                    d: 'Deshacer cambios'
+                    tp:1
+                    onClicking: tiWS.text=raiz.prevPathWS
                 }
-
+                Boton{
+                    Layout.preferredWidth:  app.fs*1.2
+                    Layout.preferredHeight: app.fs*1.2
+                    b:app.c2
+                    c: "#333"
+                    t: "\uf00c"
+                    d: 'Utilizar este Espacio de Trabajo'
+                    tp:1
+                    enabled: tiWS.color===app.c1?true:false
+                    opacity: enabled?1.0:0.5
+                    onClicking: setWS(tiWS.text)
+                }
             }
-        }
-        FolderDialog {
-            id: folderDialog
-            currentFolder: tiWS.text
-            folder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
-            options: FolderDialog.ShowDirsOnly
+        }        
+        FileDialog {
+            id: fileDialog
             visible: false
+            //modality: true ? Qt.WindowModal : Qt.NonModal
+            title: 'Select New Work Space'
+            selectExisting: true
+            folder: appSettings.ucs
+            selectMultiple: false
+            selectFolder: true
+            //nameFilters: [ "Archivo de texto (*.txt)", "Todos los archivos (*)" ]
+            selectedNameFilter: "Todos los archivos (*)"
+            sidebarVisible: true
             onAccepted: {
-                tiWS.text=(''+folderDialog.currentFolder).replace('file://', '')
+               fileDialog.visible=false
+
+                var f=''
+                if(Qt.platform.os==='windows'){
+                    f=(''+fileUrls[0]).replace('file:///','')
+                }else{
+                    f=(''+fileUrls[0]).replace('file://','')
+                }
+                appSettings.ucs = fileUrls[0]
+                tiWS.text=f
             }
+            onRejected: { console.log("Rejected") }
         }
+
         function setWS(ws){
             if(unik.fileExist(ws)||unik.mkdir(ws)){
                 unik.setWorkSpace(ws)
+                dur.duration=1
+                xMsgAplicado.opacity=1.0
+                tmsg1.start()
                 unik.log('New WorkSpace seted: '+ws)
             }
             tiWS.color = unik.fileExist(ws)?app.c1:"red"
         }
-
+        function preSetWS(ws){
+            unik.mkdir(ws)
+            tiWS.color = unik.fileExist(ws)?app.c1:"red"
+        }
 }
