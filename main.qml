@@ -77,7 +77,7 @@ ApplicationWindow{
         property int appX: 0
         property int appY: 0
         property int appWS
-        property int pyLineRH1: 0
+        property int pyLineRH1: 100
         property bool logVisible: true
         property string uGitUrl: 'https://github.com/nextsigner/unik-qml-blogger.git'
         property string uRS
@@ -399,10 +399,20 @@ ApplicationWindow{
                             d:'Ver panel de la salida estandar de esta y otras instancias de unik para depurar errores y conocer eventos'
                             b:appSettings.logVisible?app.c2:'#444'
                             c: appSettings.logVisible?'black':'#ccc'
-                            opacity: app.area===1?1.0:0.0
-                            enabled: opacity===1.0
                             onClicking: {
+                                if(!appSettings.logVisible){
+                                    //unik.showLogView(app)
+                                }else{
+                                    //unik.hideLogView(app)
+                                }
+
                                 appSettings.logVisible = !appSettings.logVisible
+                                unik.setProperty("logViewVisible", appSettings.logVisible)
+                                /*unik.log("Objetos: "+app.contentItem.children.lenght)
+                                for(var i=0;i<app.contentItem.children.lenght;i++){
+                                    unik.log("Objeto "+app.contentItem.children[i].objectName)
+                                }*/
+
                             }
                         }
                         Boton{//Config
@@ -547,6 +557,10 @@ ApplicationWindow{
     }
 
     Component.onCompleted: {        
+        unik.setProperty("logViewVisible", appSettings.logVisible)
+        if(appSettings.pyLineRH1<10){
+            appSettings.pyLineRH1 = 100
+        }
         if(Qt.platform.os==='windows'||Qt.platform.os==='linux'||Qt.platform.os==='osx'){
             app.visibility = appSettings.appWS
             if(appSettings.appWS===2){

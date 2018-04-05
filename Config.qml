@@ -168,7 +168,7 @@ Rectangle {
             tiWS.color = unik.fileExist(ws)?app.c1:"red"
         }
         function preSetWS(ws){
-            unik.mkdir(ws)
+            //unik.mkdir(ws)
             tiWS.color = unik.fileExist(ws)?app.c1:"red"
         }
 }

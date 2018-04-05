@@ -6,8 +6,8 @@ Item {
     //anchors.fill: parent
     property alias flm: folderListModelApps
     property alias dgvisible: xAddGit.visible
-    Connections {target: unik;onUkStdChanged: logView.log(unik.ukStd);}
-    Connections {target: unik;onStdErrChanged: logView.log(unik.getStdErr());}
+    //Connections {target: unik;onUkStdChanged: logView.log(unik.ukStd);}
+    //Connections {target: unik;onStdErrChanged: logView.log(unik.getStdErr());}
     Rectangle{
         id: tb
         width: raiz.width
@@ -28,7 +28,7 @@ Item {
         width: raiz.width-app.fs
         //height: raiz.height-tb.height
         anchors.top: tb.bottom
-        anchors.bottom: lineRH.top
+        anchors.bottom: parent.bottom
         anchors.horizontalCenter: raiz.horizontalCenter
         model: folderListModelApps
         delegate: delListApp
@@ -351,33 +351,6 @@ Item {
 
             }
         }
-    }
-
-
-    LineResizeH{
-        id:lineRH;
-        y:visible?appSettings.pyLineRH1: parent.height;
-        onLineReleased: appSettings.pyLineRH1 = y;
-        visible: appSettings.logVisible;
-        /*onYChanged: wv.height = !lineRH.visible ? wv.parent.height-(wv.parent.height-lineRH.y) : wv.parent.height*/
-        onYChanged: {
-            if(y<raiz.height/3){
-                y=raiz.height/3+2
-            }
-        }
-        Component.onCompleted: {
-            if(lineRH.y<raiz.height/3){
-                lineRH.y=raiz.height/3+2
-            }
-            //console.log("Line Resize LovView y: "+y)
-        }
-    }
-    LogView{
-        id:logView;
-        width: raiz.width
-        anchors.top: lineRH.bottom;
-        anchors.bottom: parent.bottom;
-        visible: appSettings.logVisible;
     }
 
 
