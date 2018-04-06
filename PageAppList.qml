@@ -474,9 +474,9 @@ Item {
         visible: false
     }
     Component.onCompleted: {
-        if(lineRH.y<raiz.height/3){
+        /*if(lineRH.y<raiz.height/3){
             lineRH.y=raiz.height/3+2
-        }
+        }*/
         //console.log("Line Resize LovView y: "+y)
     }
     function dg(){

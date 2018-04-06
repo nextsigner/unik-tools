@@ -149,7 +149,10 @@ Rectangle {
         var d = new Date(Date.now())
         var c = unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik-tools/master/GitAppsList.qml?raw=true&r='+d.getTime())
         var nLm=Qt.createQmlObject(c, raiz, 'qmlNLM')
-        lv.model = nLm.lm
+        if(nLm){
+            lv.model = nLm.lm
+        }
+
     }
 
 }

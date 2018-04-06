@@ -4,7 +4,7 @@
         Item {
             id: raiz
             width: parent.width
-            height: 10
+            height: 100
             property int minY: 0
             property int maxY: raiz.parent.height-100
             signal lineReleased
