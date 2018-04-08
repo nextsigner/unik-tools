@@ -309,13 +309,15 @@ Item {
                         var carpetaLocal=appsDir
                         var ugdata = ''+unik.getFile(carpetaLocal+'/'+fileName+'/unik_github.dat')
                         var url = ugdata.replace('.git', '')
-                        logView.log('Actualizando '+url)
+                        //logView.log('Actualizando '+url)
 
-                        logView.log('Actualizando en carpeta '+carpetaLocal)
+                        //logView.log('Actualizando en carpeta '+carpetaLocal)
+                        appSettings.logVisible = true
+                        unik.setProperty("logViewVisible", true)
                         listApps.enabled=false
                         botActualizarGit.enabled=false
                         var actualizado = unik.downloadGit(url, carpetaLocal)
-                        logView.log('Actualizado: '+actualizado)
+                        //logView.log('Actualizado: '+actualizado)
                         listApps.enabled=true
                         botActualizarGit.enabled=true
                     }
