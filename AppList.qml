@@ -149,7 +149,7 @@ Rectangle {
                                         var c='{"mode":"-upk", "arg1": "'+upkFileName+'", "arg2":"-user=unik", "-key='+m1.replace('.upk', '')+'"}'
                                         unik.setFile(appsDir+'/config.json', c)
                                         unik.restartApp()
-                                        //https://raw.githubusercontent.com/nextsigner/semitimes/master/semitimes_year.upk
+
                                     }
 
 
