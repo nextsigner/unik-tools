@@ -340,6 +340,7 @@ ApplicationWindow{
                             d:'Instalar una aplicaciòn desde una url GitHub.com'
                             b:pal.dgvisible?app.c2:app.c5
                             c:pal.dgvisible?app.c5:app.c2
+                            visible: version>=2.15
                             onClicking: {
                                 app.area = 1
                                 pal.dgvisible = !pal.dgvisible

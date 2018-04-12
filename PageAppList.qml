@@ -6,8 +6,8 @@ Item {
     //anchors.fill: parent
     property alias flm: folderListModelApps
     property alias dgvisible: xAddGit.visible
-    //Connections {target: unik;onUkStdChanged: logView.log(unik.ukStd);}
-    //Connections {target: unik;onStdErrChanged: logView.log(unik.getStdErr());}
+    //Connections {target: unik;onUkStdChanged: //logView.log(unik.ukStd);}
+    //Connections {target: unik;onStdErrChanged: //logView.log(unik.getStdErr());}
     Rectangle{
         id: tb
         width: raiz.width
@@ -114,7 +114,7 @@ Item {
                         var s0=''+fileName
                         var s1= s0.substring(s0.length-4, s0.length);
                         if(!folderListModelApps.isFolder(index)&&s1==='.upk'){
-                            logView.log("Lanzando upk: "+fileName)
+                            //logView.log("Lanzando upk: "+fileName)
                             var d = new Date(Date.now())
                             var t = unik.getPath(2)+'/t'+d.getTime()
                             unik.mkdir(t)
@@ -122,9 +122,9 @@ Item {
                             if(upkToFolder){
                                 engine.load(t+'/main.qml')
                             }
-                            logView.log("Upk to folder: "+upkToFolder)
+                            //logView.log("Upk to folder: "+upkToFolder)
                         }else{
-                            logView.log("Lanzando carpeta "+path)
+                            //logView.log("Lanzando carpeta "+path)
                             engine.load(path+'/main.qml')
                         }
                     }
@@ -164,14 +164,14 @@ Item {
                         var s0=''+fileName
                         var s1= s0.substring(s0.length-4, s0.length);
                         if(!folderListModelApps.isFolder(index)&&s1==='.upk'){
-                            logView.log("Lanzando upk: "+fileName)
+                            //logView.log("Lanzando upk: "+fileName)
                             var d = new Date(Date.now())
                             var t = unik.getPath(2)+'/t'+d.getTime()
                             unik.mkdir(t)
                             var upkToFolder = unik.upkToFolder(path, "unik-free", "free", t)
                             c='{"mode":"-folder", "arg1": "'+t+'"}'
                         }else{
-                            logView.log("Lanzando carpeta "+path)
+                            //logView.log("Lanzando carpeta "+path)
                             c='{"mode":"-folder", "arg1": "'+path+'"}'
                         }
                         unik.setFile(j, c)
@@ -240,7 +240,7 @@ Item {
                         var s0=''+fileName
                         var s1= s0.substring(s0.length-4, s0.length);
                         if(!folderListModelApps.isFolder(index)&&s1==='.upk'){
-                            logView.log("Lanzando upk: "+fileName)
+                            //logView.log("Lanzando upk: "+fileName)
                             var d = new Date(Date.now())
                             var t = unik.getPath(2)+'/t'+d.getTime()
                             unik.mkdir(t)
@@ -250,9 +250,9 @@ Item {
                                 unik.log('Running: '+appPath+' '+cl)
                                 unik.run(appPath+' '+cl)
                             }
-                            logView.log("Upk to folder: "+upkToFolder)
+                            //logView.log("Upk to folder: "+upkToFolder)
                         }else{
-                            logView.log("Lanzando carpeta "+path)
+                            //logView.log("Lanzando carpeta "+path)
                             cl+=''+path
                             unik.log('Running: '+appPath+' '+cl)
                             unik.run(appPath+' '+cl)
@@ -275,8 +275,8 @@ Item {
                             app.appVigente = fileName
                             var c2 = appsDir+'/config.json'
                             unik.setFile(c2, json)
-                            logView.log('Aplicaciòn por defecto: '+c)
-                            logView.log('Nuevo Json Config: '+c2)
+                            //logView.log('Aplicaciòn por defecto: '+c)
+                            //logView.log('Nuevo Json Config: '+c2)
                         }else{
                             var c1 = ''+fileName
                             var c2 = c1.split('.upk')
@@ -306,20 +306,29 @@ Item {
                     //opacity:  (''+fileName).indexOf('unik-qml')===0 ? 1.0 : 0.0
                     enabled: opacity===1.0
                     onClicked: {
-                        var carpetaLocal=appsDir
-                        var ugdata = ''+unik.getFile(carpetaLocal+'/'+fileName+'/unik_github.dat')
-                        var url = ugdata.replace('.git', '')
-                        //logView.log('Actualizando '+url)
+                        if(version<2.15){
+                            var carpetaLocal=appsDir
+                            var ugdata = ''+unik.getFile(carpetaLocal+'/'+fileName+'/unik_github.dat')
+                            var url = ugdata.replace('.git', '')
+                            //var url = url0.replace('https://github.com/', 'https://codeload.github.com/')
+                            ////logView.log('Actualizando '+url)
 
-                        //logView.log('Actualizando en carpeta '+carpetaLocal)
-                        appSettings.logVisible = true
-                        unik.setProperty("logViewVisible", true)
-                        listApps.enabled=false
-                        botActualizarGit.enabled=false
-                        var actualizado = unik.downloadGit(url, carpetaLocal)
-                        //logView.log('Actualizado: '+actualizado)
-                        listApps.enabled=true
-                        botActualizarGit.enabled=true
+                            ////logView.log('Actualizando en carpeta '+carpetaLocal)
+                            appSettings.logVisible = true
+                            unik.setProperty("logViewVisible", true)
+                            listApps.enabled=false
+                            botActualizarGit.enabled=false
+                            var actualizado = unik.downloadGit(url, carpetaLocal)
+                            ////logView.log('Actualizado: '+actualizado)
+                            listApps.enabled=true
+                            botActualizarGit.enabled=true
+                        }else{
+                            var carpetaLocal=appsDir
+                            var ugdata = ''+unik.getFile(carpetaLocal+'/'+fileName+'/unik_github.dat')
+                            //var url0 = ugdata.replace('.git', '/zip/master')
+                            //var urlZip = url0.replace('https://github.com/', 'https://codeload.github.com/')
+                            var actualizado = unik.downloadGit(ugdata, carpetaLocal)
+                        }
                     }
                     Text {
                         text: '\uf019'
@@ -447,13 +456,13 @@ Item {
         onVisibleChanged: {
             if(!visible){
                 if(dc.estadoEntrada===1&&dc.estadoSalida===0){
-                    logView.log("No Acepta eliminar")
+                    //logView.log("No Acepta eliminar")
                 }
                 if(dc.estadoEntrada===1&&dc.estadoSalida===1){
-                    logView.log("Acepta eliminar")
+                    //logView.log("Acepta eliminar")
                     var urlUpk = appsDir+'/'+dc.dato1
                     var urlUpk1 = urlUpk.replace('file:///', '')
-                    logView.log("Eliminando "+urlUpk1)
+                    //logView.log("Eliminando "+urlUpk1)
                     unik.deleteFile(urlUpk1)
                 }
                 if(dc.estadoEntrada===2&&dc.estadoSalida===1){
@@ -474,45 +483,12 @@ Item {
         height: app.fs*11
         anchors.centerIn: parent
         visible: false
-    }
-    Component.onCompleted: {
-        /*if(lineRH.y<raiz.height/3){
-            lineRH.y=raiz.height/3+2
-        }*/
-        //console.log("Line Resize LovView y: "+y)
-    }
-    function dg(){
+    }    
+    function dg(){        
         btnDG.enabled = false
-        if(tiUrlGit.text.indexOf('https://')!==-1&&tiUrlGit.text.indexOf('/')!==-1&&tiUrlGit.text.indexOf('github.com/')!==-1){
-            var check = ''+unik.getHttpFile(tiUrlGit.text.replace('.git', ''));
-            unik.log('Check url github '+tiUrlGit.text+': '+check)
-            if(check!=='Error:404'){
-                var g1=tiUrlGit.text.split('/')
-                var g2=(''+g1[g1.length-1]).replace('.git', '')
-                var folder=appsDir
-                var folder2=folder+'/'+g2
-                unik.log('Prepare urlGit: '+tiUrlGit.text)
-                unik.log('Making folder: '+folder)
-                unik.mkdir(folder2)
-                var urlGit=tiUrlGit.text.replace('.git', '')
-                var gitDownloaded=unik.downloadGit(urlGit, folder)
-                if(gitDownloaded){
-                    xAddGit.visible = false
-                    btnDG.enabled = true
-                    unik.log('GitHub downloaded in folder '+folder2)
-                    var ugdata = tiUrlGit.text
-                    unik.setFile(folder2+'/unik_github.dat', ugdata)
-                    listApps.model = undefined
-                    listApps.model = folderListModelApps
-                    return;
-                }
-            }else{
-                unik.log('GitHub Project Not Found.')
-            }
-        }else{
-            unik.log('This url is no valid for this action.')
-            btnDG.enabled = true
-        }
+        var carpetaLocal=appsDir
+        var actualizado = unik.downloadGit(tiUrlGit.text, carpetaLocal)
+        btnDG.enabled = true
     }
 
 }

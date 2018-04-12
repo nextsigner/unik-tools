@@ -39,6 +39,7 @@ sitio web en donde exista código QML disponible."
             img2: "https://github.com/nextsigner/naty/blob/master/screenshot.png?raw=true"
             tipo: "linux-osx-windows-android"
         }
+
         ListElement{
             nom: "semitimes"
             des: "Primer Reloj QML creado para la lista de Aplicaciones QML disponibles para unik qml engine."
@@ -47,6 +48,17 @@ sitio web en donde exista código QML disponible."
             img2: "https://github.com/nextsigner/semitimes/blob/master/semitimes_m1/screenshot.png?raw=true"
             tipo: "linux-osx-windows-android"
         }
+
+
+        ListElement{
+            nom: "semitimes_year"
+            des: "Reloj Calendario QML creado para la lista de Aplicaciones QML disponibles para unik qml engine.\nEste reloj està disponible en el formato UPK."
+            dev: "@nextsigner"
+            urlgit: "https://github.com/nextsigner/semitimes/tree/master/semitimes_m1"
+            img2: "https://github.com/nextsigner/semitimes/blob/master/semitimes_m1/screenshot.png?raw=true"
+            tipo: "linux-osx-windows-android"
+        }
+
 
     }
 
