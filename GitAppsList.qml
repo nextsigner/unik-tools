@@ -59,9 +59,8 @@ sitio web en donde exista código QML disponible."
             img2: "https://github.com/nextsigner/semitimes/blob/master/semitimes_m1/screenshot.png?raw=true"
             tipo: "linux-osx-windows-android"
         }
-        ListElement{nom: "spacer";tipo: "linux-osx-windows-android"}
-        ListElement{nom: "spacer";tipo: "linux-osx-windows-android"}
-        ListElement{nom: "spacer";tipo: "linux-osx-windows-android"}
+        ListElement{nom: "spacer";des:"";dev:"";img2:"";tipo: "linux-osx-windows-android"}
+
 
 
     }

@@ -20,8 +20,9 @@ Rectangle {
                 height: visible?lv.width*0.2:0
                 anchors.horizontalCenter: parent.horizontalCenter
                 clip: true
-                color: nom!=='spacer'?app.c1:'transparent'
-                border.width: nom!=='spacer'?2:0
+                color: app.c1
+                opacity: nom!=='spacer'?1.0:0.0
+                border.width: 2
                 border.color: app.c2
                 radius: app.fs*0.5
                 visible: (''+tipo).indexOf(''+Qt.platform.os)!==-1
@@ -36,7 +37,7 @@ Rectangle {
                     cache:false
                 }
                 Column{
-                    visible:parent.color!=='transparent'
+                    //visible:parent.color!=='transparent'
                     anchors.left: imagen.right
                     anchors.leftMargin: app.fs*0.5
                     anchors.verticalCenter: parent.verticalCenter
