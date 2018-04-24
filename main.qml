@@ -78,111 +78,17 @@ ApplicationWindow{
         property int appY: 0
         property int appWS
         property int pyLineRH1: 100
-        property bool logVisible: true
+        property bool logVisible
         property string uGitUrl: 'https://github.com/nextsigner/unik-qml-blogger.git'
         property string uRS
         property string ucs: ''
+        onLogVisibleChanged: {
+            unik.setProperty("logViewVisible", logVisible)
+        }
     }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
-    /*Item{
-        id: xWainting
-        anchors.fill: parent
-        visible: app.waiting
-        Rectangle{
-            width: parent.width*0.1
-            height: width
-            radius: width*0.5
-            color: app.c5
-            border.width: 2
-            border.color: app.c2
-            anchors.centerIn: parent
-            Text {
-                id: txtW0
-                text: "\uf1ce"
-                font.family: "FontAwesome"
-                color: app.c2
-                font.pixelSize: parent.width*0.9
-                anchors.centerIn: parent
-                onRotationChanged:{if(rotation>279){rotation=50}}
-                Behavior on rotation {
-                    NumberAnimation {
-                        target: txtW0
-                        property: "rotation"
-                        duration: 2000
-                        easing.type: Easing.InOutQuad
-                    }
-                }
-            }
-            Text {
-                id: txtW1
-                text: "\uf1ce"
-                font.family: "FontAwesome"
-                color: "black"
-                rotation: 100
-                font.pixelSize: parent.width*0.8
-                anchors.centerIn: parent
-                onRotationChanged:{if(rotation>330){rotation=180}}
-                Behavior on rotation {
-                    NumberAnimation {
-                        target: txtW1
-                        property: "rotation"
-                        duration: 3000
-                        easing.type: Easing.InOutQuad
-                    }
-                }
-            }
-            Text {
-                id: txtW2
-                text: "\uf1ce"
-                font.family: "FontAwesome"
-                color: app.c2
-                rotation: 350
-                font.pixelSize: parent.width*0.7
-                anchors.centerIn: parent
-                onRotationChanged:{if(rotation<180){rotation=300}}
-                Behavior on rotation {
-                    NumberAnimation {
-                        target: txtW2
-                        property: "rotation"
-                        duration: 5000
-                        easing.type: Easing.InOutQuad
-                    }
-                }
-            }
-            Text {
-                id: txtWaiting1
-                text: "\uf017"
-                font.family: "FontAwesome"
-                color: app.c2
-                font.pixelSize: parent.width*0.55
-                anchors.centerIn: parent
-            }
-            MouseArea{
-                anchors.fill: parent
-                onClicked: app.waiting=false
-            }
-        }
-        Timer{
-            id:tw
-            running: true
-            repeat: true
-            interval: 1000
-            property int s: 5
-            onTriggered: {
-                txtWaiting1.text=''+s
-                //console.log("--------------------->"+s)
-                if(s===0){
-                    tw.stop()
-                    if(app.waiting){
-                        Qt.quit()
-                    }
-                }
-                txtWaiting1.opacity=txtWaiting1.opacity-=0.15
-                tw.s--
-            }
-        }
-
-    }*/
+    //FontLoader {name: "FontAwesomeRegular400";source: "qrc:/fa-regular-400.ttf";}
+    //FontLoader {name: "FontAwesome";source: "qrc:/fa-solid-900.ttf";}
     Item{
         id: xApp
         anchors.fill: parent
@@ -299,6 +205,18 @@ ApplicationWindow{
                                 app.area=0
                             }
                         }
+                        Boton{//DepsList
+                            id:btnAreaDeps
+                            w:parent.width
+                            h: w                            
+                            //f:"FontAwesome5Free"
+                            t: '\uf00a'
+                            d:'Instalar Dependencias'
+                            b:app.area===4?app.c2:app.c1
+                            onClicking: {
+                                app.area=4
+                            }
+                        }
                         Boton{//PageAppList
                             id:btnArea1
                             w:parent.width
@@ -340,7 +258,7 @@ ApplicationWindow{
                             d:'Instalar una aplicaciòn desde una url GitHub.com'
                             b:pal.dgvisible?app.c2:app.c5
                             c:pal.dgvisible?app.c5:app.c2
-                            visible: version>=2.15
+                            //visible: parseInt(version)>=2.15
                             onClicking: {
                                 app.area = 1
                                 pal.dgvisible = !pal.dgvisible
@@ -413,7 +331,6 @@ ApplicationWindow{
                                 for(var i=0;i<app.contentItem.children.lenght;i++){
                                     unik.log("Objeto "+app.contentItem.children[i].objectName)
                                 }*/
-
                             }
                         }
                         Boton{//Config
@@ -466,6 +383,12 @@ ApplicationWindow{
                     height: parent.height
                     visible: app.area===0
                 }
+                UnikInstallDependencies{
+                    id: unikDepsList
+                    width: app.width-xTools.width
+                    height: parent.height
+                    visible: app.area===4
+                }
                 PageAppList{
                     id: pal
                     width: app.width-xTools.width
@@ -504,13 +427,16 @@ ApplicationWindow{
 
     Timer{
         id:timerInit
-        running: false
-        repeat: false
-        interval: 2000
+        running: true
+        repeat: true
+        interval: 1000
+        property int v: 0
         onTriggered: {
-            unik.log('unik-tools log')
-            unik.log('unik-tools version: '+version+'')
-            unik.log('unik-tools host:  '+host+'')
+                unik.setProperty("logViewVisible", appSettings.logVisible)
+                timerInit.v++
+                if(timerInit.v>12){
+                    timerInit.stop()
+                }
         }
     }
 
@@ -574,9 +500,11 @@ ApplicationWindow{
             app.visibility = "FullScreen"
         }
         ful.init()
-        timerInit.start()
+        unik.log('unik-tools log')
+        unik.log('unik version: '+version+'')
+        unik.log('unik-tools host:  '+host+'')
         unik.log('Unik Tools AppName: '+appName)
-        unik.log(app.contentData)
+        //unik.log(app.contentData)
         appList.act()
     }
 

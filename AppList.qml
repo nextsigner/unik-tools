@@ -11,6 +11,7 @@ Rectangle {
         spacing: app.fs*0.5
         delegate: del
         anchors.horizontalCenter: parent.horizontalCenter
+        clip:true
         Component{
             id:del
             Rectangle{
@@ -19,8 +20,8 @@ Rectangle {
                 height: visible?lv.width*0.2:0
                 anchors.horizontalCenter: parent.horizontalCenter
                 clip: true
-                color: app.c1
-                border.width: 2
+                color: nom!=='spacer'?app.c1:'transparent'
+                border.width: nom!=='spacer'?2:0
                 border.color: app.c2
                 radius: app.fs*0.5
                 visible: (''+tipo).indexOf(''+Qt.platform.os)!==-1
@@ -35,6 +36,7 @@ Rectangle {
                     cache:false
                 }
                 Column{
+                    visible:parent.color!=='transparent'
                     anchors.left: imagen.right
                     anchors.leftMargin: app.fs*0.5
                     anchors.verticalCenter: parent.verticalCenter

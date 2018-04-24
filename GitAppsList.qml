@@ -4,6 +4,7 @@ Item {
     property alias lm: lm2
     ListModel{
         id:lm2
+
         ListElement{
             nom: "FutuRock Web Browser"
             des: "Navergador Web para los oyentes de FutuRock. Este navegador está diseñado solo para navegar por las Redes Sociales más importantes de la manera más facil, ágil y dinámica aprovechando al máximo tu pantalla."
@@ -58,6 +59,9 @@ sitio web en donde exista código QML disponible."
             img2: "https://github.com/nextsigner/semitimes/blob/master/semitimes_m1/screenshot.png?raw=true"
             tipo: "linux-osx-windows-android"
         }
+        ListElement{nom: "spacer";tipo: "linux-osx-windows-android"}
+        ListElement{nom: "spacer";tipo: "linux-osx-windows-android"}
+        ListElement{nom: "spacer";tipo: "linux-osx-windows-android"}
 
 
     }
