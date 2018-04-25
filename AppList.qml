@@ -122,34 +122,32 @@ Rectangle {
                                 onClicked: {
                                     if((''+urlgit).indexOf('.upk')<0){
 
+                                        //app.area=1
 
-
-                                    //app.area=1
-
-                                    //var downloaded = unik.downloadGit(urlgit, fd)
-                                    unik.setProperty("logViewVisible", true)
-                                    var carpetaLocal=appsDir
-                                    var downloaded = unik.downloadGit(urlgit, carpetaLocal)
-                                    var fd = appsDir
-                                    if(downloaded){
-                                        unik.log('Aplicación '+nom+' descargada.')
-                                        var m0= (''+urlgit).split('/')
-                                        var s0=''+m0[m0.length-1]
-                                        var s1=s0.replace('.git', '')
-                                        var nc = '{"mode":"-folder", "arg1": "'+fd+'/'+s1+'"}'
-                                        unik.setFile(appsDir+'/config.json', nc)
-                                        unik.setFile(fd+'/unik_github.dat', urlgit)
-                                        unik.restartApp()
-                                    }else{
-                                        unik.log('Aplicación '+nom+' no se ha instalado.')
-                                    }
+                                        //var downloaded = unik.downloadGit(urlgit, fd)
+                                        unik.setProperty("logViewVisible", true)
+                                        var carpetaLocal=appsDir
+                                        var downloaded = unik.downloadGit(urlgit, carpetaLocal)
+                                        var fd = appsDir
+                                        if(downloaded){
+                                            unik.log('Aplicación '+nom+' descargada.')
+                                            var m0= (''+urlgit).split('/')
+                                            var s0=''+m0[m0.length-1]
+                                            var s1=s0.replace('.git', '')
+                                            var nc = '{"mode":"-folder", "arg1": "'+fd+'/'+s1+'"}'
+                                            unik.setFile(appsDir+'/config.json', nc)
+                                            unik.setFile(fd+'/unik_github.dat', urlgit)
+                                            unik.restartApp()
+                                        }else{
+                                            unik.log('Aplicación '+nom+' no se ha instalado.')
+                                        }
                                     }else{
                                         var m0=(''+urlgit).split('/')
                                         var m1=''+m0[m0.length-1]
                                         var upkData=unik.getHttpFile(urlgit)
                                         var upkFileName=appsDir+'/'+m1
                                         unik.setFile(upkFileName, upkData)
-                                        var c='{"mode":"-upk", "arg1": "'+upkFileName+'", "arg2":"-user=unik", "-key='+m1.replace('.upk', '')+'"}'
+                                        var c='{"mode":"-upk", "arg1": "'+upkFileName+'", "arg2":"-user=unik", "arg3":"-key=free"}'
                                         unik.setFile(appsDir+'/config.json', c)
                                         unik.restartApp()
 
