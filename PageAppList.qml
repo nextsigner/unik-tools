@@ -6,8 +6,6 @@ Item {
     //anchors.fill: parent
     property alias flm: folderListModelApps
     property alias dgvisible: xAddGit.visible
-    //Connections {target: unik;onUkStdChanged: //logView.log(unik.ukStd);}
-    //Connections {target: unik;onStdErrChanged: //logView.log(unik.getStdErr());}
     Rectangle{
         id: tb
         width: raiz.width
@@ -186,9 +184,6 @@ Item {
                         }
                     }
                 }
-
-
-
                 Button{//Ejecutar Aparte
                     id: btnRun2
                     width: parent.height
@@ -266,8 +261,8 @@ Item {
                     text: '\uf00c'
                     font.family: "FontAwesome"
                     font.pixelSize: xItem.height*0.8
-                    opacity: app.appVigente+'.upk'!==fileName ? 1.0 : 0.0
-                    background: Rectangle{color: app.appVigente+'.upk'===fileName ? app.c2 : app.c1; radius: app.fs*0.3;}
+                    opacity: app.appVigente!==fileName ? 1.0 : 0.0
+                    background: Rectangle{color: app.appVigente===fileName ? app.c2 : app.c1; radius: app.fs*0.3;}
                     onClicked: {
                         if((''+fileName).indexOf('.upk')<0){
                             var c = appsDir+'/'+fileName
@@ -278,10 +273,20 @@ Item {
                             //logView.log('Aplicaciòn por defecto: '+c)
                             //logView.log('Nuevo Json Config: '+c2)
                         }else{
-                            var c1 = ''+fileName
-                            var c2 = c1.split('.upk')
-                            app.appVigente = c2[0]
+                            /*var c1 = ''+fileName
+                            var c2 = c1.split('.upk')*/
+                            app.appVigente = fileName
+                            var p = ''+appsDir+'/'+fileName
+                            var d = '{"mode":"-upk", "arg1":"'+p+'", "arg2":"-user=unik-free", "arg3":"-key=free"}'
+                            var c=''+appsDir+'/config.json'
+                            unik.setFile(c, d)
+
+                            //unik.restartApp()
                         }
+                        dc.estadoEntrada=3
+                        dc.titulo="Confirmar Reinicio"
+                        dc.consulta="Se ha cambiado de aplicaciòn\npor defecto: "+appVigente+"\nReiniciar Unik?"
+                        dc.visible=true
                     }
                 }
 
@@ -470,6 +475,9 @@ Item {
                 }
                 if(dc.estadoEntrada===2&&dc.estadoSalida===0){
                     ukit.loadUpk(dc.dato1, false)
+                }
+                if(dc.estadoEntrada===3&&dc.estadoSalida===1){
+                    unik.restartApp()
                 }
 
 
