@@ -147,7 +147,7 @@ Rectangle {
                                         var upkData=unik.getHttpFile(urlgit)
                                         var upkFileName=appsDir+'/'+m1
                                         unik.setFile(upkFileName, upkData)
-                                        var c='{"mode":"-upk", "arg1": "'+upkFileName+'", "arg2":"-user=unik", "arg3":"-key=free"}'
+                                        var c='{"mode":"-upk", "arg1": "'+upkFileName+'", "arg2":"-user=unik-free", "arg3":"-key=free"}'
                                         unik.setFile(appsDir+'/config.json', c)
                                         unik.restartApp()
 

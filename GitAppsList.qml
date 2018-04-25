@@ -56,7 +56,7 @@ sitio web en donde exista código QML disponible."
             des: "Reloj Calendario QML creado para la lista de Aplicaciones QML disponibles para unik qml engine.\nEste reloj està disponible en el formato UPK."
             dev: "@nextsigner"
             urlgit: "https://raw.githubusercontent.com/nextsigner/semitimes/master/semitimes_year.upk"
-            img2: "https://github.com/nextsigner/semitimes/blob/master/semitimes_m1/screenshot.png?raw=true"
+            img2: "https://raw.githubusercontent.com/nextsigner/semitimes/master/semitimes_year/screenshot.png"
             tipo: "linux-osx-windows-android"
         }
         ListElement{nom: "spacer";des:"";dev:"";img2:"";tipo: "linux-osx-windows-android"}
