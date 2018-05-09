@@ -237,8 +237,8 @@ Item {
                 var xml0=unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/dependencies/master/'+deps6[deps6.length-1]+'/dependencies.xml')
                 var d=new Date(Date.now())
                 var r=''+d.getTime()
-                unik.setFile('/home/nextsigner/Documentos/'+r+'.xml', xml0)
-                xmlLm.source ='file:///home/nextsigner/Documentos/'+r+'.xml'
+                unik.setFile(unik.getPath(2)+'/'+r+'.xml', xml0)
+                xmlLm.source ='file://'+unik.getPath(2)+'/'+r+'.xml'
                 //console.log('>:'+deps6[deps6.length-1]+'------<br>')
             }
         }

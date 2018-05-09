@@ -136,7 +136,8 @@ Rectangle {
             //modality: true ? Qt.WindowModal : Qt.NonModal
             title: 'Select New Work Space'
             selectExisting: true
-            folder: appSettings.ucs
+            folder: shortcuts.home
+            //folder: 'file:///'+appSettings.ucs
             selectMultiple: false
             selectFolder: true
             //nameFilters: [ "Archivo de texto (*.txt)", "Todos los archivos (*)" ]
@@ -155,6 +156,9 @@ Rectangle {
                 tiWS.text=f
             }
             onRejected: { console.log("Rejected") }
+        }
+        Component.onCompleted: {
+            fileDialog.folder = appSettings.ucs
         }
 
         function setWS(ws){

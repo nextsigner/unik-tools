@@ -2,18 +2,19 @@
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
+import LogView 1.0
 
 ApplicationWindow{
     id: app
     objectName: 'unik-tools'
     visible: true
-    width: 500
-    height: 500
+    //width: 500
+    //height: 500
     visibility: 'Maximized'
     title: "unik-tools"
     color: Qt.platform.os !=='android' && app.waiting?"transparent":app.c5
-    minimumWidth: 500
-    minimumHeight: 500
+    //minimumWidth: 500
+    //minimumHeight: 500
 
     property int area: 0
     property bool closedModeLaunch: false
@@ -77,7 +78,7 @@ ApplicationWindow{
         property int appX: 0
         property int appY: 0
         property int appWS
-        property int pyLineRH1: 100
+        property int pyLineRH1
         property bool logVisible
         property string uGitUrl: 'https://github.com/nextsigner/unik-qml-blogger.git'
         property string uRS
@@ -208,7 +209,7 @@ ApplicationWindow{
                         Boton{//DepsList
                             id:btnAreaDeps
                             w:parent.width
-                            h: w                            
+                            h: w
                             //f:"FontAwesome5Free"
                             t: '\uf00a'
                             d:'Instalar Dependencias'
@@ -299,7 +300,7 @@ ApplicationWindow{
                                     if(Qt.platform.os!=='android'){
                                         unik.restartApp(args)
                                     }else{
-                                         gitDownloaded=unik.downloadGit('https://github.com/nextsigner/unik-tools', unik.getPath(3)+'/unik/unik-tools')
+                                        gitDownloaded=unik.downloadGit('https://github.com/nextsigner/unik-tools', unik.getPath(3)+'/unik/unik-tools')
                                         if(gitDownloaded){
                                             var j=appsDir+'/temp_config.json'
                                             var c='{"mode":"-folder", "arg1": "'+appsDir+'/unik-tools'+'"}'
@@ -319,18 +320,7 @@ ApplicationWindow{
                             b:appSettings.logVisible?app.c2:'#444'
                             c: appSettings.logVisible?'black':'#ccc'
                             onClicking: {
-                                if(!appSettings.logVisible){
-                                    //unik.showLogView(app)
-                                }else{
-                                    //unik.hideLogView(app)
-                                }
-
                                 appSettings.logVisible = !appSettings.logVisible
-                                unik.setProperty("logViewVisible", appSettings.logVisible)
-                                /*unik.log("Objetos: "+app.contentItem.children.lenght)
-                                for(var i=0;i<app.contentItem.children.lenght;i++){
-                                    unik.log("Objeto "+app.contentItem.children[i].objectName)
-                                }*/
                             }
                         }
                         Boton{//Config
@@ -407,12 +397,27 @@ ApplicationWindow{
                     height: parent.height
                     visible: app.area===3
                 }
-            }
+                }
 
 
 
 
         }
+        LogView{
+            id:logView
+            height: appSettings.pyLineRH1
+            width: parent.width-xTools.width
+            //y:appSettings.pyLineRH1
+            topHandlerHeight:4
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            visible: appSettings.logVisible
+            onHeightChanged: appSettings.pyLineRH1=height
+            onYChanged: {
+                //appSettings.pyLineRH1=y
+            }
+        }
+
 
         FormUnikLogin{
             id: ful
@@ -421,6 +426,7 @@ ApplicationWindow{
             height: parent.height
             color: app.c5
         }
+
     }
 
 
@@ -432,11 +438,11 @@ ApplicationWindow{
         interval: 1000
         property int v: 0
         onTriggered: {
-                unik.setProperty("logViewVisible", appSettings.logVisible)
-                timerInit.v++
-                if(timerInit.v>12){
-                    timerInit.stop()
-                }
+            unik.setProperty("logViewVisible", appSettings.logVisible)
+            timerInit.v++
+            if(timerInit.v>12){
+                timerInit.stop()
+            }
         }
     }
 
@@ -483,11 +489,12 @@ ApplicationWindow{
         }
     }
 
-    Component.onCompleted: {        
-        unik.setProperty("logViewVisible", appSettings.logVisible)
-        if(appSettings.pyLineRH1<10){
+    Component.onCompleted: {
+        //unik.setProperty("logViewVisible", appSettings.logVisible)
+        if(appSettings.pyLineRH1===0||appSettings.pyLineRH1===undefined){
             appSettings.pyLineRH1 = 100
         }
+        logView.height=appSettings.pyLineRH1
         if(Qt.platform.os==='windows'||Qt.platform.os==='linux'||Qt.platform.os==='osx'){
             app.visibility = appSettings.appWS
             if(appSettings.appWS===2){
