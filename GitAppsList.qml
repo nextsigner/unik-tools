@@ -21,7 +21,7 @@ del blog sobre programación QML de @nextsigner, el suyo, otro blogger o
 sitio web en donde exista código QML disponible."
             dev: "@nextsigner"
             urlgit: "https://github.com/nextsigner/unik-qml-blogger"
-            img2: "http://unikdev.net/img/screenshot.png"
+            img2: "https://github.com/nextsigner/unik-qml-blogger/blob/master/screenshot.png?raw=true"
             tipo: "linux-osx-windows"
         }
         ListElement{

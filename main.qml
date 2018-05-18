@@ -8,13 +8,13 @@ ApplicationWindow{
     id: app
     objectName: 'unik-tools'
     visible: true
-    //width: 500
+    //swidth: 500
     //height: 500
     visibility: 'Maximized'
     title: "unik-tools"
     color: Qt.platform.os !=='android' && app.waiting?"transparent":app.c5
     //minimumWidth: 500
-    //minimumHeight: 500
+    //minimumHeight: 500z
 
     property int area: 0
     property bool closedModeLaunch: false
@@ -64,7 +64,7 @@ ApplicationWindow{
     property color c2: "#4fec35"
     property color c3: "white"
     property color c4: "black"
-    property color c5: "#333333"
+    property color c5: "#000000"
 
     property string appVigente: appName
     property string appSeleccionada: appName
@@ -82,14 +82,9 @@ ApplicationWindow{
         property bool logVisible
         property string uGitUrl: 'https://github.com/nextsigner/unik-qml-blogger.git'
         property string uRS
-        property string ucs: ''
-        onLogVisibleChanged: {
-            unik.setProperty("logViewVisible", logVisible)
-        }
+        property string ucs: ''        
     }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
-    //FontLoader {name: "FontAwesomeRegular400";source: "qrc:/fa-regular-400.ttf";}
-    //FontLoader {name: "FontAwesome";source: "qrc:/fa-solid-900.ttf";}
     Item{
         id: xApp
         anchors.fill: parent
