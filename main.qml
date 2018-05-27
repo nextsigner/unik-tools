@@ -82,7 +82,7 @@ ApplicationWindow{
         property bool logVisible
         property string uGitUrl: 'https://github.com/nextsigner/unik-qml-blogger.git'
         property string uRS
-        property string ucs: ''        
+        property string ucs: ''
     }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
     Item{
@@ -173,7 +173,7 @@ ApplicationWindow{
                 }
             }
 
-            Row{
+            Item{
                 id:rowAreas
                 width: app.width
                 height: app.height-xTopBar.height
@@ -181,7 +181,7 @@ ApplicationWindow{
                     id: xTools
                     width: app.fs*1.5
                     height: parent.height
-                    z:99999
+                    z:logView.z+1
 
                     Column{
                         id: colTools
@@ -201,18 +201,18 @@ ApplicationWindow{
                                 app.area=0
                             }
                         }
-                        Boton{//DepsList
-                            id:btnAreaDeps
-                            w:parent.width
-                            h: w
-                            //f:"FontAwesome5Free"
-                            t: '\uf00a'
-                            d:'Instalar Dependencias'
-                            b:app.area===4?app.c2:app.c1
-                            onClicking: {
-                                app.area=4
-                            }
-                        }
+//                        Boton{//DepsList
+//                            id:btnAreaDeps
+//                            w:parent.width
+//                            h: w
+//                            //f:"FontAwesome5Free"
+//                            t: '\uf00a'
+//                            d:'Instalar Dependencias'
+//                            b:app.area===4?app.c2:app.c1
+//                            onClicking: {
+//                                app.area=4
+//                            }
+//                        }
                         Boton{//PageAppList
                             id:btnArea1
                             w:parent.width
@@ -235,17 +235,6 @@ ApplicationWindow{
                                 app.area=2
                             }
                         }
-                        /*Boton{//Load QML
-                            id:btnLoadQml
-                            visible: userLogin==='nextsigner@gmail.com'
-                            w:parent.width
-                            h: w
-                            t: '\uf05a'
-                            b:app.c1
-                            onClicking: {
-                                unik.loadQml('dfsdf')
-                            }
-                        }*/
                         Boton{//Add git project
                             id:btnAddGit
                             w:parent.width
@@ -368,12 +357,12 @@ ApplicationWindow{
                     height: parent.height
                     visible: app.area===0
                 }
-                UnikInstallDependencies{
-                    id: unikDepsList
-                    width: app.width-xTools.width
-                    height: parent.height
-                    visible: app.area===4
-                }
+//                UnikInstallDependencies{
+//                    id: unikDepsList
+//                    width: app.width-xTools.width
+//                    height: parent.height
+//                    visible: app.area===4
+//                }
                 PageAppList{
                     id: pal
                     width: app.width-xTools.width
@@ -392,27 +381,25 @@ ApplicationWindow{
                     height: parent.height
                     visible: app.area===3
                 }
+                LogView{
+                    id:logView
+                    height: appSettings.pyLineRH1
+                    width: parent.width-xTools.width
+                    topHandlerHeight:4
+                    anchors.bottom: parent.bottom
+                    anchors.right: parent.right
+                    visible: appSettings.logVisible
+                    onHeightChanged: appSettings.pyLineRH1=height
+                    onYChanged: {
+                        //appSettings.pyLineRH1=y
+                    }
                 }
-
-
-
-
-        }
-        LogView{
-            id:logView
-            height: appSettings.pyLineRH1
-            width: parent.width-xTools.width
-            //y:appSettings.pyLineRH1
-            topHandlerHeight:4
-            anchors.bottom: parent.bottom
-            anchors.right: parent.right
-            visible: appSettings.logVisible
-            onHeightChanged: appSettings.pyLineRH1=height
-            onYChanged: {
-                //appSettings.pyLineRH1=y
             }
-        }
 
+
+
+
+        }
 
         FormUnikLogin{
             id: ful
