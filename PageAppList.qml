@@ -23,11 +23,12 @@ Item {
 
     ListView{
         id: listApps
-        width: raiz.width-app.fs
+        width: raiz.width-app.fs*3
         //height: raiz.height-tb.height
         anchors.top: tb.bottom
         anchors.bottom: parent.bottom
-        anchors.horizontalCenter: raiz.horizontalCenter
+        anchors.right: raiz.right
+        //anchors.horizontalCenter: raiz.horizontalCenter
         model: folderListModelApps
         delegate: delListApp
         clip: true
@@ -62,6 +63,7 @@ Item {
                 spacing: app.fs*0.5
 
 
+
                 Button{//Convertir a UPK
                     id: btnToUpk
                     width: parent.height
@@ -85,6 +87,67 @@ Item {
                     Component.onCompleted: {
                         var path = appsDir+'/'+fileName+'/main.qml'
                         btnToUpk.visible = folderListModelApps.isFolder(index)&&unik.fileExist(path)
+                    }
+                }
+
+                Button{//Crear LNK
+                    id: btnToLnk
+                    width: parent.height
+                    height: width
+                    text: '\uf08e'
+                    font.family: "FontAwesome"
+                    font.pixelSize: xItem.height*0.8
+                    //opacity: app.appVigente+'.upk'!==fileName ? 1.0 : 0.0
+                    background: Rectangle{color: app.c1; radius: app.fs*0.3;}
+                    onClicked: {
+                        //Creating Desktop LNK
+                        var exec
+                        var ad = ''
+                        var created=false
+                        if(folderListModelApps.isFolder(index)){
+                            if(Qt.platform.os==='linux'){
+                                ad = ''+unik.getPath(6)+'/'+fileName+'.desktop'
+                                if(!unik.fileExist(ad)){
+                                    exec = ''+unik.getPath(1)+'/unik -folder '+appsDir+'/'+fileName
+                                    console.log('Unik Qml Blogger Exec Path: '+exec)
+                                    created = unik.createLink(exec, ad, ''+fileName+'', 'This is a desktop file created by unik-tools')
+                                    }
+                            }
+                            if(Qt.platform.os==='windows'){
+                                ad = ''+unik.getPath(6)+'/'+fileName+'.lnk'
+                                if(!unik.fileExist(ad)){
+                                    exec = ''+unik.getPath(1)+'/unik.exe'
+                                    var arguments = ' -folder '+appsDir+'/'+fileName
+                                    created = unik.createLink(exec, arguments, ad, 'This is a desktop file created by unik-tools', 'E:/')
+                                }
+                            }
+                            dialogoInformar.info='Se ha creado el acceso directo\nen '+ad
+                        }else{
+                            var s0=''+fileName
+                            var s1= s0.substring(s0.length-4, s0.length);
+                            var s2=s0.replace('.upk', '')
+                            if(s1==='.upk'){
+                                if(Qt.platform.os==='linux'){
+                                    ad = ''+unik.getPath(6)+'/'+s2+'.desktop'
+                                    if(!unik.fileExist(ad)){
+                                        exec = ''+unik.getPath(1)+'/unik  '+appsDir+'/'+fileName
+                                        console.log('Unik Qml Blogger Exec Path: '+exec)
+                                        created = unik.createLink(exec, ad, ''+fileName+'', 'This is a desktop file created by unik-tools')
+                                    }
+                                }
+                                if(Qt.platform.os==='windows'){
+                                    ad = ''+unik.getPath(6)+'/'+s2+'.lnk'
+                                    if(!unik.fileExist(ad)){
+                                        exec = ''+unik.getPath(1)+'/unik.exe'
+                                        var arguments = ' '+appsDir+'/'+fileName
+                                        created = unik.createLink(exec, arguments, ad, 'This is a desktop file created by unik-tools', 'E:/')
+                                    }
+                                }
+                                dialogoInformar.info='Se ha creado el acceso directo\nen '+ad
+                            }
+                        }
+
+                        dialogoInformar.visible=created
                     }
                 }
 
@@ -491,8 +554,8 @@ Item {
         height: app.fs*11
         anchors.centerIn: parent
         visible: false
-    }    
-    function dg(){        
+    }
+    function dg(){
         btnDG.enabled = false
         var carpetaLocal=appsDir
         var actualizado = unik.downloadGit(tiUrlGit.text, carpetaLocal)

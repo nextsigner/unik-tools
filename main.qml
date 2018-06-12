@@ -356,6 +356,7 @@ ApplicationWindow{
                     width: app.width-xTools.width
                     height: parent.height
                     visible: app.area===0
+                    anchors.right: parent.right
                 }
 //                UnikInstallDependencies{
 //                    id: unikDepsList
@@ -368,18 +369,21 @@ ApplicationWindow{
                     width: app.width-xTools.width
                     height: parent.height
                     visible: app.area===1
+                    anchors.right: parent.right
                 }
                 Ayuda{
                     id: ayuda
                     width: app.width-xTools.width
                     height: parent.height
                     visible: app.area===2
+                    anchors.right: parent.right
                 }
                 Config{
                     id: config
                     width: app.width-xTools.width
                     height: parent.height
                     visible: app.area===3
+                    anchors.right: parent.right
                 }
                 LogView{
                     id:logView
@@ -393,6 +397,13 @@ ApplicationWindow{
                     onYChanged: {
                         //appSettings.pyLineRH1=y
                     }
+                }
+                DialogoInformar{
+                    id:dialogoInformar
+                    width: parent.width*0.6
+                    //height: parent.height*0.5
+                    anchors.centerIn: parent
+                    visible: false
                 }
             }
 
