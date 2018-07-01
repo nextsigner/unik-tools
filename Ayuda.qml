@@ -79,8 +79,7 @@ Item {
             Component.onCompleted: {
                 var det = '<b>unik version:</b> '+version
                 det    += '<br><b>unik-tools version:</b> 1.1'
-                det    += '<br><b>unik host:</b> '+host
-                det    += '<br><b>user host:</b> '+userhost
+                det    += '<br><b>unik host:</b> '+unik.host()
                 txtDetalles.text = det
             }
         }

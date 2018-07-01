@@ -69,6 +69,7 @@ ApplicationWindow{
     property string appVigente: appName
     property string appSeleccionada: appName
 
+
     Settings{
         id: appSettings
         category: 'conf-unik-tools'
@@ -83,6 +84,12 @@ ApplicationWindow{
         property string uGitUrl: 'https://github.com/nextsigner/unik-qml-blogger.git'
         property string uRS
         property string ucs: ''
+//        Component.onCompleted: {
+//            //unik.setProperty("logViewVisible", appSettings.logVisible)
+//            var ukhost1=unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik/master/data/unik_host')
+//            unik.setHost(ukhost1)
+//            console.log('1 Current Unik Host Domain: '+unik.host())
+//         }
     }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
     Item{
@@ -484,6 +491,9 @@ ApplicationWindow{
 
     Component.onCompleted: {
         //unik.setProperty("logViewVisible", appSettings.logVisible)
+        var ukhost1=unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik/master/data/unik_host')
+        unik.setHost(ukhost1)
+        console.log('Current Unik Host Domain: '+unik.host())
         if(appSettings.pyLineRH1===0||appSettings.pyLineRH1===undefined){
             appSettings.pyLineRH1 = 100
         }
