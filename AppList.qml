@@ -125,12 +125,13 @@ Rectangle {
                                         //app.area=1
 
                                         //var downloaded = unik.downloadGit(urlgit, fd)
-                                        unik.setProperty("logViewVisible", true)
+                                        //unik.setProperty("logViewVisible", true)
                                         var carpetaLocal=appsDir
-                                        var downloaded = unik.downloadGit(urlgit, carpetaLocal)
+                                        console.log('Descargando  '+urlgit)
+                                        var downloaded = unik.downloadZipFile(urlgit, carpetaLocal)
                                         var fd = appsDir
                                         if(downloaded){
-                                            unik.log('Aplicación '+nom+' descargada.')
+                                            console.log('Aplicación '+nom+' descargada.')
                                             var m0= (''+urlgit).split('/')
                                             var s0=''+m0[m0.length-1]
                                             var s1=s0.replace('.git', '')
@@ -139,7 +140,7 @@ Rectangle {
                                             unik.setFile(fd+'/unik_github.dat', urlgit)
                                             unik.restartApp()
                                         }else{
-                                            unik.log('Aplicación '+nom+' no se ha instalado.')
+                                            console..log('Aplicación '+nom+' no se ha instalado.')
                                         }
                                     }else{
                                         var m0=(''+urlgit).split('/')
