@@ -140,7 +140,7 @@ Rectangle {
                                             unik.setFile(fd+'/unik_github.dat', urlgit)
                                             unik.restartApp()
                                         }else{
-                                            console..log('Aplicación '+nom+' no se ha instalado.')
+                                            console.log('Aplicación '+nom+' no se ha instalado.')
                                         }
                                     }else{
                                         var m0=(''+urlgit).split('/')
