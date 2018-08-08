@@ -419,14 +419,6 @@ ApplicationWindow{
 
         }
 
-        FormUnikLogin{
-            id: ful
-            visible: false
-            width:  parent.width
-            height: parent.height
-            color: app.c5
-        }
-
     }
 
 
