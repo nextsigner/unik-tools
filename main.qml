@@ -501,7 +501,7 @@ ApplicationWindow{
         }else{
             app.visibility = "FullScreen"
         }
-        ful.init()
+        //ful.init()
         unik.log('unik-tools log')
         unik.log('unik version: '+version+'')
         unik.log('unik-tools host:  '+host+'')
