@@ -161,13 +161,102 @@ Rectangle {
     }
 
 
+    Rectangle{
+        width: txtEstado.contentWidth*1.2
+        height: txtEstado.contentHeight*1.2
+        color: app.c5
+        border.width: 2
+        border.color: app.c2
+        radius: app.fs
+        anchors.centerIn: raiz
+        visible: lv.model.count<1
+
+        Text{
+            id:txtEstado
+            font.pixelSize: app.fs
+            anchors.centerIn: parent
+            color: app.c2
+            text: '<b>Cargando lista de aplicaciones...</b>'
+        }
+        MouseArea{
+            anchors.fill: parent
+            onClicked: act()
+        }
+    }
     function act(){
         var d = new Date(Date.now())
-        var c = unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik-tools/master/GitAppsList.qml?raw=true&r='+d.getTime())
-        var nLm=Qt.createQmlObject(c, raiz, 'qmlNLM')
-        if(nLm){
-            lv.model = nLm.lm
+        var dm1='The document has moved'
+        var c = ''+unik.getHttpFile('https://nsdocs.blogspot.com.ar/p/app-list.html')
+        if(c.indexOf(dm1)>0){
+            console.log('Reading AppList for Unik Qml Engine from www.unikode.org')
+            c = ''+unik.getHttpFile('http://www.unikode.org/p/app-list.html')
+        }else{
+            console.log('Reading AppList for Unik Qml Engine from blogpots.com.ar')
         }
+        //console.log(c)
+        var m0=c.split('item="tit"')
+        var s0=''+m0[1]
+        var m1=s0.split('item="pie"')
+        var s1=''+m1[0]
+        var m2=s1.split('item="item">')
+
+        var nlm='import QtQuick 2.0\n'
+        nlm+='ListModel{\n'
+
+        for(var i=1;i<m2.length;i++){
+            console.log('-------->'+m2[i])
+            var ss0=''+m2[i]
+            var mm0=ss0.split("</h2>")
+            var nom=''+mm0[0]
+
+
+
+            var mm1=ss0.split("src=\"")
+            var mm2=(''+mm1[1]).split("\"")
+            var img=''+mm2[0]
+
+            var mm3=ss0.split("<div>")
+            var mm4=(''+mm3[1]).split('<h5 item="url"')
+            var ss1=(''+mm4[0]).replace(/<br \/>/g,'')
+            var des=''+ss1.replace(/<\/div>/g,'')
+
+            var mm5=ss0.split('<h5 item="url">')
+            var mm6=(''+mm5[1]).split('href=\"')
+            var mm7=(''+mm6[1]).split('\"')
+            var urlGit=''+mm7[0]
+
+            var mm8=ss0.split("</h4>")
+            var mm9=(''+mm8[0]).split('con: ')
+            var mm10=(''+mm9[0]).split('Autor: ')
+            var mm11=(''+mm10[1]).split(' - ')
+            var comp=''+mm9[1]
+            var autor=''+mm11[0]
+
+
+            console.log('Nombre: '+nom)
+            console.log('Img: '+img)
+            console.log('Des: '+des)
+            console.log('UrlGit: '+urlGit)
+            console.log('Comp: '+comp)
+            console.log('Autor: '+autor)
+
+
+            nlm+='ListElement{
+            nom: "'+nom+'"
+            des: "'+des+'"
+            dev: "'+autor+'"
+            urlgit: "'+urlGit+'"
+            img2: "'+img+'"
+            tipo: "'+comp+'"
+        }'
+
+        }
+        nlm+='ListElement{nom: "spacer";des:"";dev:"";img2:"";tipo: "linux-osx-windows-android"}'
+        nlm+='}\n'
+        var nLm=Qt.createQmlObject(nlm, raiz, 'qmlNLM')
+        lv.model = nLm
+        txtEstado.text= '<b>Error</b> Fallò la conexiòn o descarga de lista.<br>Click para Actualizar lista de Aplicaciones.'
+
 
     }
 
