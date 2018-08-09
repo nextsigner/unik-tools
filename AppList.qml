@@ -121,14 +121,9 @@ Rectangle {
                                 }
                                 onClicked: {
                                     if((''+urlgit).indexOf('.upk')<0){
-
-                                        //app.area=1
-
-                                        //var downloaded = unik.downloadGit(urlgit, fd)
-                                        //unik.setProperty("logViewVisible", true)
                                         var carpetaLocal=appsDir
                                         console.log('Descargando  '+urlgit)
-                                        var downloaded = unik.downloadZipFile(urlgit, carpetaLocal)
+                                        var downloaded = unik.downloadGit(urlgit, carpetaLocal)
                                         var fd = appsDir
                                         if(downloaded){
                                             console.log('Aplicación '+nom+' descargada.')
