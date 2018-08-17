@@ -122,8 +122,8 @@ Rectangle {
                                 onClicked: {
                                     if((''+urlgit).indexOf('.upk')<0){
                                         var carpetaLocal=appsDir
-                                        console.log('Descargando  '+urlgit)
-                                        var downloaded = unik.downloadGit(urlgit, carpetaLocal)
+                                        //console.log('Descargando  '+urlgit)
+                                        //var downloaded = unik.downloadGit(urlgit, carpetaLocal)
                                         var fd = appsDir
                                         var m0= (''+urlgit).split('/')
                                             var s0=''+m0[m0.length-1]
