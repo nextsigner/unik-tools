@@ -125,7 +125,16 @@ Rectangle {
                                         console.log('Descargando  '+urlgit)
                                         var downloaded = unik.downloadGit(urlgit, carpetaLocal)
                                         var fd = appsDir
-                                        if(downloaded){
+                                        var m0= (''+urlgit).split('/')
+                                            var s0=''+m0[m0.length-1]
+                                            var s1=s0.replace('.git', '')
+                                            var nc = '{"mode":"-folder", "arg1": "'+fd+'/'+s1+'"}'
+											var nct = '{"mode":"-git", "arg1": "'+urlgit+'"}'
+                                            unik.setFile(appsDir+'/config.json', nc)
+											unik.setFile(appsDir+'/temp_config.json', nct)
+                                            unik.setFile(fd+'/'+s1+'/unik_github.dat', urlgit)
+                                            unik.restartApp()
+										/*if(downloaded){
                                             console.log('Aplicación '+nom+' descargada.')
                                             var m0= (''+urlgit).split('/')
                                             var s0=''+m0[m0.length-1]
@@ -136,7 +145,7 @@ Rectangle {
                                             unik.restartApp()
                                         }else{
                                             console.log('Aplicación '+nom+' no se ha instalado.')
-                                        }
+                                        }*/
                                     }else{
                                         var m0=(''+urlgit).split('/')
                                         var m1=''+m0[m0.length-1]
