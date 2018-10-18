@@ -201,7 +201,7 @@ Rectangle {
         nlm+='ListModel{\n'
 
         for(var i=1;i<m2.length;i++){
-            console.log('-------->'+m2[i])
+            //console.log('-------->'+m2[i])
             var ss0=''+m2[i]
             var mm0=ss0.split("</h2>")
             var nom=''+mm0[0]
@@ -230,12 +230,12 @@ Rectangle {
             var autor=''+mm11[0]
 
 
-            console.log('Nombre: '+nom)
-            console.log('Img: '+img)
-            console.log('Des: '+des)
-            console.log('UrlGit: '+urlGit)
-            console.log('Comp: '+comp)
-            console.log('Autor: '+autor)
+//            console.log('Nombre: '+nom)
+//            console.log('Img: '+img)
+//            console.log('Des: '+des)
+//            console.log('UrlGit: '+urlGit)
+//            console.log('Comp: '+comp)
+//            console.log('Autor: '+autor)
 
 
             nlm+='ListElement{
