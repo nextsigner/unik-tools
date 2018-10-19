@@ -130,7 +130,8 @@ Rectangle {
                                             var s1=s0.replace('.git', '')
                                             //var nc = '{"mode":"-folder", "arg1": "'+fd+'/'+s1+'"}'
 											var nct = '{"mode":"-git", "arg1": "'+urlgit+'"}'
-                                            var nct2 = '{"arg0":"-git='+urlgit+'", "arg1":"-dir=\""'+appsDir+'/'+s1+'\""}'
+                                            var nct2 = ('{"arg0":"-git='+urlgit+'.git", "arg1":"-dir='+appsDir+'/'+s1+'"}').replace('.git.git', '.git')
+                                        console.log("NCT2: "+nct2)
                                         unik.setFile(appsDir+'/temp_cfg.json', nct2)
                                         unik.setFile(appsDir+'/temp_config.json', nct)
                                         unik.restartApp()
