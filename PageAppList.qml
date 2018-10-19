@@ -219,7 +219,7 @@ Item {
                         visible: !parent.enabled
                     }
                     onClicked: {
-                        var j=appsDir+'/temp_config.json'
+                        var j=appsDir+'/temp_cfg.json'
                         var path = appsDir+'/'+fileName
                         var c
                         var s0=''+fileName
@@ -230,10 +230,10 @@ Item {
                             var t = unik.getPath(2)+'/t'+d.getTime()
                             unik.mkdir(t)
                             var upkToFolder = unik.upkToFolder(path, "unik-free", "free", t)
-                            c='{"mode":"-folder", "arg1": "'+t+'"}'
+                            c='{"arg0":"-folder='+t+'"}'
                         }else{
                             //logView.log("Lanzando carpeta "+path)
-                            c='{"mode":"-folder", "arg1": "'+path+'"}'
+                            c='{"arg0":"-folder='+path+'"}'
                         }
                         unik.setFile(j, c)
                         unik.restartApp()
@@ -329,9 +329,9 @@ Item {
                     onClicked: {
                         if((''+fileName).indexOf('.upk')<0){
                             var c = appsDir+'/'+fileName
-                            var json='{"mode":"-folder", "arg1":"'+c+'"}'
+                            var json='{"arg0":"-folder'+c+'"}'
                             app.appVigente = fileName
-                            var c2 = appsDir+'/config.json'
+                            var c2 = appsDir+'/cfg.json'
                             unik.setFile(c2, json)
                             //logView.log('Aplicaciòn por defecto: '+c)
                             //logView.log('Nuevo Json Config: '+c2)
@@ -340,11 +340,9 @@ Item {
                             var c2 = c1.split('.upk')*/
                             app.appVigente = fileName
                             var p = ''+appsDir+'/'+fileName
-                            var d = '{"mode":"-upk", "arg1":"'+p+'", "arg2":"-user=unik-free", "arg3":"-key=free"}'
-                            var c=''+appsDir+'/config.json'
+                            var d = '{"arg0":"-upk='+p+'", "arg1":"-user=unik-free", "arg2":"-key=free"}'
+                            var c=''+appsDir+'/cfg.json'
                             unik.setFile(c, d)
-
-                            //unik.restartApp()
                         }
                         dc.estadoEntrada=3
                         dc.titulo="Confirmar Reinicio"
@@ -377,11 +375,7 @@ Item {
                         if(version<2.15){
                             var carpetaLocal=appsDir
                             var ugdata = ''+unik.getFile(carpetaLocal+'/'+fileName+'/unik_github.dat')
-                            var url = ugdata.replace('.git', '')
-                            //var url = url0.replace('https://github.com/', 'https://codeload.github.com/')
-                            ////logView.log('Actualizando '+url)
-
-                            ////logView.log('Actualizando en carpeta '+carpetaLocal)
+                            var url = ugdata.replace('.git', '')                            
                             appSettings.logVisible = true
                             unik.setProperty("logViewVisible", true)
                             listApps.enabled=false
@@ -393,9 +387,9 @@ Item {
                         }else{
                             var carpetaLocal=appsDir
                             var ugdata = ''+unik.getFile(carpetaLocal+'/'+fileName+'/unik_github.dat')
-                            //var url0 = ugdata.replace('.git', '/zip/master')
-                            //var urlZip = url0.replace('https://github.com/', 'https://codeload.github.com/')
+                            botActualizarGit.enabled=false
                             var actualizado = unik.downloadGit(ugdata, carpetaLocal)
+                            botActualizarGit.enabled=true
                         }
                     }
                     Text {
