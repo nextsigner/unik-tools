@@ -128,12 +128,9 @@ Rectangle {
                                         var m0= (''+urlgit).split('/')
                                             var s0=''+m0[m0.length-1]
                                             var s1=s0.replace('.git', '')
-                                            //var nc = '{"mode":"-folder", "arg1": "'+fd+'/'+s1+'"}'
-											var nct = '{"mode":"-git", "arg1": "'+urlgit+'"}'
                                             var nct2 = ('{"arg0":"-git='+urlgit+'.git", "arg1":"-dir='+appsDir+'/'+s1+'"}').replace('.git.git', '.git')
                                         console.log("NCT2: "+nct2)
                                         unik.setFile(appsDir+'/temp_cfg.json', nct2)
-                                        unik.setFile(appsDir+'/temp_config.json', nct)
                                         unik.restartApp()
                                     }else{
                                         var m0=(''+urlgit).split('/')
@@ -141,10 +138,11 @@ Rectangle {
                                         var upkData=unik.getHttpFile(urlgit)
                                         var upkFileName=appsDir+'/'+m1
                                         unik.setFile(upkFileName, upkData)
-                                        var c='{"mode":"-upk", "arg1": "'+upkFileName+'", "arg2":"-user=unik-free", "arg3":"-key=free"}'
-                                        unik.setFile(appsDir+'/config.json', c)
+                                        var c='{"arg0": "-upk='+upkFileName+'", "arg2":"-user=unik-free", "arg3":"-key=free"}'
+                                        unik.setFile(appsDir+'/cfg.json', c)
+                                        console.log('Sleeping Unik for restart...')
+                                        //unik.sleep(2)
                                         unik.restartApp()
-
                                     }
 
 
