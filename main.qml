@@ -84,12 +84,12 @@ ApplicationWindow{
         property string uGitUrl: 'https://github.com/nextsigner/unik-qml-blogger.git'
         property string uRS
         property string ucs: ''
-//        Component.onCompleted: {
-//            //unik.setProperty("logViewVisible", appSettings.logVisible)
-//            var ukhost1=unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik/master/data/unik_host')
-//            unik.setHost(ukhost1)
-//            console.log('1 Current Unik Host Domain: '+unik.host())
-//         }
+        //        Component.onCompleted: {
+        //            //unik.setProperty("logViewVisible", appSettings.logVisible)
+        //            var ukhost1=unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik/master/data/unik_host')
+        //            unik.setHost(ukhost1)
+        //            console.log('1 Current Unik Host Domain: '+unik.host())
+        //         }
     }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
     Item{
@@ -208,18 +208,18 @@ ApplicationWindow{
                                 app.area=0
                             }
                         }
-//                        Boton{//DepsList
-//                            id:btnAreaDeps
-//                            w:parent.width
-//                            h: w
-//                            //f:"FontAwesome5Free"
-//                            t: '\uf00a'
-//                            d:'Instalar Dependencias'
-//                            b:app.area===4?app.c2:app.c1
-//                            onClicking: {
-//                                app.area=4
-//                            }
-//                        }
+                        //                        Boton{//DepsList
+                        //                            id:btnAreaDeps
+                        //                            w:parent.width
+                        //                            h: w
+                        //                            //f:"FontAwesome5Free"
+                        //                            t: '\uf00a'
+                        //                            d:'Instalar Dependencias'
+                        //                            b:app.area===4?app.c2:app.c1
+                        //                            onClicking: {
+                        //                                app.area=4
+                        //                            }
+                        //                        }
                         Boton{//PageAppList
                             id:btnArea1
                             w:parent.width
@@ -273,33 +273,15 @@ ApplicationWindow{
                             c: up ? 'white':'#000'
                             property bool up: false
                             onClicking: {
+                                var j=appsDir+'/temp_cfg.json'
+                                var c
                                 if(!up){
-                                    if(Qt.platform.os!=='android'){
-                                        unik.restartApp("-git=https://github.com/nextsigner/unik-tools.git")
-                                    }else{
-                                        var gitDownloaded=unik.downloadGit('https://github.com/nextsigner/unik-tools', appsDir+'/unik-tools')
-                                        if(gitDownloaded){
-                                            var j=appsDir+'/temp_config.json'
-                                            var c='{"mode":"-folder", "arg1": "'+appsDir+'/unik-tools'+'"}'
-                                            unik.setFile(j, c)
-                                            unik.restartApp()
-                                        }
-                                    }
+                                        c='{"arg0":"-git=https://github.com/nextsigner/unik-tools.git", "arg1":"-folder='+appsDir+'/unik-tools"}'
                                 }else{
-                                    var args = '-folder '+appsDir+'/unik-tools'
-                                    args += ' -dim='+app.width+'x'+app.height+' -pos='+app.x+'x'+app.y
-                                    if(Qt.platform.os!=='android'){
-                                        unik.restartApp(args)
-                                    }else{
-                                        gitDownloaded=unik.downloadGit('https://github.com/nextsigner/unik-tools', unik.getPath(3)+'/unik/unik-tools')
-                                        if(gitDownloaded){
-                                            var j=appsDir+'/temp_config.json'
-                                            var c='{"mode":"-folder", "arg1": "'+appsDir+'/unik-tools'+'"}'
-                                            unik.setFile(j, c)
-                                            unik.restartApp()
-                                        }
-                                    }
+                                    c='{"arg0":"-folder='+appsDir+'/unik-tools"}'
                                 }
+                                unik.setFile(j, c)
+                                unik.restartApp()
                             }
                         }
                         Boton{//Show Debug Panel
@@ -365,12 +347,12 @@ ApplicationWindow{
                     visible: app.area===0
                     anchors.right: parent.right
                 }
-//                UnikInstallDependencies{
-//                    id: unikDepsList
-//                    width: app.width-xTools.width
-//                    height: parent.height
-//                    visible: app.area===4
-//                }
+                //                UnikInstallDependencies{
+                //                    id: unikDepsList
+                //                    width: app.width-xTools.width
+                //                    height: parent.height
+                //                    visible: app.area===4
+                //                }
                 PageAppList{
                     id: pal
                     width: app.width-xTools.width
