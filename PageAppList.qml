@@ -294,7 +294,7 @@ Item {
                             appPath = '"'+appExec+'"'
                         }
                         var path = appsDir+'/'+fileName
-                        var cl = '-folder '
+                        var cl = '-folder='
                         var s0=''+fileName
                         var s1= s0.substring(s0.length-4, s0.length);
                         if(!folderListModelApps.isFolder(index)&&s1==='.upk'){
@@ -329,7 +329,7 @@ Item {
                     onClicked: {
                         if((''+fileName).indexOf('.upk')<0){
                             var c = appsDir+'/'+fileName
-                            var json='{"arg0":"-folder'+c+'"}'
+                            var json='{"arg0":"-folder='+c+'"}'
                             app.appVigente = fileName
                             var c2 = appsDir+'/cfg.json'
                             unik.setFile(c2, json)
