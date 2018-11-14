@@ -126,9 +126,9 @@ Rectangle {
                                         //var downloaded = unik.downloadGit(urlgit, carpetaLocal)
                                         var fd = appsDir
                                         var m0= (''+urlgit).split('/')
-                                            var s0=''+m0[m0.length-1]
-                                            var s1=s0.replace('.git', '')
-                                            var nct2 = ('{"arg0":"-git='+urlgit+'.git", "arg1":"-dir='+appsDir+'/'+s1+'"}').replace('.git.git', '.git')
+                                        var s0=''+m0[m0.length-1]
+                                        var s1=s0.replace('.git', '')
+                                        var nct2 = ('{"arg0":"-git='+urlgit+'.git", "arg1":"-dir='+appsDir+'/'+s1+'"}').replace('.git.git', '.git')
                                         console.log("NCT2: "+nct2)
                                         unik.setFile(appsDir+'/temp_cfg.json', nct2)
                                         unik.restartApp()
@@ -205,39 +205,44 @@ Rectangle {
             var mm0=ss0.split("</h2>")
             var nom=''+mm0[0]
 
-
-
             var mm1=ss0.split("src=\"")
-            var mm2=(''+mm1[1]).split("\"")
-            var img=''+mm2[0]
+            if(mm1.length>1){
+                var mm2=(''+mm1[1]).split("\"")
+                var img=''+mm2[0]
 
-            var mm3=ss0.split("<div>")
-            var mm4=(''+mm3[1]).split('<h5 item="url"')
-            var ss1=(''+mm4[0]).replace(/<br \/>/g,'')
-            var des=''+ss1.replace(/<\/div>/g,'')
-
-            var mm5=ss0.split('<h5 item="url">')
-            var mm6=(''+mm5[1]).split('href=\"')
-            var mm7=(''+mm6[1]).split('\"')
-            var urlGit=''+mm7[0]
-
-            var mm8=ss0.split("</h4>")
-            var mm9=(''+mm8[0]).split('con: ')
-            var mm10=(''+mm9[0]).split('Autor: ')
-            var mm11=(''+mm10[1]).split(' - ')
-            var comp=''+mm9[1]
-            var autor=''+mm11[0]
+                var mm3=ss0.split("<div>")
 
 
-//            console.log('Nombre: '+nom)
-//            console.log('Img: '+img)
-//            console.log('Des: '+des)
-//            console.log('UrlGit: '+urlGit)
-//            console.log('Comp: '+comp)
-//            console.log('Autor: '+autor)
+                if(mm3.length>1){
+                    var mm4=(''+mm3[1]).split('<h5 item="url"')
+                    var ss1=(''+mm4[0]).replace(/<br \/>/g,'')
+                    var des=''+ss1.replace(/<\/div>/g,'')
+
+                    var mm5=ss0.split('<h5 item="url">')
+                    if(mm5.length>1){
+                        var mm6=(''+mm5[1]).split('href=\"')
+                        if(mm6.length>1){
+                            var mm7=(''+mm6[1]).split('\"')
+                            var urlGit=''+mm7[0]
+
+                            var mm8=ss0.split("</h4>")
+                            var mm9=(''+mm8[0]).split('con: ')
+                            var mm10=(''+mm9[0]).split('Autor: ')
+                            if(mm9.length>1&&mm10.length>1){
+                                var mm11=(''+mm10[1]).split(' - ')
+                                var comp=''+mm9[1]
+                                var autor=''+mm11[0]
 
 
-            nlm+='ListElement{
+                                //            console.log('Nombre: '+nom)
+                                //            console.log('Img: '+img)
+                                //            console.log('Des: '+des)
+                                //            console.log('UrlGit: '+urlGit)
+                                //            console.log('Comp: '+comp)
+                                //            console.log('Autor: '+autor)
+
+
+                                nlm+='ListElement{
             nom: "'+nom+'"
             des: "'+des+'"
             dev: "'+autor+'"
@@ -245,8 +250,12 @@ Rectangle {
             img2: "'+img+'"
             tipo: "'+comp+'"
         }'
-
-        }
+                            }
+                        }
+                    }
+                }
+            }
+        }//ff
         nlm+='ListElement{nom: "spacer";des:"";dev:"";img2:"";tipo: "linux-osx-windows-android"}'
         nlm+='}\n'
         var nLm=Qt.createQmlObject(nlm, raiz, 'qmlNLM')
