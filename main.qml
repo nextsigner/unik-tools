@@ -276,7 +276,7 @@ ApplicationWindow{
                                 var j=appsDir+'/temp_cfg.json'
                                 var c
                                 if(!up){
-                                        c='{"arg0":"-git=https://github.com/nextsigner/unik-tools.git", "arg1":"-folder='+appsDir+'/unik-tools"}'
+                                    c='{"arg0":"-git=https://github.com/nextsigner/unik-tools.git", "arg1":"-folder='+appsDir+'/unik-tools"}'
                                 }else{
                                     c='{"arg0":"-folder='+appsDir+'/unik-tools"}'
                                 }
@@ -432,65 +432,71 @@ ApplicationWindow{
             unik.setDebugLog(false)
             var ur0 = ''+unik.getHttpFile('https://github.com/nextsigner/unik-tools/commits/master?r='+d.getTime())
             var m0=ur0.split("commit-title")
-            var m1=(''+m0[1]).split('</p>')
-            var m2=(''+m1[0]).split('\">')
-            var m3=(''+m2[2]).split('<')
-            var ur = ''+m3[0]
-            if(appSettings.uRS===''){
-                appSettings.uRS=ur
-            }
-            //unik.log("Update key control nª"+tu.v+": "+ur+" urs: "+appSettings.uRS)
-            if(appSettings.uRS!==ur){
-                unik.setDebugLog(true)
-                unik.log("Updating unik-tools")
-                appSettings.uRS = ur
-                var fd=appsDir
-                var downloaded = unik.downloadGit('https://github.com/nextsigner/unik-tools', fd)
-                appSettings.uRS=''
-                tu.stop()
-                if(downloaded){
-                    btnUpdate.up=true
-                }else{
+            if(m0.length>1){
+                var m1=(''+m0[1]).split('</p>')
+                var m2=(''+m1[0]).split('\">')
+                if(m2.length>2){
+                    var m3=(''+m2[2]).split('<')
+                    var ur = ''+m3[0]
+                    if(appSettings.uRS===''){
+                        appSettings.uRS=ur
+                    }
+                    //unik.log("Update key control nª"+tu.v+": "+ur+" urs: "+appSettings.uRS)
+                    if(appSettings.uRS!==ur){
+                        unik.setDebugLog(true)
+                        unik.log("Updating unik-tools")
+                        appSettings.uRS = ur
+                        var fd=appsDir
+                        var downloaded = unik.downloadGit('https://github.com/nextsigner/unik-tools', fd)
+                        appSettings.uRS=''
+                        tu.stop()
+                        if(downloaded){
+                            btnUpdate.up=true
+                        }else{
+                            tu.start()
+                        }
+                    }else{
+                        //appSettings.uRS=ur
+                    }
+                    unik.setDebugLog(true)
+                    tu.interval=1000*60*5
+                    tu.repeat=true
                     tu.start()
-                }
-            }else{
-                //appSettings.uRS=ur
-            }
-            unik.setDebugLog(true)
-            tu.interval=1000*60*5
-            tu.repeat=true
-            tu.start()
-        }
-    }
 
-    Component.onCompleted: {
-        //unik.setProperty("logViewVisible", appSettings.logVisible)
-        var ukhost1=unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik/master/data/unik_host')
-        unik.setHost(ukhost1)
-        console.log('Current Unik Host Domain: '+unik.host())
-        if(appSettings.pyLineRH1===0||appSettings.pyLineRH1===undefined){
-            appSettings.pyLineRH1 = 100
-        }
-        logView.height=appSettings.pyLineRH1
-        if(Qt.platform.os==='windows'||Qt.platform.os==='linux'||Qt.platform.os==='osx'){
-            app.visibility = appSettings.appWS
-            if(appSettings.appWS===2){
-                app.x = appSettings.appX
-                app.y = appSettings.appY
-                app.width = appSettings.appWidth
-                app.height = appSettings.appHeight
+
             }
-        }else{
-            app.visibility = "FullScreen"
         }
-        //ful.init()
-        unik.log('unik-tools log')
-        unik.log('unik version: '+version+'')
-        unik.log('unik-tools host:  '+host+'')
-        unik.log('Unik Tools AppName: '+appName)
-        //unik.log(app.contentData)
-        appList.act()
     }
+}
+
+Component.onCompleted: {
+    //unik.setProperty("logViewVisible", appSettings.logVisible)
+    var ukhost1=unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik/master/data/unik_host')
+    unik.setHost(ukhost1)
+    console.log('Current Unik Host Domain: '+unik.host())
+    if(appSettings.pyLineRH1===0||appSettings.pyLineRH1===undefined){
+        appSettings.pyLineRH1 = 100
+    }
+    logView.height=appSettings.pyLineRH1
+    if(Qt.platform.os==='windows'||Qt.platform.os==='linux'||Qt.platform.os==='osx'){
+        app.visibility = appSettings.appWS
+        if(appSettings.appWS===2){
+            app.x = appSettings.appX
+            app.y = appSettings.appY
+            app.width = appSettings.appWidth
+            app.height = appSettings.appHeight
+        }
+    }else{
+        app.visibility = "FullScreen"
+    }
+    //ful.init()
+    unik.log('unik-tools log')
+    unik.log('unik version: '+version+'')
+    unik.log('unik-tools host:  '+host+'')
+    unik.log('Unik Tools AppName: '+appName)
+    //unik.log(app.contentData)
+    appList.act()
+}
 
 
 }
