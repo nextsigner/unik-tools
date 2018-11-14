@@ -29,12 +29,13 @@ Rectangle {
                 Image {
                     id: imagen
                     source: img2
-                    width: xC.height-app.fs*0.4
-                    height: width
+                    //width:
+                    height: xC.height-app.fs*0.4
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: app.fs*0.5
-                    cache:false
+                    //cache:false
+                    fillMode: Image.PreserveAspectFit
                 }
                 Column{
                     //visible:parent.color!=='transparent'
@@ -191,58 +192,62 @@ Rectangle {
         }
         //console.log(c)
         var m0=c.split('item="tit"')
-        var s0=''+m0[1]
-        var m1=s0.split('item="pie"')
-        var s1=''+m1[0]
-        var m2=s1.split('item="item">')
-
-        var nlm='import QtQuick 2.0\n'
-        nlm+='ListModel{\n'
-
-        for(var i=1;i<m2.length;i++){
-            //console.log('-------->'+m2[i])
-            var ss0=''+m2[i]
-            var mm0=ss0.split("</h2>")
-            var nom=''+mm0[0]
-
-            var mm1=ss0.split("src=\"")
-            if(mm1.length>1){
-                var mm2=(''+mm1[1]).split("\"")
-                var img=''+mm2[0]
-
-                var mm3=ss0.split("<div>")
+        var s0
+        if(m0.length>1){
+            s0=''+m0[1]
 
 
-                if(mm3.length>1){
-                    var mm4=(''+mm3[1]).split('<h5 item="url"')
-                    var ss1=(''+mm4[0]).replace(/<br \/>/g,'')
-                    var des=''+ss1.replace(/<\/div>/g,'')
+            var m1=s0.split('item="pie"')
+            var s1=''+m1[0]
+            var m2=s1.split('item="item">')
 
-                    var mm5=ss0.split('<h5 item="url">')
-                    if(mm5.length>1){
-                        var mm6=(''+mm5[1]).split('href=\"')
-                        if(mm6.length>1){
-                            var mm7=(''+mm6[1]).split('\"')
-                            var urlGit=''+mm7[0]
+            var nlm='import QtQuick 2.0\n'
+            nlm+='ListModel{\n'
 
-                            var mm8=ss0.split("</h4>")
-                            var mm9=(''+mm8[0]).split('con: ')
-                            var mm10=(''+mm9[0]).split('Autor: ')
-                            if(mm9.length>1&&mm10.length>1){
-                                var mm11=(''+mm10[1]).split(' - ')
-                                var comp=''+mm9[1]
-                                var autor=''+mm11[0]
+            for(var i=1;i<m2.length;i++){
+                //console.log('-------->'+m2[i])
+                var ss0=''+m2[i]
+                var mm0=ss0.split("</h2>")
+                var nom=''+mm0[0]
 
+                var mm1=ss0.split("src=\"")
+                if(mm1.length>1){
+                    var mm2=(''+mm1[1]).split("\"")
+                    var img=''+mm2[0]
 
-                                //            console.log('Nombre: '+nom)
-                                //            console.log('Img: '+img)
-                                //            console.log('Des: '+des)
-                                //            console.log('UrlGit: '+urlGit)
-                                //            console.log('Comp: '+comp)
-                                //            console.log('Autor: '+autor)
+                    var mm3=ss0.split("<div>")
 
 
-                                nlm+='ListElement{
+                    if(mm3.length>1){
+                        var mm4=(''+mm3[1]).split('<h5 item="url"')
+                        var ss1=(''+mm4[0]).replace(/<br \/>/g,'')
+                        var des=''+ss1.replace(/<\/div>/g,'')
+
+                        var mm5=ss0.split('<h5 item="url">')
+                        if(mm5.length>1){
+                            var mm6=(''+mm5[1]).split('href=\"')
+                            if(mm6.length>1){
+                                var mm7=(''+mm6[1]).split('\"')
+                                var urlGit=''+mm7[0]
+
+                                var mm8=ss0.split("</h4>")
+                                var mm9=(''+mm8[0]).split('con: ')
+                                var mm10=(''+mm9[0]).split('Autor: ')
+                                if(mm9.length>1&&mm10.length>1){
+                                    var mm11=(''+mm10[1]).split(' - ')
+                                    var comp=''+mm9[1]
+                                    var autor=''+mm11[0]
+
+
+                                    //            console.log('Nombre: '+nom)
+                                    //            console.log('Img: '+img)
+                                    //            console.log('Des: '+des)
+                                    //            console.log('UrlGit: '+urlGit)
+                                    //            console.log('Comp: '+comp)
+                                    //            console.log('Autor: '+autor)
+
+
+                                    nlm+='ListElement{
             nom: "'+nom+'"
             des: "'+des+'"
             dev: "'+autor+'"
@@ -250,18 +255,19 @@ Rectangle {
             img2: "'+img+'"
             tipo: "'+comp+'"
         }'
+                                }
                             }
                         }
                     }
                 }
-            }
-        }//ff
-        nlm+='ListElement{nom: "spacer";des:"";dev:"";img2:"";tipo: "linux-osx-windows-android"}'
-        nlm+='}\n'
-        var nLm=Qt.createQmlObject(nlm, raiz, 'qmlNLM')
-        lv.model = nLm
-        txtEstado.text= '<b>Error</b> Fallò la conexiòn o descarga de lista.<br>Click para Actualizar lista de Aplicaciones.'
-
+            }//ff
+            nlm+='ListElement{nom: "spacer";des:"";dev:"";img2:"";tipo: "linux-osx-windows-android"}'
+            nlm+='}\n'
+            var nLm=Qt.createQmlObject(nlm, raiz, 'qmlNLM')
+            lv.model = nLm
+        }else{
+            txtEstado.text= '<b>Error</b> Fallò la conexiòn o descarga de lista.<br>Click para Actualizar lista de Aplicaciones.'
+        }
 
     }
 
