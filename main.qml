@@ -447,14 +447,10 @@ ApplicationWindow{
                         unik.log("Updating unik-tools")
                         appSettings.uRS = ur
                         var fd=appsDir
-                        var downloaded = unik.downloadGit('https://github.com/nextsigner/unik-tools', fd)
+                        //var downloaded = unik.downloadGit('https://github.com/nextsigner/unik-tools', fd)
                         appSettings.uRS=''
-                        tu.stop()
-                        if(downloaded){
-                            btnUpdate.up=true
-                        }else{
-                            tu.start()
-                        }
+                        btnUpdate.up=true
+
                     }else{
                         //appSettings.uRS=ur
                     }
