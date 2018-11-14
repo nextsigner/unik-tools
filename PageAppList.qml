@@ -111,7 +111,7 @@ Item {
                                     exec = ''+unik.getPath(1)+'/unik -folder '+appsDir+'/'+fileName
                                     console.log('Unik Qml Blogger Exec Path: '+exec)
                                     created = unik.createLink(exec, ad, ''+fileName+'', 'This is a desktop file created by unik-tools')
-                                    }
+                                }
                             }
                             if(Qt.platform.os==='windows'){
                                 ad = ''+unik.getPath(6)+'/'+fileName+'.lnk'
@@ -298,7 +298,6 @@ Item {
                         var s0=''+fileName
                         var s1= s0.substring(s0.length-4, s0.length);
                         if(!folderListModelApps.isFolder(index)&&s1==='.upk'){
-                            //logView.log("Lanzando upk: "+fileName)
                             var d = new Date(Date.now())
                             var t = unik.getPath(2)+'/t'+d.getTime()
                             unik.mkdir(t)
@@ -306,14 +305,12 @@ Item {
                             if(upkToFolder){
                                 cl +=''+t
                                 unik.log('Running: '+appPath+' '+cl)
-                                unik.run(appPath+' '+cl)
+                                unik.ejecutarLineaDeComandoAparte(appPath+' '+cl)
                             }
-                            //logView.log("Upk to folder: "+upkToFolder)
                         }else{
-                            //logView.log("Lanzando carpeta "+path)
                             cl+=''+path
                             unik.log('Running: '+appPath+' '+cl)
-                            unik.run(appPath+' '+cl)
+                            unik.ejecutarLineaDeComandoAparte(appPath+' '+cl)
                         }
                     }
                 }
@@ -375,7 +372,7 @@ Item {
                         if(version<2.15){
                             var carpetaLocal=appsDir
                             var ugdata = ''+unik.getFile(carpetaLocal+'/'+fileName+'/unik_github.dat')
-                            var url = ugdata.replace('.git', '')                            
+                            var url = ugdata.replace('.git', '')
                             appSettings.logVisible = true
                             unik.setProperty("logViewVisible", true)
                             listApps.enabled=false
