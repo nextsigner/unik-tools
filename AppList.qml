@@ -127,27 +127,86 @@ Rectangle {
                                         //var downloaded = unik.downloadGit(urlgit, carpetaLocal)
                                         var fd = appsDir
                                         var m0= (''+urlgit).split('/')
-                                        var s0=''+m0[m0.length-1]
-                                        var s1=s0.replace('.git', '')
-                                        var nct2 = ('{"arg0":"-git='+urlgit+'.git", "arg1":"-dir='+appsDir+'/'+s1+'"}').replace('.git.git', '.git')
-                                        console.log("NCT2: "+nct2)
-                                        unik.setFile(appsDir+'/temp_cfg.json', nct2)
+                                            var s0=''+m0[m0.length-1]
+                                            var s1=s0.replace('.git', '')
+                                            //var nc = '{"mode":"-folder", "arg1": "'+fd+'/'+s1+'"}'
+                                            var nct = '{"mode":"-git", "arg1": "'+urlgit+'"}'
+                                        //var nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'"}'
+                                        //unik.setFile(appsDir+'/temp_cfg.json', nct2)
+                                        //unik.restartApp()
+                                        //unik.sleep(3)
                                         unik.restartApp()
+                                        if(Qt.platform.os!=='windows'){
+                                            var nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'"}'
+                                            unik.setFile(appsDir+'/temp_cfg.json', nct2)
+                                            unik.restartApp()
+                                        }else{
+                                            var nct3 = '{"arg0":"-folder='+appsDir+'/'+s1+'"}'
+                                            unik.setFile(appsDir+'/temp_cfg.json', nct3)
+                                            unik.createLink(appExec, '-folder='+appsDir+'/'+s1, unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
+                                            var downloaded=unik.downloadGit(urlgit, appsDir+'/'+s1)
+                                            var appPath
+                                            if(Qt.platform.os==='osx'){
+                                                appPath = '"'+unik.getPath(1)+'/'+unik.getPath(0)+'"'
+                                            }
+                                            if(Qt.platform.os==='windows'){
+                                                appPath = '"'+unik.getPath(1)+'/'+unik.getPath(0)+'"'
+                                            }
+                                            if(Qt.platform.os==='linux'){
+                                                appPath = '"'+appExec+'"'
+                                            }
+                                            var codeMsg='import QtQuick 2.9\n'
+                                            codeMsg+='import QtQuick.Controls 2.0\n'
+                                            codeMsg+='ApplicationWindow{\n'
+                                            codeMsg+='  id:winmsg\n'
+                                            codeMsg+='  visible:true\n'
+                                            codeMsg+='  flags:Qt.Window | Qt.WindowStaysOnTopHint\n'
+                                            codeMsg+='  color:"'+app.c4+'"\n'
+                                            codeMsg+='  width:txt.contentWidth+'+parseInt(app.fs)+'*6\n'
+                                            codeMsg+='  height:txt.contentHeight+'+parseInt(app.fs)+'*16\n'
+                                            codeMsg+='  Text{\n'
+                                            codeMsg+='      id:txt\n'
+                                            codeMsg+='      color:"'+app.c2+'"\n'
+                                            codeMsg+='      text:"Aplicación Instalada\\nSe ha creado un\\nEnlace en el Escritorio."\n'
+                                            codeMsg+='      font.pixelSize:'+parseInt(app.fs)+'\n'
+                                            codeMsg+='      anchors.centerIn: parent\n'
+                                            codeMsg+='      width:+'+parseInt(app.fs)+'*10\n'
+                                            codeMsg+='      wrapMode: Text.WordWrap\n'
+                                            codeMsg+='  }\n'
+
+                                            codeMsg+='  Button{\n'
+                                            codeMsg+='      id:btn\n'
+                                            codeMsg+='      text:"Ejecutar"\n'
+                                            codeMsg+='      font.pixelSize:'+parseInt(app.fs)+'\n'
+                                            codeMsg+='      anchors.horizontalCenter: parent.horizontalCenter\n'
+                                            codeMsg+='      anchors.bottom: parent.bottom\n'
+                                            codeMsg+='      anchors.bottomMargin: '+parseInt(app.fs)+'\n'
+                                            codeMsg+='      onClicked:{\n'
+                                            codeMsg+='         winmsg.close()\n'
+                                            codeMsg+='         unik.ejecutarLineaDeComandoAparte('+appPath+')\n'
+                                            codeMsg+='      }\n'
+                                            codeMsg+='  }\n'
+
+
+                                            codeMsg+='}\n'
+                                            unik.setFile(unik.getPath(2)+'/main.qml', codeMsg)
+                                            unik.ejecutarLineaDeComandoAparte(appPath+' -folder='+unik.getPath(2))
+                                        }
                                     }else{
                                         var m0=(''+urlgit).split('/')
                                         var m1=''+m0[m0.length-1]
                                         var upkData=unik.getHttpFile(urlgit)
                                         var upkFileName=appsDir+'/'+m1
                                         unik.setFile(upkFileName, upkData)
-                                        var c='{"arg0": "-upk='+upkFileName+'", "arg2":"-user=unik-free", "arg3":"-key=free"}'
-                                        unik.setFile(appsDir+'/cfg.json', c)
-                                        console.log('Sleeping Unik for restart...')
-                                        //unik.sleep(2)
+                                        var c='{"mode":"-upk", "arg1": "'+upkFileName+'", "arg2":"-user=unik-free", "arg3":"-key=free"}'
+                                        unik.setFile(appsDir+'/config.json', c)
                                         unik.restartApp()
+
                                     }
 
 
                                 }
+
                             }
 
                         }
