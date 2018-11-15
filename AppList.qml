@@ -141,9 +141,14 @@ Rectangle {
                                             unik.setFile(appsDir+'/temp_cfg.json', nct2)
                                             unik.restartApp()
                                         }else{
-                                            var nct3 = '{"arg0":"-folder='+appsDir+'/'+s1+'"}'
-                                            unik.setFile(appsDir+'/temp_cfg.json', nct3)
-                                            unik.createLink(appExec, '-folder='+appsDir+'/'+s1, unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
+                                            var nct3
+                                            if(''+s1==='unikast'){
+                                                nct3 = '{"arg0":"-folder='+appsDir+'/'+s1+'", "arg1":"-wss"}'
+                                                unik.createLink(appExec, '-folder='+appsDir+'/'+s1+' -wss', unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
+                                            }else{
+                                                nct3 = '{"arg0":"-folder='+appsDir+'/'+s1+'"}'
+                                                unik.createLink(appExec, '-folder='+appsDir+'/'+s1, unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
+                                            }
                                             var downloaded=unik.downloadGit(urlgit, appsDir+'/'+s1)
                                             var appPath
                                             if(Qt.platform.os==='osx'){
