@@ -127,16 +127,9 @@ Rectangle {
                                         //var downloaded = unik.downloadGit(urlgit, carpetaLocal)
                                         var fd = appsDir
                                         var m0= (''+urlgit).split('/')
-                                            var s0=''+m0[m0.length-1]
-                                            var s1=s0.replace('.git', '')
-                                            //var nc = '{"mode":"-folder", "arg1": "'+fd+'/'+s1+'"}'
-                                            var nct = '{"mode":"-git", "arg1": "'+urlgit+'"}'
-                                        //var nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'"}'
-                                        //unik.setFile(appsDir+'/temp_cfg.json', nct2)
-                                        //unik.restartApp()
-                                        //unik.sleep(3)
-                                        unik.restartApp()
-                                        if(Qt.platform.os!=='windows'){
+                                        var s0=''+m0[m0.length-1]
+                                        var s1=s0.replace('.git', '')
+                                        if(Qt.platform.os==='linux'){
                                             var nct2
                                             if(''+s1==='unikast'){
                                                 nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'", "arg2":"-wss"}'
@@ -151,11 +144,16 @@ Rectangle {
                                             var nct3
                                             if(''+s1==='unikast'){
                                                 nct3 = '{"arg0":"-folder='+appsDir+'/'+s1+'", "arg1":"-wss"}'
-                                                unik.createLink(appExec, '-folder='+appsDir+'/'+s1+' -wss', unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
+                                                if(Qt.platform.os==='windows'){
+                                                    unik.createLink(appExec, '-folder='+appsDir+'/'+s1+' -wss', unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
+                                                }
                                             }else{
                                                 nct3 = '{"arg0":"-folder='+appsDir+'/'+s1+'"}'
-                                                unik.createLink(appExec, '-folder='+appsDir+'/'+s1, unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
+                                                if(Qt.platform.os==='windows'){
+                                                    unik.createLink(appExec, '-folder='+appsDir+'/'+s1, unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
+                                                }
                                             }
+                                            unik.setFile(appsDir+'/temp_cfg.json', nct3)
                                             var downloaded=unik.downloadGit(urlgit, appsDir+'/'+s1)
                                             var appPath
                                             if(Qt.platform.os==='osx'){
@@ -179,7 +177,7 @@ Rectangle {
                                             codeMsg+='  Text{\n'
                                             codeMsg+='      id:txt\n'
                                             codeMsg+='      color:"'+app.c2+'"\n'
-                                            codeMsg+='      text:"Aplicación Instalada\\nSe ha creado un\\nEnlace en el Escritorio."\n'
+                                            codeMsg+='      text:"Aplicación '+s1+' Instalada\\nSe ha creado un\\nEnlace en el Escritorio."\n'
                                             codeMsg+='      font.pixelSize:'+parseInt(app.fs)+'\n'
                                             codeMsg+='      anchors.centerIn: parent\n'
                                             codeMsg+='      width:+'+parseInt(app.fs)+'*10\n'
@@ -194,6 +192,7 @@ Rectangle {
                                             codeMsg+='      anchors.bottom: parent.bottom\n'
                                             codeMsg+='      anchors.bottomMargin: '+parseInt(app.fs)+'\n'
                                             codeMsg+='      onClicked:{\n'
+                                            codeMsg+='         unik.setFile(\''+appsDir+'/temp_cfg.json\''+', \''+nct3+'\')\n'
                                             codeMsg+='         winmsg.close()\n'
                                             codeMsg+='         unik.ejecutarLineaDeComandoAparte('+appPath+')\n'
                                             codeMsg+='      }\n'
