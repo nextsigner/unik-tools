@@ -137,7 +137,14 @@ Rectangle {
                                         //unik.sleep(3)
                                         unik.restartApp()
                                         if(Qt.platform.os!=='windows'){
-                                            var nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'"}'
+                                            var nct2
+                                            if(''+s1==='unikast'){
+                                                nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'", "arg2":"-wss"}'
+                                                unik.createLink(appExec+' -folder='+appsDir+'/'+s1+' -wss', unik.getPath(6)+'/'+s1+'.desktop', s1, 'It is created by Unik Qml Engine with the UnikTools')
+                                            }else{
+                                                nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'"}'
+                                                unik.createLink(appExec+' -folder='+appsDir+'/'+s1, unik.getPath(6)+'/'+s1+'.desktop', s1, 'It is created by Unik Qml Engine with the UnikTools')
+                                            }
                                             unik.setFile(appsDir+'/temp_cfg.json', nct2)
                                             unik.restartApp()
                                         }else{
