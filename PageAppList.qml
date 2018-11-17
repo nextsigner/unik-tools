@@ -308,7 +308,11 @@ Item {
                                 unik.ejecutarLineaDeComandoAparte(appPath+' '+cl)
                             }
                         }else{
-                            cl+=''+path
+                            if(s1==='unikast'){
+                                cl+=''+path+' -cfg -wss'
+                            }else{
+                                cl+=''+path+' -cfg'
+                            }
                             unik.log('Running: '+appPath+' '+cl)
                             unik.ejecutarLineaDeComandoAparte(appPath+' '+cl)
                         }
