@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0
 Rectangle {
     id: raiz
     color: app.c5
+    signal loaded
     ListView{
         id: lv
         width: raiz.width*0.9
@@ -149,15 +150,19 @@ Rectangle {
                                             if(''+s1==='unikast'){
                                                 nclink = '-folder='+appsDir+'/'+s1+' -cfg -wss'
                                                 nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'", "arg2":"-wss"}'
-                                                unik.createLink(appExec, '-folder='+appsDir+'/'+s1+' -cfg -wss', unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
+                                                unik.createLink(appExec, '-folder='+appsDir+'/'+s1+' -cfg', unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
+                                                unik.setFile(appsDir+'/link_'+s1+'.ukl', nclink)
+                                                unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg -wss')
                                             }else{
                                                 nclink = '-folder='+appsDir+'/'+s1+' -cfg'
                                                 nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'"}'
                                                 unik.createLink(appExec, '-folder='+appsDir+'/'+s1+' -cfg', unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
+                                                unik.setFile(appsDir+'/link_'+s1+'.ukl', nclink)
+                                                unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg')
                                             }
-                                            unik.setFile(appsDir+'/link_'+s1+'.ukl', nclink)
+
                                             //unik.setFile(appsDir+'/temp_cfg.json', nct2)
-                                            unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg')
+
                                         }else{
                                             var nct3                                            
                                             if(''+s1==='unikast'){
@@ -362,7 +367,7 @@ Rectangle {
         }else{
             txtEstado.text= '<b>Error</b> Fallò la conexiòn o descarga de lista.<br>Click para Actualizar lista de Aplicaciones.'
         }
-
+        loaded()
     }
 
 }

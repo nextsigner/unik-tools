@@ -1,4 +1,4 @@
-﻿import QtQuick 2.7
+﻿import QtQuick 2.9
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
@@ -7,14 +7,12 @@ import LogView 1.0
 ApplicationWindow{
     id: app
     objectName: 'unik-tools'
-    visible: true
-    //swidth: 500
-    //height: 500
-    visibility: 'Maximized'
+    visible: false
+    width: 500
+    height: 500
     title: "unik-tools"
-    color: Qt.platform.os !=='android' && app.waiting?"transparent":app.c5
-    //minimumWidth: 500
-    //minimumHeight: 500z
+    visibility:  "Maximized"
+    color: 'black'
 
     property int area: 0
     property bool closedModeLaunch: false
@@ -346,6 +344,7 @@ ApplicationWindow{
                     height: parent.height
                     visible: app.area===0
                     anchors.right: parent.right
+                    onLoaded: app.visible=true
                 }
                 //                UnikInstallDependencies{
                 //                    id: unikDepsList
@@ -374,6 +373,7 @@ ApplicationWindow{
                     visible: app.area===3
                     anchors.right: parent.right
                 }
+
                 LogView{
                     id:logView
                     height: appSettings.pyLineRH1
@@ -464,6 +464,7 @@ ApplicationWindow{
         }
     }
 }
+
 
 Component.onCompleted: {
     //unik.setProperty("logViewVisible", appSettings.logVisible)
