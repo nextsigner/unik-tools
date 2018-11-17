@@ -145,6 +145,18 @@ Rectangle {
                                             unik.setFile(appsDir+'/link_'+s1+'.ukl', nclink)
                                             unik.setFile(appsDir+'/temp_cfg.json', nct2)
                                             unik.restartApp()
+                                        }else if(Qt.platform.os==='osx'){
+                                            nct2
+                                            if(''+s1==='unikast'){
+                                                nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'", "arg2":"-cfg", "arg3":"-wss"}'
+
+                                                unik.setFile(appsDir+'/temp_cfg.json', nct2)
+                                                unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg -wss')
+                                            }else{
+                                                nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'", "arg2":"-cfg"}'
+                                                unik.setFile(appsDir+'/temp_cfg.json', nct2)
+                                                unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg')
+                                            }
                                         }else if(Qt.platform.os==='windows'){
                                             var nct2
                                             if(''+s1==='unikast'){
