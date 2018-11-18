@@ -4,14 +4,10 @@ import Qt.labs.folderlistmodel 2.2
 import QtWebView 1.1
 Item {
     id: raiz
-    property int nindex: 0
-    //anchors.fill: parent
-
-
-
+    property int nindex: 0    
     Rectangle{
         id: tb
-        width: raiz.width/2
+        wi dth: raiz.width/2
         height: app.fs*1.4
         color: app.c1
         opacity: raiz.nindex === 0 ? 1.0 : 0.5
@@ -78,7 +74,7 @@ Item {
             textFormat: Text.RichText
             Component.onCompleted: {
                 var det = '<b>unik version:</b> '+version
-                det    += '<br><b>unik-tools version:</b> 1.1'
+                det    += '<br><b>unik-tools version:</b> '+app.version
                 det    += '<br><b>unik host:</b> '+unik.host()
                 txtDetalles.text = det
             }

@@ -19,6 +19,7 @@ ApplicationWindow{
     property bool logueado: false
     property string userLogin: ''
     property string keyLog: ''
+    property string version: '2.46.7'
     //property bool waiting: wait
 
     //flags: Qt.platform.os !=='android' && app.waiting?Qt.Window | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint:1
