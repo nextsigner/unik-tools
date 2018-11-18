@@ -137,14 +137,18 @@ Rectangle {
                                                 nclink = '-folder='+appsDir+'/'+s1+' -cfg -wss'
                                                 nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'", "arg2":"-cfg", "arg3":"-wss"}'
                                                 unik.createLink(appExec+' -folder='+appsDir+'/'+s1+' -cfg -wss', unik.getPath(6)+'/'+s1+'.desktop', s1, 'It is created by Unik Qml Engine with the UnikTools')
+                                                unik.setFile(appsDir+'/link_'+s1+'.ukl', nclink)
+                                                unik.setFile(appsDir+'/temp_cfg.json', nct2)
+                                                 unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg -wss')
                                             }else{
                                                 nclink = '-folder='+appsDir+'/'+s1+' -cfg'
                                                 nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'", "arg2":"-cfg"}'
                                                 unik.createLink(appExec+' -folder='+appsDir+'/'+s1+' -cfg', unik.getPath(6)+'/'+s1+'.desktop', s1, 'It is created by Unik Qml Engine with the UnikTools')
+                                                unik.setFile(appsDir+'/link_'+s1+'.ukl', nclink)
+                                                unik.setFile(appsDir+'/temp_cfg.json', nct2)
+                                                 unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg')
                                             }
-                                            unik.setFile(appsDir+'/link_'+s1+'.ukl', nclink)
-                                            unik.setFile(appsDir+'/temp_cfg.json', nct2)
-                                            unik.restartApp()
+
                                         }else if(Qt.platform.os==='osx'){
                                             nct2
                                             if(''+s1==='unikast'){
