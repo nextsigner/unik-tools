@@ -7,7 +7,7 @@ Item {
     property int nindex: 0    
     Rectangle{
         id: tb
-        wi dth: raiz.width/2
+        width: raiz.width/2
         height: app.fs*1.4
         color: app.c1
         opacity: raiz.nindex === 0 ? 1.0 : 0.5
