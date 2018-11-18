@@ -74,7 +74,7 @@ Item {
             textFormat: Text.RichText
             Component.onCompleted: {
                 var det = '<b>unik version:</b> '+version
-                det    += '<br><b>unik-tools version:</b> '+app.version
+                det    += '<br><b>unik-tools version:</b> '+app.utversion
                 det    += '<br><b>unik host:</b> '+unik.host()
                 txtDetalles.text = det
             }
