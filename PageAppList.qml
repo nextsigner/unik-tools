@@ -108,7 +108,7 @@ Item {
                             if(Qt.platform.os==='linux'){
                                 ad = ''+unik.getPath(6)+'/'+fileName+'.desktop'
                                 if(!unik.fileExist(ad)){
-                                    exec = ''+unik.getPath(1)+'/unik -folder '+appsDir+'/'+fileName
+                                    exec = '"'+appExec+' -folder '+appsDir+'/'+fileName+' -cfg'
                                     console.log('Unik Qml Blogger Exec Path: '+exec)
                                     created = unik.createLink(exec, ad, ''+fileName+'', 'This is a desktop file created by unik-tools')
                                 }
@@ -116,9 +116,8 @@ Item {
                             if(Qt.platform.os==='windows'){
                                 ad = ''+unik.getPath(6)+'/'+fileName+'.lnk'
                                 if(!unik.fileExist(ad)){
-                                    exec = ''+unik.getPath(1)+'/unik.exe'
-                                    var arguments = ' -folder '+appsDir+'/'+fileName
-                                    created = unik.createLink(exec, arguments, ad, 'This is a desktop file created by unik-tools', 'E:/')
+                                    var arguments = ' -folder '+appsDir+'/'+fileName+' -cfg'
+                                    created = unik.createLink('"'+appExec+'"', arguments, ad, 'This is a desktop file created by unik-tools', 'E:/')
                                 }
                             }
                             dialogoInformar.info='Se ha creado el acceso directo\nen '+ad

@@ -447,7 +447,9 @@ ApplicationWindow{
 
 
 Component.onCompleted: {
-    //unik.setProperty("logViewVisible", appSettings.logVisible)
+    var ukldata='-folder='+appsDir+'/unik-tools -cfg '
+    var ukl=appsDir+'/link_unik-tools.ukl'
+    unik.setFile(ukl, ukldata)
     var ukhost1=unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik/master/data/unik_host')
     unik.setHost(ukhost1)
     console.log('Current Unik Host Domain: '+unik.host())
