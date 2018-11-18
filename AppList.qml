@@ -167,23 +167,18 @@ Rectangle {
                                                 unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg')
                                             }
                                         }else if(Qt.platform.os==='windows'){
-                                            var nct2
-                                            if(''+s1==='unikast'){
-                                                nclink = '-folder='+appsDir+'/'+s1+' -cfg -wss'
-                                                nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'", "arg2":"-wss"}'
-                                                unik.createLink(appExec, '-folder='+appsDir+'/'+s1+' -cfg', unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
-                                                unik.setFile(appsDir+'/link_'+s1+'.ukl', nclink)
-                                                unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg -wss')
+                                            var add=''
+                                            var flc='-folder='+appsDir+'/'+s1+' -cfg'
+                                            if(''+s1==='unikast'||(''+s1).toLowerCase().indexOf('server')>=0){
+                                                nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'", "arg3":"-cfg", "arg4":"-wss"}'
+                                                add+=' -wss'
                                             }else{
-                                                nclink = '-folder='+appsDir+'/'+s1+' -cfg'
-                                                nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'"}'
-                                                unik.createLink(appExec, '-folder='+appsDir+'/'+s1+' -cfg', unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
-                                                unik.setFile(appsDir+'/link_'+s1+'.ukl', nclink)
-                                                unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg')
+                                                nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'",  "arg3":"-cfg"}'
                                             }
-
-                                            //unik.setFile(appsDir+'/temp_cfg.json', nct2)
-
+                                            unik.createLink(appExec, flc+add, unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
+                                            unik.setFile(appsDir+'/link_'+s1+'.ukl', flc)
+                                            unik.setFile(appsDir+'/temp_cfg.json', nct2)
+                                            unik.ejecutarLineaDeComandoAparte('"'+appExec+'" '+'-git='+urlgit+'.git -folder='+appsDir+'/'+s1+' -cfg'+add)
                                         }else{
                                             var nct3                                            
                                             if(''+s1==='unikast'){
