@@ -205,19 +205,7 @@ ApplicationWindow{
                             onClicking: {
                                 app.area=0
                             }
-                        }
-                        //                        Boton{//DepsList
-                        //                            id:btnAreaDeps
-                        //                            w:parent.width
-                        //                            h: w
-                        //                            //f:"FontAwesome5Free"
-                        //                            t: '\uf00a'
-                        //                            d:'Instalar Dependencias'
-                        //                            b:app.area===4?app.c2:app.c1
-                        //                            onClicking: {
-                        //                                app.area=4
-                        //                            }
-                        //                        }
+                        }                       
                         Boton{//PageAppList
                             id:btnArea1
                             w:parent.width
@@ -274,9 +262,9 @@ ApplicationWindow{
                                 var j=appsDir+'/temp_cfg.json'
                                 var c
                                 if(!up){
-                                    c='{"arg0":"-git=https://github.com/nextsigner/unik-tools.git", "arg1":"-folder='+appsDir+'/unik-tools"}'
+                                    c='{"arg0":"-git=https://github.com/nextsigner/unik-tools.git", "arg1":"-folder='+appsDir+'/unik-tools", "arg2":"-cfg"}'
                                 }else{
-                                    c='{"arg0":"-folder='+appsDir+'/unik-tools"}'
+                                    c='{"arg0":"-folder='+appsDir+'/unik-tools", "arg2":"-cfg"}'
                                 }
                                 unik.setFile(j, c)
                                 unik.restartApp()
@@ -447,10 +435,8 @@ ApplicationWindow{
                         unik.log("Updating unik-tools")
                         appSettings.uRS = ur
                         var fd=appsDir
-                        //var downloaded = unik.downloadGit('https://github.com/nextsigner/unik-tools', fd)
                         appSettings.uRS=''
                         btnUpdate.up=true
-
                     }else{
                         //appSettings.uRS=ur
                     }
