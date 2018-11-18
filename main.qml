@@ -267,7 +267,7 @@ ApplicationWindow{
                                     c='{"arg0":"-folder='+appsDir+'/unik-tools", "arg2":"-cfg"}'
                                 }
                                 unik.setFile(j, c)
-                                unik.restartApp()
+                                unik.restartApp('-cfg')
                             }
                         }
                         Boton{//Show Debug Panel
@@ -333,13 +333,7 @@ ApplicationWindow{
                     visible: app.area===0
                     anchors.right: parent.right
                     onLoaded: app.visible=true
-                }
-                //                UnikInstallDependencies{
-                //                    id: unikDepsList
-                //                    width: app.width-xTools.width
-                //                    height: parent.height
-                //                    visible: app.area===4
-                //                }
+                }                
                 PageAppList{
                     id: pal
                     width: app.width-xTools.width
