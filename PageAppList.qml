@@ -302,7 +302,7 @@ Item {
                             unik.mkdir(t)
                             var upkToFolder = unik.upkToFolder(path, "unik-free", "free", t)
                             if(upkToFolder){
-                                cl +=''+t
+                                cl +=''+t+' -cfg'
                                 unik.log('Running: '+appPath+' '+cl)
                                 unik.ejecutarLineaDeComandoAparte(appPath+' '+cl)
                             }

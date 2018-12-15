@@ -249,14 +249,34 @@ Rectangle {
                                             unik.ejecutarLineaDeComandoAparte(appExec+' -folder='+unik.getPath(2)+' -cfg')
                                         }
                                     }else{
-                                        var m0=(''+urlgit).split('/')
+                                        if(Qt.platform.os==='osx'){
+                                            appPath = '"'+unik.getPath(1)+'/'+unik.getPath(0)+'"'
+                                        }
+                                        if(Qt.platform.os==='windows'){
+                                            appPath = '"'+unik.getPath(1)+'/'+unik.getPath(0)+'"'
+                                        }
+                                        if(Qt.platform.os==='linux'){
+                                            appPath = '"'+appExec+'"'
+                                        }
+                                        var cl = '-folder='
+                                        m0=(''+urlgit).split('/')
                                         var m1=''+m0[m0.length-1]
                                         var upkData=unik.getHttpFile(urlgit)
                                         var upkFileName=appsDir+'/'+m1
                                         unik.setFile(upkFileName, upkData)
+                                        var d = new Date(Date.now())
+                                        var t = unik.getPath(2)+'/t'+d.getTime()
+                                        unik.mkdir(t)
+                                        var upkToFolder = unik.upkToFolder(upkFileName, "unik-free", "free", t)
+                                        if(upkToFolder){
+                                            cl +=''+t+' -cfg'
+                                            unik.log('Running: '+appPath+' '+cl)
+                                            unik.ejecutarLineaDeComandoAparte(appPath+' '+cl)
+                                        }
+                                        /*
                                         var c='{"mode":"-upk", "arg1": "'+upkFileName+'", "arg2":"-user=unik-free", "arg3":"-key=free"}'
                                         unik.setFile(appsDir+'/config.json', c)
-                                        unik.restartApp()
+                                        unik.restartApp()*/
 
                                     }
 
