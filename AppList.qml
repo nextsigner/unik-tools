@@ -149,7 +149,7 @@ Rectangle {
 //                                                 unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg')
 //                                            }
                                             var params=(''+urlgit)
-                                            var m0=urlGit.split('/')
+                                            var m0=(''+urlgit).split('/')
                                             var s1=(''+m0[m0.length-1]).replace('.git', '')
                                             params+=', -folder='+pws+'/'+s1
                                             params+=', -dir='+pws+'/'+s1
