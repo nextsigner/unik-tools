@@ -130,7 +130,7 @@ Rectangle {
                                         //var m0= (''+urlgit).split('/')
                                         //var s0=''+m0[m0.length-1]
                                         //var s1=s0.replace('.git', '')
-                                        //var nclink
+                                        var nclink
                                         if(Qt.platform.os==='linux'){
                                             var nct2
 //                                            if(''+s1==='unikast'){
@@ -148,16 +148,16 @@ Rectangle {
 //                                                unik.setFile(appsDir+'/temp_cfg.json', nct2)
 //                                                 unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg')
 //                                            }
-                                            var params=(''+urlgit)
-                                            var m0=(''+urlgit).split('/')
+                                            var par=(''+urlgit)
+                                            var m0=(''+par).split('/')
                                             var s1=(''+m0[m0.length-1]).replace('.git', '')
-                                            params+=', -folder='+pws+'/'+s1
-                                            params+=', -dir='+pws+'/'+s1
+                                            par+=",-folder="+pws+"/"+s1
+                                            par+=",-dir"=+pws+"/"+s1
                                             if(''+s1==='unikast'){
-                                                params+=',-wss'
+                                                par+=",-wss"
                                             }
-                                            unik.setUnikStartSettings(params)
-                                            console.log('New USS params: '+params)
+                                            unik.setUnikStartSettings(par)
+                                            console.log('New USS params: '+par)
                                              unik.restartApp("")
                                         }else if(Qt.platform.os==='osx'){
                                             nct2
