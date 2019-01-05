@@ -148,7 +148,7 @@ Rectangle {
 //                                                unik.setFile(appsDir+'/temp_cfg.json', nct2)
 //                                                 unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg')
 //                                            }
-                                            var par=(''+urlgit)
+                                            var par=('-git='+urlgit)
                                             var m0=(''+par).split('/')
                                             var s1=(''+m0[m0.length-1]).replace('.git', '')
                                             par+=",-folder="+pws+"/"+s1
