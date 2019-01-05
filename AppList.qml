@@ -152,7 +152,7 @@ Rectangle {
                                             var m0=(''+par).split('/')
                                             var s1=(''+m0[m0.length-1]).replace('.git', '')
                                             par+=",-folder="+pws+"/"+s1
-                                            par+=",-dir"=+pws+"/"+s1
+                                            par+=",-dir="+pws+"/"+s1
                                             if(''+s1==='unikast'){
                                                 par+=",-wss"
                                             }
