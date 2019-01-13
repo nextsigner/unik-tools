@@ -168,7 +168,7 @@ Rectangle {
                                             //Write ukl file data for launch with out update
                                             unik.setFile(uklFile, uklData)
                                             uklData=' -git='+urlgit
-                                            uklFileUp=''+pws+'/link_update'+s1+'.ukl'
+                                            uklFileUp=''+pws+'/link_update-'+s1+'.ukl'
                                             //Write ukl file data for launch with git update
                                             unik.setFile(uklFileUp, uklData)
                                             console.log('New UKL File: '+uklFile)
