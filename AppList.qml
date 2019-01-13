@@ -122,6 +122,9 @@ Rectangle {
                                     lBotInst.text="Instalar"
                                 }
                                 onClicked: {
+                                    var uklData=''
+                                    var uklFile=''
+                                    var uklFileUp=''
                                     if((''+urlgit).indexOf('.upk')<0){
                                         var carpetaLocal=appsDir
                                         //console.log('Descargando  '+urlgit)
@@ -133,21 +136,7 @@ Rectangle {
                                         var nclink
                                         if(Qt.platform.os==='linux'){
                                             var nct2
-                                            //                                            if(''+s1==='unikast'){
-                                            //                                                nclink = '-folder='+appsDir+'/'+s1+' -cfg -wss'
-                                            //                                                nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'", "arg2":"-cfg", "arg3":"-wss"}'
-                                            //                                                unik.createLink(appExec+' -folder='+appsDir+'/'+s1+' -cfg -wss', unik.getPath(6)+'/'+s1+'.desktop', s1, 'It is created by Unik Qml Engine with the UnikTools')
-                                            //                                                unik.setFile(appsDir+'/link_'+s1+'.ukl', nclink)
-                                            //                                                unik.setFile(appsDir+'/temp_cfg.json', nct2)
-                                            //                                                 unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg -wss')
-                                            //                                            }else{
-                                            //                                                nclink = '-folder='+appsDir+'/'+s1+' -cfg'
-                                            //                                                nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'", "arg2":"-cfg"}'
-                                            //                                                unik.createLink(appExec+' -folder='+appsDir+'/'+s1+' -cfg', unik.getPath(6)+'/'+s1+'.desktop', s1, 'It is created by Unik Qml Engine with the UnikTools')
-                                            //                                                unik.setFile(appsDir+'/link_'+s1+'.ukl', nclink)
-                                            //                                                unik.setFile(appsDir+'/temp_cfg.json', nct2)
-                                            //                                                 unik.ejecutarLineaDeComandoAparte(appExec+' -git='+urlgit+' -folder='+appsDir+'/'+s1+'  -cfg')
-                                            //                                            }
+
                                             var par=('-git='+urlgit)
                                             var m0=(''+par).split('/')
                                             var s1=(''+m0[m0.length-1]).replace('.git', '')
@@ -165,10 +154,24 @@ Rectangle {
                                             s1=(''+m0[m0.length-1]).replace('.git', '')
                                             par+=",-folder="+pws+"/"+s1
                                             par+=",-dir="+pws+"/"+s1
-                                            if(''+s1==='unikast'){
+                                            if(''+s1==='unikast'||(''+s1).indexOf('wss')>=1){
                                                 par+=",-wss"
+                                                uklData+='-wss '
                                             }
+
+                                            //Setting restart unik args
                                             unik.setUnikStartSettings(par)
+
+                                            //Making ukl link file data for Unik Launcher Application
+                                            uklData+="-folder="+pws+"/"+s1
+                                            uklFile=pws+'/link_'+s1+'.ukl'
+                                            //Write ukl file data for launch with out update
+                                            unik.setFile(uklFile, uklData)
+                                            uklData=(' -git='+urlgit)
+                                            uklFileUp=pws+'/link_update'+s1+'.ukl'
+                                            //Write ukl file data for launch with git update
+                                            unik.setFile(uklFile, uklData)
+
                                             console.log('New USS params: '+par)
                                             unik.ejecutarLineaDeComandoAparte('"'+appExec+'"')
 
