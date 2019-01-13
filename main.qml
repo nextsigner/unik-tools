@@ -3,7 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
 import LogView 1.0
-
+z
 ApplicationWindow{
     id: app
     objectName: 'unik-tools'
@@ -19,7 +19,7 @@ ApplicationWindow{
     property bool logueado: false
     property string userLogin: ''
     property string keyLog: ''
-    property string utversion: '2.46.8'
+    property string utversion: '3.2.2'
     //property bool waiting: wait
 
     //flags: Qt.platform.os !=='android' && app.waiting?Qt.Window | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint:1
@@ -33,20 +33,12 @@ ApplicationWindow{
         Qt.quit()
     }
     onWidthChanged: {
-        if(Qt.platform.os==='android'){
-            //xApp.rotation = app.width>app.height?0:90
-        }else{
-            appSettings.appWidth = width
-            appSettings.appX = app.x
-        }
+        appSettings.appWidth = width
+        appSettings.appX = app.x
     }
     onHeightChanged:  {
-        if(Qt.platform.os==='android'){
-            //xApp.rotation = app.width>app.height?0:90
-        }else{
-            appSettings.appHeight = height
-            appSettings.appY = app.y
-        }
+        appSettings.appHeight = height
+        appSettings.appY = app.y
     }
     onXChanged: {
         appSettings.appX = app.x
@@ -80,21 +72,14 @@ ApplicationWindow{
         property int appWS
         property int pyLineRH1
         property bool logVisible
-        property string uGitUrl: 'https://github.com/nextsigner/unik-qml-blogger.git'
+        property string uGitUrl: 'https://github.com/nextsigner/unik-tools.git'
         property string uRS
         property string ucs: ''
-        //        Component.onCompleted: {
-        //            //unik.setProperty("logViewVisible", appSettings.logVisible)
-        //            var ukhost1=unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik/master/data/unik_host')
-        //            unik.setHost(ukhost1)
-        //            console.log('1 Current Unik Host Domain: '+unik.host())
-        //         }
-    }
+            }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
     Item{
         id: xApp
         anchors.fill: parent
-        //visible: !app.waiting
         Column{
             height: app.height
             Rectangle{//Top Tool Bar
@@ -176,6 +161,7 @@ ApplicationWindow{
                     anchors.right: parent.right
                     anchors.rightMargin: app.fs*0.1
                     color: app.c1
+                    visible: app.appVigente!==""
                 }
             }
 
@@ -206,7 +192,7 @@ ApplicationWindow{
                             onClicking: {
                                 app.area=0
                             }
-                        }                       
+                        }
                         Boton{//PageAppList
                             id:btnArea1
                             w:parent.width
@@ -260,16 +246,17 @@ ApplicationWindow{
                             c: up ? 'white':'#000'
                             property bool up: false
                             onClicking: {
-                                var j=appsDir+'/temp_cfg.json'
-                                var c
-                                if(!up){
-                                    c='{"arg0":"-git=https://github.com/nextsigner/unik-tools.git", "arg1":"-folder='+appsDir+'/unik-tools", "arg2":"-cfg"}'
-                                }else{
-                                    c='{"arg0":"-folder='+appsDir+'/unik-tools", "arg2":"-cfg"}'
+                                var par='-git=https://github.com/nextsigner/unik.git'
+                                var m0=(''+par).split('/')
+                                var s1=(''+m0[m0.length-1]).replace('.git', '')
+                                par+=",-folder="+pws+"/"+s1
+                                par+=",-dir="+pws+"/"+s1
+                                if(''+s1==='unikast'){
+                                    par+=",-wss"
                                 }
-                                unik.setFile(j, c)
-                                unik.restartApp('-cfg')
-                            }
+                                unik.setUnikStartSettings(par)
+                                console.log('New USS params: '+par)
+                                unik.restartApp('-restartingFromUnik')                            }
                         }
                         Boton{//Show Debug Panel
                             id:btnShowDP
@@ -334,7 +321,7 @@ ApplicationWindow{
                     visible: app.area===0
                     anchors.right: parent.right
                     onLoaded: app.visible=true
-                }                
+                }
                 PageAppList{
                     id: pal
                     width: app.width-xTools.width
@@ -378,16 +365,8 @@ ApplicationWindow{
                     visible: false
                 }
             }
-
-
-
-
         }
-
     }
-
-
-
     Timer{
         id:timerInit
         running: true
@@ -402,7 +381,6 @@ ApplicationWindow{
             }
         }
     }
-
     Timer{
         id:tu
         running: true
@@ -441,42 +419,47 @@ ApplicationWindow{
                     tu.start()
 
 
+                }
             }
         }
     }
-}
 
 
-Component.onCompleted: {
-    var ukldata='-folder='+appsDir+'/unik-tools -cfg '
-    var ukl=appsDir+'/link_unik-tools.ukl'
-    unik.setFile(ukl, ukldata)
-    var ukhost1=unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik/master/data/unik_host')
-    unik.setHost(ukhost1)
-    console.log('Current Unik Host Domain: '+unik.host())
-    if(appSettings.pyLineRH1===0||appSettings.pyLineRH1===undefined){
-        appSettings.pyLineRH1 = 100
-    }
-    logView.height=appSettings.pyLineRH1
-    if(Qt.platform.os==='windows'||Qt.platform.os==='linux'||Qt.platform.os==='osx'){
-        app.visibility = appSettings.appWS
-        if(appSettings.appWS===2){
-            app.x = appSettings.appX
-            app.y = appSettings.appY
-            app.width = appSettings.appWidth
-            app.height = appSettings.appHeight
+    Component.onCompleted: {
+        var ukldata='-folder='+appsDir+'/unik-tools '
+        var ukl=appsDir+'/link_unik-tools.ukl'
+        unik.setFile(ukl, ukldata)
+        var ukhost1=unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik/master/data/unik_host')
+        unik.setHost(ukhost1)
+        console.log('Current Unik Host Domain: '+unik.host())
+        if(appSettings.pyLineRH1===0||appSettings.pyLineRH1===undefined){
+            appSettings.pyLineRH1 = 100
         }
-    }else{
-        app.visibility = "FullScreen"
+        logView.height=appSettings.pyLineRH1
+        if(Qt.platform.os==='windows'||Qt.platform.os==='linux'||Qt.platform.os==='osx'){
+            app.visibility = appSettings.appWS
+            if(appSettings.appWS===2){
+                app.x = appSettings.appX
+                app.y = appSettings.appY
+                app.width = appSettings.appWidth
+                app.height = appSettings.appHeight
+            }
+        }else{
+            app.visibility = "FullScreen"
+        }
+        unik.log('unik-tools log')
+        unik.log('unik version: '+version+'')
+        unik.log('unik-tools host:  '+host+'')
+        unik.log('Unik Tools AppName: '+appName)
+        //unik.log(app.contentData)
+        appList.act()
+        var params=(''+Qt.application.arguments)
+        if(params.indexOf('-restartingFromUnik')>=0){
+            tu.stop()
+            tu.running=false
+        }
+
     }
-    //ful.init()
-    unik.log('unik-tools log')
-    unik.log('unik version: '+version+'')
-    unik.log('unik-tools host:  '+host+'')
-    unik.log('Unik Tools AppName: '+appName)
-    //unik.log(app.contentData)
-    appList.act()
-}
 
 
 }

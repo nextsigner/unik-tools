@@ -160,9 +160,9 @@ Rectangle {
                                             console.log('New USS params: '+par)
                                             unik.restartApp("")
                                         }else if(Qt.platform.os==='osx'){
-                                            var par=('-git='+urlgit)
-                                            var m0=(''+par).split('/')
-                                            var s1=(''+m0[m0.length-1]).replace('.git', '')
+                                            par=('-git='+urlgit)
+                                            m0=(''+par).split('/')
+                                            s1=(''+m0[m0.length-1]).replace('.git', '')
                                             par+=",-folder="+pws+"/"+s1
                                             par+=",-dir="+pws+"/"+s1
                                             if(''+s1==='unikast'){
@@ -170,7 +170,8 @@ Rectangle {
                                             }
                                             unik.setUnikStartSettings(par)
                                             console.log('New USS params: '+par)
-                                            unik.restartApp("")
+                                            unik.ejecutarLineaDeComandoAparte('"'+appExec+'"')
+
                                         }else if(Qt.platform.os==='windows'){
                                             par=('-git='+urlgit)
                                             m0=(''+par).split('/')
