@@ -68,13 +68,13 @@ ApplicationWindow{
         property int appHeight: 500
         property int appX: 0
         property int appY: 0
-        property int appWS
-        property int pyLineRH1
+        property int appWS //Application WorkSpace
+        property int lvh //LogView Height
         property bool logVisible
         property string uGitUrl: 'https://github.com/nextsigner/unik-tools.git'
-        property string uRS
+        property string uRS // Ultimate Revisiòn String for Git commit comparation
         property string ucs: ''
-            }
+    }
     FontLoader {name: "FontAwesome";source: "qrc:/fontawesome-webfont.ttf";}
     Item{
         id: xApp
@@ -345,15 +345,15 @@ ApplicationWindow{
 
                 LogView{
                     id:logView
-                    height: appSettings.pyLineRH1
+                    height: appSettings.lvh
                     width: parent.width-xTools.width
                     topHandlerHeight:4
                     anchors.bottom: parent.bottom
                     anchors.right: parent.right
                     visible: appSettings.logVisible
-                    onHeightChanged: appSettings.pyLineRH1=height
+                    onHeightChanged: appSettings.lvh=height
                     onYChanged: {
-                        //appSettings.pyLineRH1=y
+                        //appSettings.lvh=y
                     }
                 }
                 DialogoInformar{
@@ -431,10 +431,10 @@ ApplicationWindow{
         var ukhost1=unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik/master/data/unik_host')
         unik.setHost(ukhost1)
         console.log('Current Unik Host Domain: '+unik.host())
-        if(appSettings.pyLineRH1===0||appSettings.pyLineRH1===undefined){
-            appSettings.pyLineRH1 = 100
+        if(appSettings.lvh===0||appSettings.lvh===undefined){
+            appSettings.lvh = 100
         }
-        logView.height=appSettings.pyLineRH1
+        logView.height=appSettings.lvh
         if(Qt.platform.os==='windows'||Qt.platform.os==='linux'||Qt.platform.os==='osx'){
             app.visibility = appSettings.appWS
             if(appSettings.appWS===2){
