@@ -347,7 +347,7 @@ ApplicationWindow{
                     id:logView
                     height: appSettings.pyLineRH1
                     width: parent.width-xTools.width
-                    //topHandlerHeight:4
+                    topHandlerHeight:4
                     anchors.bottom: parent.bottom
                     anchors.right: parent.right
                     visible: appSettings.logVisible
