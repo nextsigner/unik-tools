@@ -426,7 +426,7 @@ ApplicationWindow{
 
 
     Component.onCompleted: {
-        var ukldata='-folder='+appsDir+'/unik-tools '
+        var ukldata='-git=https://github.com/nextsigner/unik-tools.git -folder='+appsDir+'/unik-tools'
         var ukl=appsDir+'/link_unik-tools.ukl'
         unik.setFile(ukl, ukldata)
         var ukhost1=unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik/master/data/unik_host')
