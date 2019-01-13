@@ -164,13 +164,16 @@ Rectangle {
 
                                             //Making ukl link file data for Unik Launcher Application
                                             uklData+="-folder="+pws+"/"+s1
-                                            uklFile=pws+'/link_'+s1+'.ukl'
+                                            uklFile=''+pws+'/link_'+s1+'.ukl'
                                             //Write ukl file data for launch with out update
                                             unik.setFile(uklFile, uklData)
-                                            uklData=(' -git='+urlgit)
-                                            uklFileUp=pws+'/link_update'+s1+'.ukl'
+                                            uklData=' -git='+urlgit
+                                            uklFileUp=''+pws+'/link_update'+s1+'.ukl'
                                             //Write ukl file data for launch with git update
                                             unik.setFile(uklFile, uklData)
+                                            console.log('New UKL File: '+uklFile)
+                                            console.log('New UKL Data: '+uklData)
+
 
                                             console.log('New USS params: '+par)
                                             unik.ejecutarLineaDeComandoAparte('"'+appExec+'"')
