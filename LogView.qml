@@ -2,13 +2,13 @@ import QtQuick 2.0
 import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 Rectangle{
-    id:raiz
+    id:r
     width: parent.width
     height:  parent.height
     clip: true
-    color: raiz.scrollBarBgColor
+    color: r.scrollBarBgColor
     border.width: 1
-    border.color: raiz.scrollBarHandlerColor
+    border.color: r.scrollBarHandlerColor
     property string bodyText: ''
     property var handlerSB
 
@@ -24,14 +24,14 @@ Rectangle{
     property color bgColor: "#000000"
 
     property int scrollBarWidth:12
-    property color scrollBarHandlerColor: raiz.fontColor
-    property color scrollBarBgColor: raiz.bgColor
+    property color scrollBarHandlerColor: r.fontColor
+    property color scrollBarBgColor: r.bgColor
 
     property bool showPlainText: false
     property bool enableAutoToBottom: true
 
     property bool showCommandsLineInput: false
-    property int commandsLineInputHeight: raiz.fontSize*2
+    property int commandsLineInputHeight: r.fontSize*2
 
     property string help: ''
 
@@ -40,21 +40,21 @@ Rectangle{
     Connections {target: unik;onUkStdChanged: log((''+unik.ukStd).replace(/\n/g, '<br />'));}
     Connections {target: unik;onStdErrChanged: log((''+unik.ukStd).replace(/\n/g, '<br />'));}
     Timer{
-        running: raiz.height<=0&&raiz.topHandlerHeight<=0
+        running: r.height<=0&&r.topHandlerHeight<=0
         repeat: false
         interval: 500
         onTriggered: {
-            raiz.topHandlerHeight=4
-            raiz.height=4
+            r.topHandlerHeight=4
+            r.height=4
         }
     }
     Flickable{
         id:fk
-        width: parent.width-fontSize*2
-        height: raiz.showUnikControls ? parent.height-lineRTop.height-xBtns.height : parent.height-lineRTop.height
+        width: r.width
+        height: r.showUnikControls ? parent.height-lineRTop.height-xBtns.height : parent.height-lineRTop.height
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
-        contentWidth: parent.width
+        contentWidth: r.width
         contentHeight: logTxt.height
         boundsBehavior: Flickable.StopAtBounds
         onDragStarted:  draged=true
@@ -80,69 +80,64 @@ Rectangle{
         }
         Text {
             id: logTxt
-            width: parent.width-fontSize*2
+            width: r.width.width-fontSize*2
             height: contentHeight
             font.pixelSize: fontSize
             color: fontColor
             wrapMode: Text.WordWrap
-            textFormat: showPlainText ? Text.Normal : Text.RichText
-            onTextChanged: {
-                if(!fk.draged){
-                    //fk.uh=contentHeight
-                }
-            }
+            textFormat: showPlainText ? Text.Normal : Text.RichText            
         }
     }
     LineResizeTop{
         id:lineRTop;
-        width: raiz.width
-        height: raiz.topHandlerHeight
-        color: raiz.handlerColor
-        minY: 0-raiz.y
+        width: r.width
+        height: r.topHandlerHeight
+        color: r.handlerColor
+        minY: 0-r.y
         maxY: height
-        onEnabledChanged: raiz.height+=10
+        onEnabledChanged: r.height+=10
         onYChanged: {
-            raiz.height-=y;lineRTop.y=0;
-            if(raiz.height<=raiz.topHandlerHeight){
-                raiz.height=raiz.topHandlerHeight
+            r.height-=y;lineRTop.y=0;
+            if(r.height<=r.topHandlerHeight){
+                r.height=r.topHandlerHeight
                 lineRTop.y=0;
             }
         }
         onProcesar: {
-            raiz.height-=y;lineRTop.y=0;
+            r.height-=y;lineRTop.y=0;
         }
         onLineReleased: {
-            raiz.height-=y;lineRTop.y=0;
-            if(raiz.height<=raiz.topHandlerHeight){
-                raiz.height=raiz.topHandlerHeight
+            r.height-=y;lineRTop.y=0;
+            if(r.height<=r.topHandlerHeight){
+                r.height=r.topHandlerHeight
                 lineRTop.y=0;
             }
         }
     }
     Rectangle{
         id: xBtns
-        width: raiz.width
-        height: raiz.showUnikControls?raiz.fontSize*2:0
-        color: raiz.fontColor
+        width: r.width
+        height: r.showUnikControls?r.fontSize*2:0
+        color: r.fontColor
         anchors.top: lineRTop.bottom
         Row{
             visible: parent.height!==0
             anchors.right: parent.right
-            anchors.rightMargin: raiz.fontSize*0.2
+            anchors.rightMargin: r.fontSize*0.2
             anchors.verticalCenter: parent.verticalCenter
-            height: raiz.fontSize*1.6
-            spacing: raiz.fontSize
+            height: r.fontSize*1.6
+            spacing: r.fontSize
             Boton{
                 id:btnDown
                 w:parent.height
                 h: w
                 t: '\uf063'
-                b: raiz.bgColor
-                c: raiz.fontColor
+                b: r.bgColor
+                c: r.fontColor
                 d:'Reducir LogView hacia abajo'
                 tp:1
                 onClicking: {
-                    raiz.height=0+lineRTop.height
+                    r.height=0+lineRTop.height
                 }
             }
             Boton{
@@ -150,19 +145,19 @@ Rectangle{
                 w:parent.height
                 h: w
                 t: ''
-                b: raiz.bgColor
-                c: raiz.fontColor
-                d:raiz.showPlainText?'LogView a HTML':'LogView a TXT'
+                b: r.bgColor
+                c: r.fontColor
+                d:r.showPlainText?'LogView a HTML':'LogView a TXT'
                 tp:1
                 onClicking: {
-                    raiz.showPlainText=!raiz.showPlainText
+                    r.showPlainText=!r.showPlainText
                 }
                 Text {
                     id: txtTT1
-                    text: raiz.showPlainText?'<b>TXT<b>':'<b>HTML<b>'
+                    text: r.showPlainText?'<b>TXT<b>':'<b>HTML<b>'
                     anchors.centerIn: parent
                     font.pixelSize: parent.width*0.3
-                    color: raiz.fontColor
+                    color: r.fontColor
                 }
             }
             Boton{
@@ -170,8 +165,8 @@ Rectangle{
                 w:parent.height
                 h: w
                 t: '\uf12d'
-                b: raiz.bgColor
-                c: raiz.fontColor
+                b: r.bgColor
+                c: r.fontColor
                 d:'Limpiar LogView'
                 tp:1
                 onClicking: {
@@ -183,8 +178,8 @@ Rectangle{
                 w:parent.height
                 h: w
                 t: '<b>?</b>'
-                b: raiz.bgColor
-                c: raiz.fontColor
+                b: r.bgColor
+                c: r.fontColor
                 d:'Acerca de Unikast'
                 tp:1
                 onClicking: {
@@ -199,11 +194,11 @@ Rectangle{
                 w:parent.height
                 h: w
                 t: '\uf015'
-                b: raiz.bgColor
-                c: raiz.fontColor
+                b: r.bgColor
+                c: r.fontColor
                 d:'Iniciar Unik-Tools'
                 tp:1
-                visible: !raiz.enUnikTools
+                visible: !r.enUnikTools
                 onClicking: {
                     unik.ejecutarLineaDeComandoAparte(appExec+' -folder='+appsDir+'/unik-tools  -cfg')
                 }
@@ -213,8 +208,8 @@ Rectangle{
                 w:parent.height
                 h: w
                 t: '\uf0b2'
-                b: raiz.bgColor
-                c: raiz.fontColor
+                b: r.bgColor
+                c: r.fontColor
                 d:'FullScreen'
                 tp:1
                 onClicking: {
@@ -229,11 +224,11 @@ Rectangle{
                 w:parent.height
                 h: w
                 t: '\uf021'
-                b: raiz.bgColor
-                c: raiz.fontColor
+                b: r.bgColor
+                c: r.fontColor
                 d:'Reiniciar'
                 tp:1
-                visible: !raiz.enUnikTools
+                visible: !r.enUnikTools
                 onClicking: {
                     unik.restartApp()
                 }
@@ -242,18 +237,18 @@ Rectangle{
                     font.family: "FontAwesome"
                     font.pixelSize: parent.height*0.3
                     anchors.centerIn: parent
-                    color: raiz.fontColor
+                    color: r.fontColor
                 }
             }
             Boton{//Quit
                 w:parent.height
                 h: w
                 t: "\uf011"
-                b: raiz.bgColor
-                c: raiz.fontColor
+                b: r.bgColor
+                c: r.fontColor
                 d:'Apagar'
                 tp:1
-                visible: !raiz.enUnikTools
+                visible: !r.enUnikTools
                 onClicking: {
                     Qt.quit()
                 }
@@ -264,7 +259,7 @@ Rectangle{
 
     onHeightChanged: appSettings.lvh=height
     Component.onCompleted: {
-        if(raiz.showUnikInitMessages){
+        if(r.showUnikInitMessages){
             var s=(''+unik.initStdString).replace(/\n/g, '<br />')
             var stdinit='<b>Start Unik Init Message:</b>\u21b4<br />'+s+'<br /><b>End Unik Init Message.</b><br />\n'
             var txt =''
@@ -300,19 +295,19 @@ Rectangle{
             logTxt.text+=bodyText
         }
         //unik.setProperty("setInitString", true)
-        if(raiz.fontSize<=0){
-            raiz.fontSize = 14
+        if(r.fontSize<=0){
+            r.fontSize = 14
         }
     }
     function log(l){
         if((''+l).indexOf('QSslSocket')>-1){
             return
         }
-        if(logTxt.text.length>raiz.maxLength){
+        if(logTxt.text.length>r.maxLength){
             logTxt.text=''
         }
         logTxt.text+=l
-        if(fk.contentHeight>=raiz.height&&!fk.draged){
+        if(fk.contentHeight>=r.height&&!fk.draged){
             fk.contentY=fk.contentHeight-fk.height
         }
     }
@@ -334,8 +329,8 @@ Rectangle{
             }
         }
         log(nd)
-        if(raiz.height<400){
-            raiz.height=400
+        if(r.height<400){
+            r.height=400
         }
     }
 }
