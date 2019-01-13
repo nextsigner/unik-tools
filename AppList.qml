@@ -172,86 +172,29 @@ Rectangle {
                                             console.log('New USS params: '+par)
                                             unik.restartApp("")
                                         }else if(Qt.platform.os==='windows'){
-                                            var add=''
-                                            var flc='-folder='+appsDir+'/'+s1+' -cfg'
-                                            if(''+s1==='unikast'||(''+s1).toLowerCase().indexOf('server')>=0){
-                                                nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'", "arg3":"-cfg", "arg4":"-wss"}'
-                                                add+=' -wss'
-                                            }else{
-                                                nct2 = '{"arg0":"-git='+urlgit+'.git", "arg1":"-folder='+appsDir+'/'+s1+'",  "arg3":"-cfg"}'
-                                            }
-                                            unik.createLink(appExec, flc+add, unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
-                                            unik.setFile(appsDir+'/link_'+s1+'.ukl', flc)
-                                            unik.setFile(appsDir+'/temp_cfg.json', nct2)
-                                            unik.ejecutarLineaDeComandoAparte('"'+appExec+'" '+'-git='+urlgit+'.git -folder='+appsDir+'/'+s1+' -dir='+appsDir+'/'+s1+' -cfg'+add)
-                                        }else{
-                                            var nct3
+                                            par=('-git='+urlgit)
+                                            m0=(''+par).split('/')
+                                            s1=(''+m0[m0.length-1]).replace('.git', '')
+                                            par+=",-folder="+pws+"/"+s1
+                                            par+=",-dir="+pws+"/"+s1
                                             if(''+s1==='unikast'){
-                                                nct3 = '{"arg0":"-folder='+appsDir+'/'+s1+'", "arg1":"-wss"}'
-                                                nclink = '-folder='+appsDir+'/'+s1+' -cfg -wss'
-                                                if(Qt.platform.os==='windows'){
-                                                    unik.createLink(appExec, '-folder='+appsDir+'/'+s1+' -cfg -wss', unik.getPath(6)+'/'+s1+'.lnk',"It is a file created by Unik Qml Engine", appsDir+'/'+s1 )
-                                                }
-                                            }else{
-                                                nct3 = '{"arg0":"-folder='+appsDir+'/'+s1+'"}'
-                                                nclink = '-folder='+appsDir+'/'+s1+' -cfg'
-
+                                                par+=",-wss"
                                             }
-                                            unik.setFile(appsDir+'/link_'+s1+'.ukl', nclink)
-                                            unik.setFile(appsDir+'/temp_cfg.json', nct3)
-                                            var downloaded=unik.downloadGit(urlgit, appsDir+'/'+s1)
-                                            var appPath
-                                            if(Qt.platform.os==='osx'){
-                                                appPath = '"'+unik.getPath(1)+'/'+unik.getPath(0)+'"'
+                                            unik.setUnikStartSettings(par)
+                                            console.log('New USS params: '+par)
+                                           unik.ejecutarLineaDeComandoAparte('"'+appExec+'"')
+                                        }else{
+                                            par=('-git='+urlgit)
+                                            m0=(''+par).split('/')
+                                            s1=(''+m0[m0.length-1]).replace('.git', '')
+                                            par+=",-folder="+pws+"/"+s1
+                                            par+=",-dir="+pws+"/"+s1
+                                            if(''+s1==='unikast'){
+                                                par+=",-wss"
                                             }
-                                            if(Qt.platform.os==='windows'){
-                                                appPath = '"'+unik.getPath(1)+'/'+unik.getPath(0)+'"'
-                                            }
-                                            if(Qt.platform.os==='linux'){
-                                                appPath = '"'+appExec+'"'
-                                            }
-                                            var codeMsg='import QtQuick 2.0\n'
-                                            codeMsg+='import QtQuick.Controls 2.0\n'
-                                            codeMsg+='import QtQuick.Window 2.0\n'
-                                            codeMsg+='ApplicationWindow{\n'
-                                            codeMsg+='  id:winmsg\n'
-                                            codeMsg+='  visible:true\n'
-                                            codeMsg+='  flags:Qt.Window | Qt.WindowStaysOnTopHint\n'
-                                            codeMsg+='  color:"'+app.c4+'"\n'
-                                            codeMsg+='  width:txt.contentWidth+'+parseInt(app.fs)+'*6\n'
-                                            codeMsg+='  height:txt.contentHeight+'+parseInt(app.fs)+'*16\n'
-                                            codeMsg+='  Text{\n'
-                                            codeMsg+='      id:txt\n'
-                                            codeMsg+='      color:"'+app.c2+'"\n'
-                                            codeMsg+='      text:"Aplicación '+s1+' Instalada\\nSe ha creado un\\nEnlace en el Escritorio."\n'
-                                            codeMsg+='      font.pixelSize:'+parseInt(app.fs)+'\n'
-                                            codeMsg+='      anchors.centerIn: parent\n'
-                                            codeMsg+='      width:+'+parseInt(app.fs)+'*10\n'
-                                            codeMsg+='      wrapMode: Text.WordWrap\n'
-                                            codeMsg+='  }\n'
-
-                                            codeMsg+='  Button{\n'
-                                            codeMsg+='      id:btn\n'
-                                            codeMsg+='      text:"Ejecutar"\n'
-                                            codeMsg+='      font.pixelSize:'+parseInt(app.fs)+'\n'
-                                            codeMsg+='      anchors.horizontalCenter: parent.horizontalCenter\n'
-                                            codeMsg+='      anchors.bottom: parent.bottom\n'
-                                            codeMsg+='      anchors.bottomMargin: '+parseInt(app.fs)+'\n'
-                                            codeMsg+='      onClicked:{\n'
-                                            codeMsg+='         unik.setFile(\''+appsDir+'/temp_cfg.json\''+', \''+nct3+'\')\n'
-                                            codeMsg+='         winmsg.close()\n'
-                                            codeMsg+='         unik.ejecutarLineaDeComandoAparte(\''+appPath+' -cfg\')\n'
-                                            codeMsg+='      }\n'
-                                            codeMsg+='  }\n'
-
-                                            codeMsg+='      Component.onCompleted:{\n'
-                                            //codeMsg+='          var d=unik.downloadGit(\''+urlgit+'\',"C:/Users/qt/Desktop/")\n'
-                                            codeMsg+='      }\n'
-
-
-                                            codeMsg+='}\n'
-                                            unik.setFile(unik.getPath(2)+'/main.qml', codeMsg)
-                                            unik.ejecutarLineaDeComandoAparte(appExec+' -folder='+unik.getPath(2)+' -cfg')
+                                            unik.setUnikStartSettings(par)
+                                            console.log('New USS params: '+par)
+                                            unik.ejecutarLineaDeComandoAparte('"'+appExec+'"')
                                         }
                                     }else{
                                         if(Qt.platform.os==='osx'){
