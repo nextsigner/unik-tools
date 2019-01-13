@@ -2,8 +2,7 @@
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
-import LogView 1.0
-z
+
 ApplicationWindow{
     id: app
     objectName: 'unik-tools'
