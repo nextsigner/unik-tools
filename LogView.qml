@@ -6,7 +6,8 @@ Rectangle{
     width: parent.width
     height:  parent.height
     clip: true
-    color: r.scrollBarBgColor
+    property int topHandlerHeight: 30
+    /*color: r.scrollBarBgColor
     border.width: 1
     border.color: r.scrollBarHandlerColor
     property string bodyText: ''
@@ -333,4 +334,5 @@ Rectangle{
             r.height=400
         }
     }
+*/
 }

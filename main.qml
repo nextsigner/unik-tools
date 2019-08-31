@@ -1,4 +1,4 @@
-﻿import QtQuick 2.9
+﻿import QtQuick 2.12
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 import Qt.labs.settings 1.0
@@ -382,7 +382,7 @@ ApplicationWindow{
     }
     Timer{
         id:tu
-        running: true
+        running: false
         repeat: false
         interval: 1000*5
         property int v: 0
@@ -425,7 +425,8 @@ ApplicationWindow{
 
 
     Component.onCompleted: {
-        var ukldata='-git=https://github.com/nextsigner/unik-tools.git -folder='+appsDir+'/unik-tools'
+        //var ukldata='-git=https://github.com/nextsigner/unik-tools.git -folder='+appsDir+'/unik-tools'
+        var ukldata='-folder='+appsDir+'/unik-tools'
         var ukl=appsDir+'/link_unik-tools.ukl'
         unik.setFile(ukl, ukldata)
         var ukhost1=unik.getHttpFile('https://raw.githubusercontent.com/nextsigner/unik/master/data/unik_host')

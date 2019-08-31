@@ -1,10 +1,10 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
-import Qt.labs.folderlistmodel 2.2
+//import Qt.labs.folderlistmodel 2.2
 import QtWebView 1.1
 Item {
     id: raiz
-    property int nindex: 0    
+    property int nindex: 0
     Rectangle{
         id: tb
         width: raiz.width/2
@@ -56,7 +56,7 @@ Item {
             id: weAyuda
             width: parent.width
             height: parent.height
-            url: "https://nsdocs.blogspot.com.ar/2018/02/unik-documentation.html"
+            url: "https://github.com/nextsigner/unik/wiki/Unik-Documentation"
         }
     }
     Rectangle{
