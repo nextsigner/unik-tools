@@ -18,4 +18,4 @@ El modo en que unik opera, permite que este y otros módulos se actualicen direc
 ## Más información:
 * Email: nextsigner@gmail.com
 * Whatsapps: +54 11 3802 4370
-
+* Twitter: @nextsigner
