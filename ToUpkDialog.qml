@@ -125,9 +125,12 @@ Item {
                     onClicked: {
                         var m0=currentFolder.split('/')
                         var c = unik.mkUpk(currentFolder, m0[m0.length-1], tiUser.text, tiKey.text, appsDir+'')
+                        if(c){
+                            unik.createLink(unik.getPath(1)+"/unik.exe",  ''+pws+'/'+ m0[m0.length-1]+'.upk', unik.getPath(7)+'/Desktop/Upk '+ m0[m0.length-1]+'.lnk', 'Ejecutar Upk de '+ m0[m0.length-1], pws+'/'+ m0[m0.length-1]);
+                        }
                         //logView.log('Upk converted: '+c)
                         appSettings.logVisible = true
-                        unik.setProperty("logViewVisible", true)
+                        //unik.setProperty("logViewVisible", true)
                         raiz.visible = !c
                     }
                 }
