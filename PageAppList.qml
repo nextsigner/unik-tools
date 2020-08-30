@@ -448,7 +448,7 @@ Item {
             spacing: app.fs
             Text {
                 id: labelUG
-                text: "Url GitHub: "
+                text: "Url Git: "
                 font.pixelSize: app.fs
                 color: app.c1
                 anchors.verticalCenter: parent.verticalCenter
@@ -489,9 +489,85 @@ Item {
                 t: '\uf019'
                 b:app.area===0?app.c2:app.c1
                 anchors.verticalCenter: parent.verticalCenter
-                onClicking: {
-                    dg()
+                onClicking:  {
+                    var uklData=''
+                    var uklFile=''
+                    var uklFileUp=''
+                    var carpetaLocal=appsDir
+                    var nclink
+                    if(Qt.platform.os==='linux'){
+                        var nct2
+
+                        var par=('-git='+tiUrlGit.text)
+                        var m0=(''+par).split('/')
+                        var s1=(''+m0[m0.length-1]).replace('.git', '')
+                        //par+=",-folder="+pws+"/"+s1
+                        //par+=",-dir="+pws+"/"+s1
+                        if(''+s1==='unikast'){
+                            par+=",-wss"
+                        }
+                        unik.setUnikStartSettings(par)
+                        console.log('New USS params: '+par)
+                        unik.restartApp(par)
+                    }else if(Qt.platform.os==='osx'){
+                        par=('-git='+tiUrlGit.text)
+                        m0=(''+par).split('/')
+                        s1=(''+m0[m0.length-1]).replace('.git', '')
+                        //par+=",-folder="+pws+"/"+s1
+                        //par+=",-dir="+pws+"/"+s1
+                        if(''+s1==='unikast'||(''+s1).indexOf('wss')>=1){
+                            par+=",-wss"
+                            uklData+='-wss '
+                        }
+
+                        //Setting restart unik args
+                        unik.setUnikStartSettings(par)
+
+                        //Making ukl link file data for Unik Launcher Application
+                        uklData+="-folder="+pws+"/"+s1
+                        uklFile=''+pws+'/link_'+s1+'.ukl'
+                        //Write ukl file data for launch with out update
+                        unik.setFile(uklFile, uklData)
+                        uklData=' -git='+urlgit
+                        uklFileUp=''+pws+'/link_update-'+s1+'.ukl'
+                        //Write ukl file data for launch with git update
+                        unik.setFile(uklFileUp, uklData)
+                        console.log('New UKL File: '+uklFile)
+                        console.log('New UKL Data: '+uklData)
+
+
+                        console.log('New USS params: '+par)
+                        unik.ejecutarLineaDeComandoAparte('"'+appExec+'"')
+
+                    }else if(Qt.platform.os==='windows'){
+                        par=('-git='+tiUrlGit.text)
+                        m0=(''+par).split('/')
+                        s1=(''+m0[m0.length-1]).replace('.git', '')
+                        //par+=",-folder="+pws+"/"+s1
+                        //par+=",-dir="+pws+"/"+s1
+                        if(''+s1==='unikast'){
+                            par+=",-wss"
+                        }
+                        unik.setUnikStartSettings(par)
+                        console.log('New USS params: '+par)
+                        unik.ejecutarLineaDeComandoAparte('"'+appExec+'"')
+                    }else{
+                        par=('-git='+urlgit)
+                        m0=(''+par).split('/')
+                        s1=(''+m0[m0.length-1]).replace('.git', '')
+                        par+=",-folder="+pws+"/"+s1
+                        par+=",-dir="+pws+"/"+s1
+                        if(''+s1==='unikast'){
+                            par+=",-wss"
+                        }
+                        unik.setUnikStartSettings(par)
+                        console.log('New USS params: '+par)
+                        unik.ejecutarLineaDeComandoAparte('"'+appExec+'"')
+                    }
                 }
+                //                onClicking: {
+                //                    dg()
+                //                }
             }
         }
         Boton{//Close
